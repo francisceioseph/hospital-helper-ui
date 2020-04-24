@@ -1,13 +1,12 @@
 import React from "react";
-import { Stack, Text } from "office-ui-fabric-react";
+import { Stack } from "office-ui-fabric-react";
 
 import "./home.scss";
+import { SideMenu } from "../../side-menu/SideMenu";
 
 export const homeRoute: string = "/home";
 export const HomePage: React.FC = () => (
-  <Stack verticalAlign="center" horizontalAlign="center" verticalFill gap={15}>
-    <Text>hey</Text>
-    <Text>hey</Text>
-    <Text>hey</Text>
+  <Stack verticalAlign="start" horizontalAlign="start" verticalFill>
+    <SideMenu></SideMenu>
   </Stack>
 );
