@@ -5,7 +5,15 @@ import {
   ICardSectionTokens,
   ICardTokens,
 } from "@uifabric/react-cards";
-import { Text, FontWeights, IIconStyles, Icon, Stack } from "@fluentui/react";
+import {
+  Text,
+  FontWeights,
+  IIconStyles,
+  Icon,
+  Stack,
+  StackItem,
+  IStackItemStyles,
+} from "@fluentui/react";
 
 export const BedListItem: React.FC = () => {
   const footerCardSectionStyles: ICardSectionStyles = {
@@ -22,6 +30,12 @@ export const BedListItem: React.FC = () => {
     },
   };
 
+  const rootStackItemStyles: IStackItemStyles = {
+    root: {
+      height: "fit-content",
+    },
+  };
+
   const footerCardSectionTokens: ICardSectionTokens = {
     padding: "12px 0px 0px",
   };
@@ -29,7 +43,7 @@ export const BedListItem: React.FC = () => {
   const cardTokens: ICardTokens = { childrenMargin: 12 };
 
   return (
-    <Stack>
+    <StackItem styles={rootStackItemStyles}>
       <Card tokens={cardTokens}>
         <Card.Section>
           <Text>Leito 001</Text>
@@ -43,12 +57,12 @@ export const BedListItem: React.FC = () => {
         >
           <Icon iconName="RedEye" styles={iconStyles} />
           <Icon iconName="SingleBookmark" styles={iconStyles} />
-          <Stack.Item>
+          <Stack.Item grow>
             <span />
           </Stack.Item>
           <Icon iconName="MoreVertical" styles={iconStyles} />
         </Card.Section>
       </Card>
-    </Stack>
+    </StackItem>
   );
 };

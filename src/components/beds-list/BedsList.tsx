@@ -1,18 +1,35 @@
-import React from "react";
-import { Stack, IStackStyles, StackItem, Text } from "@fluentui/react";
+import React, { FC } from "react";
+import { Stack, IStackItemStyles, IStackTokens } from "@fluentui/react";
+import { BedListItem } from "./BedListItem";
 
-export const BedsList: React.FC = () => {
-  const outterStackStyles: IStackStyles = {
-    root: {
-      padding: "1rem",
-    },
-  };
+interface IBedsListProps {
+  beds: Array<any>;
+}
 
+const stackStyling: IStackItemStyles = {
+  root: {
+    height: "85vh",
+    overflowY: "scroll",
+    overflowX: "hidden",
+  },
+};
+
+const stackTokens: IStackTokens = {
+  childrenGap: 8,
+};
+
+export const BedsList: FC<IBedsListProps> = ({ beds }) => {
   return (
-    <Stack styles={outterStackStyles}>
-      <StackItem>
-        <Text variant="large">Home</Text>
-      </StackItem>
+    <Stack
+      wrap
+      horizontal
+      horizontalAlign="space-around"
+      styles={stackStyling}
+      tokens={stackTokens}
+    >
+      {beds.map((item, index) => (
+        <BedListItem key={index}></BedListItem>
+      ))}
     </Stack>
   );
 };
