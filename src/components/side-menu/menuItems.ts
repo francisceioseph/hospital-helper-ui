@@ -1,4 +1,6 @@
 import { INavLinkGroup } from "@fluentui/react";
+import { homeRoute } from "../pages/home/home";
+import { bedsRoute } from "../pages/beds/BedsPage";
 
 export const menuItems: INavLinkGroup[] = [
   {
@@ -7,7 +9,7 @@ export const menuItems: INavLinkGroup[] = [
       {
         key: "home-page",
         name: "Página Inicial",
-        url: "",
+        url: homeRoute,
       },
     ],
   },
@@ -32,7 +34,7 @@ export const menuItems: INavLinkGroup[] = [
       {
         key: "leitos",
         name: "Leitos",
-        url: "",
+        url: bedsRoute,
       },
     ],
   },
