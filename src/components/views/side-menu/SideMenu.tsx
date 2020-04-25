@@ -2,9 +2,10 @@ import React from "react";
 import { Nav, INavStyles, INavLink } from "@fluentui/react";
 import { menuItems } from "./menuItems";
 import { useHistory } from "react-router";
-import { bedsRoute } from "../pages/beds/BedsPage";
-import { homeRoute } from "../pages/home/home";
-import { Constants } from "../../constants/constants";
+import { bedsRoute } from "../../pages/beds/BedsPage";
+import { homeRoute } from "../../pages/home/home";
+import { Constants } from "../../../constants/constants";
+import { addPacientRoute } from "../../pages/pacient/AddPacientPage";
 
 export const SideMenu: React.FC = () => {
   const navStyles: Partial<INavStyles> = {
@@ -45,6 +46,10 @@ export const SideMenu: React.FC = () => {
       }
       case Constants.kBedRouteKey: {
         history.push(bedsRoute);
+        break;
+      }
+      case Constants.kNewPacientRouteKey: {
+        history.push(addPacientRoute);
         break;
       }
       default: {

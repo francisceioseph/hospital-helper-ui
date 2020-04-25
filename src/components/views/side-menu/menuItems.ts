@@ -1,5 +1,5 @@
 import { INavLinkGroup } from "@fluentui/react";
-import { Constants } from "../../constants/constants";
+import { Constants } from "../../../constants/constants";
 
 export const menuItems: INavLinkGroup[] = [
   {

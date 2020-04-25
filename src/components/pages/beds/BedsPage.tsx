@@ -1,5 +1,5 @@
 import React from "react";
-import { BedsList } from "../../beds-list/BedsList";
+import { BedsList } from "../../views/beds-list/BedsList";
 import { Stack, StackItem, Text, IStackItemStyles } from "@fluentui/react";
 
 export const bedsRoute = "/auth/beds";
