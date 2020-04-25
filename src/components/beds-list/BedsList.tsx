@@ -1,16 +1,19 @@
 import React, { FC } from "react";
-import { Stack, IStackItemStyles, IStackTokens } from "@fluentui/react";
+import { Stack, IStackTokens, IStackStyles } from "@fluentui/react";
 import { BedListItem } from "./BedListItem";
 
 interface IBedsListProps {
   beds: Array<any>;
 }
 
-const stackStyling: IStackItemStyles = {
+const stackStyling: IStackStyles = {
   root: {
     height: "85vh",
     overflowY: "scroll",
     overflowX: "hidden",
+    paddingRight: 16,
+    paddingLeft: 16,
+    paddingTop: 16,
   },
 };
 
