@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { IStackItemStyles, Stack, StackItem, Text } from "@fluentui/react";
+import { PacientForm } from "../../views/pacient-form/pacient-form";
 
 export const addPacientRoute = "/auth/pacients/add";
 
@@ -18,7 +19,9 @@ export const AddPacientPage: FC = () => {
       <StackItem styles={titleStyles}>
         <Text variant="large">Cadastrar Paciente</Text>
       </StackItem>
-      <StackItem></StackItem>
+      <StackItem>
+        <PacientForm />
+      </StackItem>
     </Stack>
   );
 };
