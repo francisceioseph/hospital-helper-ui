@@ -1,6 +1,10 @@
 import React from "react";
-import { Nav, INavStyles } from "@fluentui/react";
+import { Nav, INavStyles, INavLink } from "@fluentui/react";
 import { menuItems } from "./menuItems";
+import { useHistory } from "react-router";
+import { bedsRoute } from "../pages/beds/BedsPage";
+import { homeRoute } from "../pages/home/home";
+import { Constants } from "../../constants/constants";
 
 export const SideMenu: React.FC = () => {
   const navStyles: Partial<INavStyles> = {
@@ -31,5 +35,25 @@ export const SideMenu: React.FC = () => {
     },
   };
 
-  return <Nav styles={navStyles} groups={menuItems} />;
+  const history = useHistory();
+
+  const handleLinkClick = (_?: any, item?: INavLink) => {
+    switch (item?.key) {
+      case Constants.kHomeRouteKey: {
+        history.push(homeRoute);
+        break;
+      }
+      case Constants.kBedRouteKey: {
+        history.push(bedsRoute);
+        break;
+      }
+      default: {
+        return;
+      }
+    }
+  };
+
+  return (
+    <Nav styles={navStyles} groups={menuItems} onLinkClick={handleLinkClick} />
+  );
 };

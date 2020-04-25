@@ -1,15 +1,14 @@
 import { INavLinkGroup } from "@fluentui/react";
-import { homeRoute } from "../pages/home/home";
-import { bedsRoute } from "../pages/beds/BedsPage";
+import { Constants } from "../../constants/constants";
 
 export const menuItems: INavLinkGroup[] = [
   {
     name: "Início",
     links: [
       {
-        key: "home-page",
+        key: Constants.kHomeRouteKey,
         name: "Página Inicial",
-        url: homeRoute,
+        url: "",
       },
     ],
   },
@@ -17,12 +16,12 @@ export const menuItems: INavLinkGroup[] = [
     name: "Paciente",
     links: [
       {
-        key: "cadastrar-paciente",
+        key: Constants.kNewPacientRouteKey,
         name: "Cadastrar Paciente",
         url: "",
       },
       {
-        key: "buscar-paciente",
+        key: Constants.kSearchPacientRouteKey,
         name: "Buscar Paciente",
         url: "",
       },
@@ -32,9 +31,9 @@ export const menuItems: INavLinkGroup[] = [
     name: "Internamento",
     links: [
       {
-        key: "leitos",
+        key: Constants.kBedRouteKey,
         name: "Leitos",
-        url: bedsRoute,
+        url: "",
       },
     ],
   },
