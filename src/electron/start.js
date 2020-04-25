@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require("electron");
 
 const path = require("path");
 const url = require("url");
+const initIPC = require("./ipc/config");
 
 let mainWindow;
 
@@ -26,6 +27,8 @@ function createWindow() {
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
+
+  initIPC();
 }
 
 app.on("ready", createWindow);
