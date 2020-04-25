@@ -9,6 +9,9 @@ import {
   IStackStyles,
 } from "@fluentui/react";
 import { Controller, useForm } from "react-hook-form";
+import { PacientService } from "../../../service/pacient.service";
+
+const pacientService = new PacientService();
 
 export const PacientForm: FC = () => {
   const { handleSubmit, control, errors, reset } = useForm();
@@ -25,15 +28,20 @@ export const PacientForm: FC = () => {
   };
 
   const submit = (data: any) => {
-    console.log(data);
-
-    reset({
-      fullName: "",
-      birthDate: "",
-      motherName: "",
-      prontuario: "",
-      leito: "",
-    });
+    pacientService
+      .createPacient(data)
+      .then(() => {
+        reset({
+          fullName: "",
+          birthDate: "",
+          motherName: "",
+          prontuario: "",
+          leito: "",
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (

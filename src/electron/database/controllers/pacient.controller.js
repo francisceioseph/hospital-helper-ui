@@ -1,8 +1,10 @@
 const IPCConstants = require("../../ipc/constants");
-const Pacient = require("../models/pacient.model");
+const { Pacient } = require("../config");
 
 class PacientController {
-  async create(event, args) {
+  static async create(event, args) {
+    console.log("hey");
+    console.log(JSON.stringify(args.data));
     const replayChannel = IPCConstants.PACIENT.CREATE_RESPONSE_CHANNEL;
 
     try {
@@ -11,28 +13,29 @@ class PacientController {
         data: pacient.get({ plain: true }),
       });
     } catch (error) {
-      event.replay(replayChannel, {
+      console.error(error);
+      event.reply(replayChannel, {
         error,
         data: null,
       });
     }
   }
 
-  async list(event, args) {
+  static async list(event, args) {
     const replayChannel = IPCConstants.PACIENT.LIST_RESPONSE_CHANNEL;
 
     try {
       const pacients = await Pacient.findAll({ plain: true });
-      event.replay(replayChannel, { data: pacients });
+      event.reply(replayChannel, { data: pacients });
     } catch (error) {
-      event.replay(replayChannel, {
+      event.reply(replayChannel, {
         error,
         data: null,
       });
     }
   }
 
-  async show(event, args) {
+  static async show(event, args) {
     const replayChannel = IPCConstants.PACIENT.SHOW_RESPONSE_CHANNEL;
 
     try {
@@ -41,16 +44,16 @@ class PacientController {
         plain: true,
       });
 
-      event.replay(replayChannel, { data: pacient });
+      event.reply(replayChannel, { data: pacient });
     } catch (error) {
-      event.replay(replayChannel, {
+      event.reply(replayChannel, {
         error,
         data: null,
       });
     }
   }
 
-  async update(event, args) {
+  static async update(event, args) {
     const replayChannel = IPCConstants.PACIENT.UPDATE_RESPONSE_CHANNEL;
 
     try {
@@ -59,16 +62,16 @@ class PacientController {
         returning: true,
         plain: true,
       });
-      event.replay(replayChannel, { data: pacient });
+      event.reply(replayChannel, { data: pacient });
     } catch (error) {
-      event.replay(replayChannel, {
+      event.reply(replayChannel, {
         error,
         data: null,
       });
     }
   }
 
-  async destroy(event, args) {
+  static async destroy(event, args) {
     const replayChannel = IPCConstants.PACIENT.DESTROY_RESPONSE_CHANNEL;
 
     try {
@@ -76,9 +79,9 @@ class PacientController {
         where: args.data.id,
       });
 
-      event.replay(replayChannel, { data: {} });
+      event.reply(replayChannel, { data: {} });
     } catch (error) {
-      event.replay(replayChannel, {
+      event.reply(replayChannel, {
         error,
         data: null,
       });

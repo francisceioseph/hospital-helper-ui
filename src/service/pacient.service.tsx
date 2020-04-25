@@ -2,7 +2,7 @@ import * as Constants from "../electron/ipc/constants";
 import { IpcService } from "./ipc.service";
 
 export class PacientService {
-  constructor(private ipcService: IpcService) {}
+  private ipcService: IpcService = new IpcService();
 
   createPacient(pacient: any): Promise<any> {
     const channel = Constants.PACIENT.CREATE_CHANNEL;

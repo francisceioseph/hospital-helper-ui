@@ -1,7 +1,7 @@
-import { ipcRenderer, IpcRenderer } from "electron";
+const { ipcRenderer } = window.require("electron");
 
 export class IpcService {
-  get ipc(): IpcRenderer {
+  get ipc() {
     return ipcRenderer;
   }
 
