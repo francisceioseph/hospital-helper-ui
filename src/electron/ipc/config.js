@@ -1,6 +1,7 @@
 const events = require("events");
 const database = require("../database/config");
 const initPacientIPC = require("./channels/pacient.channel");
+const initBedIPC = require("./channels/bed.channel");
 
 const sequelize = database.sequelize;
 
@@ -11,6 +12,7 @@ const initIPC = () => {
     .sync()
     .then(() => {
       initPacientIPC();
+      initBedIPC();
     })
     .catch((error) => console.log(error));
 };

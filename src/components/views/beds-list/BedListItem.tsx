@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   Card,
   ICardSectionStyles,
@@ -15,7 +15,11 @@ import {
   IStackItemStyles,
 } from "@fluentui/react";
 
-export const BedListItem: React.FC = () => {
+interface IBedListItemProps {
+  bed: any;
+}
+
+export const BedListItem: FC<IBedListItemProps> = () => {
   const footerCardSectionStyles: ICardSectionStyles = {
     root: {
       borderTop: "1px solid #F3F2F1",
@@ -47,7 +51,7 @@ export const BedListItem: React.FC = () => {
       <Card tokens={cardTokens}>
         <Card.Section>
           <Text>Leito 001</Text>
-          <Text variant="small">Francisco das Chagas</Text>
+          <Text variant="small">{}</Text>
           <Text variant="small"></Text>
         </Card.Section>
         <Card.Section

@@ -1,5 +1,11 @@
 import React, { FC } from "react";
-import { Stack, IStackTokens, IStackStyles } from "@fluentui/react";
+import {
+  Stack,
+  IStackTokens,
+  IStackStyles,
+  StackItem,
+  Text,
+} from "@fluentui/react";
 import { BedListItem } from "./BedListItem";
 
 interface IBedsListProps {
@@ -22,6 +28,20 @@ const stackTokens: IStackTokens = {
 };
 
 export const BedsList: FC<IBedsListProps> = ({ beds }) => {
+  if (beds.length === 0) {
+    return (
+      <Stack
+        verticalAlign="center"
+        horizontalAlign="center"
+        styles={stackStyling}
+      >
+        <StackItem>
+          <Text variant="large">Todos os leitos estão vazios</Text>
+        </StackItem>
+      </Stack>
+    );
+  }
+
   return (
     <Stack
       wrap
@@ -30,8 +50,8 @@ export const BedsList: FC<IBedsListProps> = ({ beds }) => {
       styles={stackStyling}
       tokens={stackTokens}
     >
-      {beds.map((item, index) => (
-        <BedListItem key={index}></BedListItem>
+      {beds.map((bed, index) => (
+        <BedListItem key={index} bed={bed}></BedListItem>
       ))}
     </Stack>
   );

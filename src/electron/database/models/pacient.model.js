@@ -22,5 +22,9 @@ module.exports = (sequelize, DataTypes) => {
     { underscored: true }
   );
 
+  Pacient.associations = (models) => {
+    Pacient.Bed = models.belongsTo(models.Bed);
+  };
+
   return Pacient;
 };
