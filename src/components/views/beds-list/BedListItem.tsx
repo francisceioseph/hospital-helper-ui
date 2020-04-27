@@ -29,7 +29,7 @@ export const BedListItem: FC<IBedListItemProps> = ({ bed }) => {
     },
     {
       key: "dar-alta-paciente",
-      text: "Dar Alta",
+      text: "Dar Alta Hospitalar",
       onClick: () => {},
     },
   ];
