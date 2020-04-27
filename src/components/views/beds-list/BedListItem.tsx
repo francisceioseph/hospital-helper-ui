@@ -1,51 +1,42 @@
-import React, { FC } from "react";
-import {
-  Card,
-  ICardSectionStyles,
-  ICardSectionTokens,
-  ICardTokens,
-} from "@uifabric/react-cards";
+import React, { FC, useState, useRef } from "react";
+import { Card } from "@uifabric/react-cards";
 import {
   Text,
-  FontWeights,
-  IIconStyles,
   Icon,
   Stack,
   StackItem,
-  IStackItemStyles,
+  ContextualMenu,
+  IContextualMenuItem,
 } from "@fluentui/react";
 import { IInternship } from "../../../types/internship.interface";
+import {
+  rootStackItemStyles,
+  footerCardSectionStyles,
+  iconStyles,
+} from "./BedListItem.style";
+import { cardTokens, footerCardSectionTokens } from "./BedListItem.tokens";
 
 interface IBedListItemProps {
   bed: IInternship;
 }
 
 export const BedListItem: FC<IBedListItemProps> = ({ bed }) => {
-  const footerCardSectionStyles: ICardSectionStyles = {
-    root: {
-      borderTop: "1px solid #F3F2F1",
+  const menuItems: IContextualMenuItem[] = [
+    {
+      key: "trocar-de-leito",
+      text: "Trocar de Leito",
+      onClick: () => {},
     },
-  };
-
-  const iconStyles: IIconStyles = {
-    root: {
-      color: "#0078D4",
-      fontSize: 16,
-      fontWeight: FontWeights.regular,
+    {
+      key: "dar-alta-paciente",
+      text: "Dar Alta",
+      onClick: () => {},
     },
-  };
+  ];
 
-  const rootStackItemStyles: IStackItemStyles = {
-    root: {
-      height: "fit-content",
-    },
-  };
+  const moreIconRef = useRef(null);
 
-  const footerCardSectionTokens: ICardSectionTokens = {
-    padding: "12px 0px 0px",
-  };
-
-  const cardTokens: ICardTokens = { childrenMargin: 12 };
+  const [showMoreMenu, setShowMoreMenu] = useState(true);
 
   return (
     <StackItem styles={rootStackItemStyles}>
@@ -64,7 +55,21 @@ export const BedListItem: FC<IBedListItemProps> = ({ bed }) => {
           <Stack.Item grow>
             <span />
           </Stack.Item>
-          <Icon iconName="MoreVertical" styles={iconStyles} />
+
+          <div ref={moreIconRef}>
+            <Icon
+              iconName="MoreVertical"
+              styles={iconStyles}
+              onClick={() => setShowMoreMenu(true)}
+            ></Icon>
+          </div>
+          <ContextualMenu
+            target={moreIconRef}
+            items={menuItems}
+            hidden={!showMoreMenu}
+            onItemClick={() => setShowMoreMenu(false)}
+            onDismiss={() => setShowMoreMenu(false)}
+          />
         </Card.Section>
       </Card>
     </StackItem>
