@@ -11,4 +11,11 @@ export class BedService {
 
     return this.ipcService.send(channel, backChannel, null);
   }
+
+  listBedsNotInUse(): Promise<IIPCResponse<any[]>> {
+    const channel = Constants.BED.LIST_NOT_IN_USE_CHANNEL;
+    const backChannel = Constants.BED.LIST_NOT_IN_USE_RESPONSE_CHANNEL;
+
+    return this.ipcService.send(channel, backChannel, null);
+  }
 }

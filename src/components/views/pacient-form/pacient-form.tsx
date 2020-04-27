@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
   Stack,
   StackItem,
@@ -7,14 +7,20 @@ import {
   PrimaryButton,
   IStackTokens,
   IStackStyles,
+  IDropdownOption,
+  Dropdown,
 } from "@fluentui/react";
 import { Controller, useForm } from "react-hook-form";
 import { PacientService } from "../../../service/pacient.service";
+import { BedService } from "../../../service/bed.service";
 
 const pacientService = new PacientService();
+const bedService = new BedService();
 
 export const PacientForm: FC = () => {
   const { handleSubmit, control, errors, reset } = useForm();
+  const [bedOptions, setBedOptions] = useState<IDropdownOption[]>([]);
+  const [bedId, setBedId] = useState<number>();
 
   const stackTokens: IStackTokens = {
     childrenGap: 16,
@@ -27,17 +33,42 @@ export const PacientForm: FC = () => {
     },
   };
 
+  const getBedsNotInUse = async () => {
+    const response = await bedService.listBedsNotInUse();
+    const beds = response.data || [];
+    const options = beds.map<IDropdownOption>((bed) => ({
+      key: bed.id,
+      text: bed.name,
+    }));
+
+    setBedOptions(options);
+  };
+
+  const handleDropdownChange = (event: any[]) => {
+    const item: IDropdownOption = event[1];
+    setBedId(parseInt(item.key.toString()));
+  };
+
+  useEffect(() => {
+    getBedsNotInUse();
+  }, []);
+
   const submit = (data: any) => {
     pacientService
-      .createPacient(data)
+      .createPacient({
+        ...data,
+        bed_id: bedId,
+      })
       .then(() => {
         reset({
           fullName: "",
           birthDate: "",
           motherName: "",
           prontuario: "",
-          leito: "",
+          bed_id: "",
         });
+        setBedId(undefined);
+        getBedsNotInUse();
       })
       .catch((error) => {
         console.error(error);
@@ -91,13 +122,15 @@ export const PacientForm: FC = () => {
             />
           </StackItem>
           <Controller
-            name="leito"
+            name="bed_id"
             label="Leito"
-            type="text"
-            as={TextField}
+            as={Dropdown}
+            options={bedOptions}
             control={control}
+            defaultValue={bedId}
+            styles={{ root: { minWidth: 166 } }}
+            onChange={handleDropdownChange}
             errorMessage={errors.prontuario?.message}
-            rules={{ required: "campo obrigatório" }}
           />
         </Stack>
 

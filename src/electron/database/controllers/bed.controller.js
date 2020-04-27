@@ -21,6 +21,26 @@ class BedController {
       });
     }
   }
+
+  static async listNotInUse(event, args) {
+    const replayChannel = IPCConstants.BED.LIST_NOT_IN_USE_RESPONSE_CHANNEL;
+    try {
+      let beds = await Bed.findAll({
+        include: Pacient,
+      });
+
+      beds = beds
+        .map((bed) => bed.toJSON())
+        .filter((bed) => bed.Pacient === null);
+
+      event.reply(replayChannel, { data: beds });
+    } catch (error) {
+      event.reply(replayChannel, {
+        error,
+        data: null,
+      });
+    }
+  }
 }
 
 module.exports = BedController;

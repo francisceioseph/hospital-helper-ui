@@ -46,7 +46,7 @@ export const BedsList: FC<IBedsListProps> = ({ beds }) => {
     <Stack
       wrap
       horizontal
-      horizontalAlign="space-around"
+      horizontalAlign="start"
       styles={stackStyling}
       tokens={stackTokens}
     >
