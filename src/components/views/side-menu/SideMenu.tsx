@@ -44,7 +44,7 @@ export const SideMenu: React.FC = () => {
         history.push(homeRoute);
         break;
       }
-      case Constants.kBedRouteKey: {
+      case Constants.kInternshipRouteKey: {
         history.push(internshipRoute);
         break;
       }

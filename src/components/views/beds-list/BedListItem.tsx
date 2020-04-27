@@ -14,12 +14,13 @@ import {
   StackItem,
   IStackItemStyles,
 } from "@fluentui/react";
+import { IInternship } from "../../../types/internship.interface";
 
 interface IBedListItemProps {
-  bed: any;
+  bed: IInternship;
 }
 
-export const BedListItem: FC<IBedListItemProps> = () => {
+export const BedListItem: FC<IBedListItemProps> = ({ bed }) => {
   const footerCardSectionStyles: ICardSectionStyles = {
     root: {
       borderTop: "1px solid #F3F2F1",
@@ -50,9 +51,8 @@ export const BedListItem: FC<IBedListItemProps> = () => {
     <StackItem styles={rootStackItemStyles}>
       <Card tokens={cardTokens}>
         <Card.Section>
-          <Text>Leito 001</Text>
-          <Text variant="small">{}</Text>
-          <Text variant="small"></Text>
+          <Text>{bed.Bed?.name}</Text>
+          <Text variant="small">{bed.Pacient?.fullName}</Text>
         </Card.Section>
         <Card.Section
           horizontal

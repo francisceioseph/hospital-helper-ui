@@ -45,7 +45,7 @@ export const InternshipPage: React.FC = () => {
   return (
     <Stack verticalFill styles={stackStyles}>
       <StackItem styles={titleStyles}>
-        <Text variant="large">Leitos</Text>
+        <Text variant="large">Pacientes Internados</Text>
       </StackItem>
       <StackItem>
         <BedsList beds={interns}></BedsList>
