@@ -4,7 +4,10 @@ import { Route, Switch } from "react-router";
 
 import { SideMenu } from "../components/views/side-menu/SideMenu";
 import { homeRoute, HomePage } from "../components/pages/home/home";
-import { bedsRoute, BedsPage } from "../components/pages/beds/BedsPage";
+import {
+  internshipRoute,
+  InternshipPage,
+} from "../components/pages/beds/InternshipPage";
 import {
   addPacientRoute,
   AddPacientPage,
@@ -22,7 +25,7 @@ export const AuthSwitch: FC = () => {
 
       <Switch>
         <Route exact path={homeRoute} component={HomePage} />
-        <Route exact path={bedsRoute} component={BedsPage} />
+        <Route exact path={internshipRoute} component={InternshipPage} />
         <Route exact path={addPacientRoute} component={AddPacientPage} />
       </Switch>
     </Stack>

@@ -7,9 +7,9 @@ import {
   IStackItemStyles,
   IStackStyles,
 } from "@fluentui/react";
-import { BedService } from "../../../service/bed.service";
+import { InternshipService } from "../../../service/internship.service";
 
-export const bedsRoute = "/auth/beds";
+export const internshipRoute = "/auth/internship";
 
 const titleStyles: IStackItemStyles = {
   root: {
@@ -21,8 +21,8 @@ const titleStyles: IStackItemStyles = {
   },
 };
 
-export const BedsPage: React.FC = () => {
-  const [beds, setBeds] = useState<Array<any>>([]);
+export const InternshipPage: React.FC = () => {
+  const [interns, setInterns] = useState<Array<any>>([]);
 
   const stackStyles: IStackStyles = {
     root: {
@@ -31,15 +31,15 @@ export const BedsPage: React.FC = () => {
   };
 
   useEffect(() => {
-    const bedService = new BedService();
+    const internshipService = new InternshipService();
 
-    const fetchBeds = async () => {
-      const { data: beds } = await bedService.listBedsInUse();
-      console.log(beds);
-      setBeds(beds || []);
+    const fetchInterns = async () => {
+      const { data: interns } = await internshipService.list();
+      console.log(interns);
+      setInterns(interns || []);
     };
 
-    fetchBeds();
+    fetchInterns();
   }, []);
 
   return (
@@ -48,7 +48,7 @@ export const BedsPage: React.FC = () => {
         <Text variant="large">Leitos</Text>
       </StackItem>
       <StackItem>
-        <BedsList beds={beds}></BedsList>
+        <BedsList beds={interns}></BedsList>
       </StackItem>
     </Stack>
   );

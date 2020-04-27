@@ -11,7 +11,12 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Bed.associate = (models) => {
-    Bed.Pacient = Bed.hasOne(models.Pacient);
+    Bed.Pacients = Bed.belongsToMany(models.Pacient, {
+      through: "Internships",
+      as: "pacients",
+      foreignKey: "bedId",
+      otherKey: "pacientId",
+    });
   };
 
   return Bed;

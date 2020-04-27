@@ -34,12 +34,14 @@ export const PacientForm: FC = () => {
   };
 
   const getBedsNotInUse = async () => {
-    const response = await bedService.listBedsNotInUse();
+    const response = await bedService.listNotInUse();
     const beds = response.data || [];
     const options = beds.map<IDropdownOption>((bed) => ({
       key: bed.id,
       text: bed.name,
     }));
+
+    console.log(response);
 
     setBedOptions(options);
   };

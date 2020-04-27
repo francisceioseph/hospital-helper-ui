@@ -1,5 +1,5 @@
 const IPCConstants = require("../../ipc/constants");
-const { Pacient } = require("../config");
+const { Pacient, Internship } = require("../config");
 
 class PacientController {
   static async create(event, args) {
@@ -8,7 +8,15 @@ class PacientController {
     const replayChannel = IPCConstants.PACIENT.CREATE_RESPONSE_CHANNEL;
 
     try {
-      const pacient = await Pacient.create(args.data);
+      const { bed_id, ...pacientData } = args.data;
+      const pacient = await Pacient.create(pacientData);
+
+      await Internship.create({
+        pacientId: pacient.id,
+        bedId: bed_id,
+        startDate: new Date(),
+      });
+
       event.reply(replayChannel, {
         data: pacient.get({ plain: true }),
       });

@@ -18,16 +18,17 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      bed_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
     },
     { underscored: true }
   );
 
   Pacient.associations = (models) => {
-    Pacient.Bed = models.belongsTo(models.Bed);
+    Pacient.Beds = Pacient.belongsToMany(models.Bed, {
+      through: "Internships",
+      as: "beds",
+      foreignKey: "bedId",
+      otherKey: "pacientId",
+    });
   };
 
   return Pacient;
