@@ -51,7 +51,7 @@ export const BedsList: FC<IBedsListProps> = ({ beds }) => {
       tokens={stackTokens}
     >
       {beds.map((bed, index) => (
-        <BedListItem key={index} bed={bed}></BedListItem>
+        <BedListItem key={index} internship={bed}></BedListItem>
       ))}
     </Stack>
   );

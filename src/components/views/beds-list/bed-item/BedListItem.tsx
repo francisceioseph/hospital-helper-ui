@@ -15,17 +15,24 @@ import {
   iconStyles,
 } from "./BedListItem.style";
 import { cardTokens, footerCardSectionTokens } from "./BedListItem.tokens";
+import { ChangeBedDialog } from "../change-bed/change-bed";
+import { InternshipService } from "../../../../service/internship.service";
 
 interface IBedListItemProps {
-  bed: IInternship;
+  internship: IInternship;
 }
 
-export const BedListItem: FC<IBedListItemProps> = ({ bed }) => {
+export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
+  const [showMoreMenu, setShowMoreMenu] = useState(true);
+  const [showChangeBedDialog, setShowChangeBedDialog] = useState(false);
+
   const menuItems: IContextualMenuItem[] = [
     {
       key: "trocar-de-leito",
       text: "Trocar de Leito",
-      onClick: () => {},
+      onClick: () => {
+        setShowChangeBedDialog(true);
+      },
     },
     {
       key: "alta-hospitalar",
@@ -36,14 +43,20 @@ export const BedListItem: FC<IBedListItemProps> = ({ bed }) => {
 
   const moreIconRef = useRef(null);
 
-  const [showMoreMenu, setShowMoreMenu] = useState(true);
+  const updateBedId = (newBedId: number) => {
+    const internshipService = new InternshipService();
+
+    internshipService.updateBed(internship.id, newBedId).then(() => {
+      setShowChangeBedDialog(false);
+    });
+  };
 
   return (
     <StackItem styles={rootStackItemStyles}>
       <Card tokens={cardTokens}>
         <Card.Section>
-          <Text>{bed.Bed?.name}</Text>
-          <Text variant="small">{bed.Pacient?.fullName}</Text>
+          <Text>{internship.Bed?.name}</Text>
+          <Text variant="small">{internship.Pacient?.fullName}</Text>
         </Card.Section>
         <Card.Section
           horizontal
@@ -72,6 +85,15 @@ export const BedListItem: FC<IBedListItemProps> = ({ bed }) => {
           />
         </Card.Section>
       </Card>
+
+      <ChangeBedDialog
+        internship={internship}
+        hidden={!showChangeBedDialog}
+        onSaveClick={updateBedId}
+        onCancelClick={(r) => {
+          setShowChangeBedDialog(false);
+        }}
+      />
     </StackItem>
   );
 };

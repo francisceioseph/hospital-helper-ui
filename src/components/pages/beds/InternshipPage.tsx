@@ -23,7 +23,6 @@ const titleStyles: IStackItemStyles = {
 
 export const InternshipPage: React.FC = () => {
   const [interns, setInterns] = useState<Array<any>>([]);
-
   const stackStyles: IStackStyles = {
     root: {
       width: "100%",

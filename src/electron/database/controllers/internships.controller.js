@@ -26,6 +26,28 @@ class InternshipController {
       });
     }
   }
+
+  static async updateBed(event, args) {
+    const { data, id } = args;
+    const replayChannel = IPCConstants.INTERNSHIP.UPDATE_BED_CHANNEL_RESPONSE;
+
+    try {
+      const internship = await Internship.findOne({
+        where: {
+          id: id,
+        },
+      });
+
+      internship.bedId = data.bedId;
+      await internship.save();
+      event.reply(replayChannel, { data: internship });
+    } catch (error) {
+      event.reply(replayChannel, {
+        error,
+        data: null,
+      });
+    }
+  }
 }
 
 module.exports = InternshipController;
