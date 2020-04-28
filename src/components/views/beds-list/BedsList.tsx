@@ -6,7 +6,7 @@ import {
   StackItem,
   Text,
 } from "@fluentui/react";
-import { BedListItem } from "./BedListItem";
+import { BedListItem } from "./bed-item/BedListItem";
 
 interface IBedsListProps {
   beds: Array<any>;

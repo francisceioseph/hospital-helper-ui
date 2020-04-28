@@ -8,7 +8,7 @@ import {
   ContextualMenu,
   IContextualMenuItem,
 } from "@fluentui/react";
-import { IInternship } from "../../../types/internship.interface";
+import { IInternship } from "../../../../types/internship.interface";
 import {
   rootStackItemStyles,
   footerCardSectionStyles,
