@@ -3,8 +3,6 @@ const { Pacient, Internship } = require("../config");
 
 class PacientController {
   static async create(event, args) {
-    console.log("hey");
-    console.log(JSON.stringify(args.data));
     const replayChannel = IPCConstants.PACIENT.CREATE_RESPONSE_CHANNEL;
 
     try {
@@ -18,10 +16,9 @@ class PacientController {
       });
 
       event.reply(replayChannel, {
-        data: pacient.get({ plain: true }),
+        data: pacient.toJSON(),
       });
     } catch (error) {
-      console.error(error);
       event.reply(replayChannel, {
         error,
         data: null,
@@ -33,7 +30,9 @@ class PacientController {
     const replayChannel = IPCConstants.PACIENT.LIST_RESPONSE_CHANNEL;
 
     try {
-      const pacients = await Pacient.findAll({ plain: true });
+      const query = await Pacient.findAll();
+      const pacients = query.map((result) => result.toJSON());
+
       event.reply(replayChannel, { data: pacients });
     } catch (error) {
       event.reply(replayChannel, {
@@ -49,10 +48,9 @@ class PacientController {
     try {
       const pacient = await Pacient.findOne({
         where: { id: args.data.id },
-        plain: true,
       });
 
-      event.reply(replayChannel, { data: pacient });
+      event.reply(replayChannel, { data: pacient.toJSON() });
     } catch (error) {
       event.reply(replayChannel, {
         error,
@@ -66,11 +64,10 @@ class PacientController {
 
     try {
       const pacient = await Pacient.update(args.data, {
-        where: args.data.id,
+        where: { id: args.data.id },
         returning: true,
-        plain: true,
       });
-      event.reply(replayChannel, { data: pacient });
+      event.reply(replayChannel, { data: pacient.toJSON() });
     } catch (error) {
       event.reply(replayChannel, {
         error,

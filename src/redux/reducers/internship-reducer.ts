@@ -6,7 +6,7 @@ import {
   LOAD_INTERNSHIPS_FAILURE,
 } from "../actions/internship-actions";
 
-interface IInternshipState {
+export interface IInternshipState {
   interns: IInternship[];
   loading: boolean;
   error?: any;
