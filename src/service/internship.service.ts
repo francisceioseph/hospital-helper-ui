@@ -12,14 +12,14 @@ export class InternshipService {
     return this.ipcService.send(channel, backChannel, null);
   }
 
-  updateBed(id: number, bedId: number): Promise<IIPCResponse<any>> {
-    const channel = Constants.INTERNSHIP.UPDATE_BED_CHANNEL;
-    const backChannel = Constants.INTERNSHIP.UPDATE_BED_CHANNEL_RESPONSE;
-    const data = {
+  update(id: number, data: any): Promise<IIPCResponse<any>> {
+    const channel = Constants.INTERNSHIP.UPDATE_CHANNEL;
+    const backChannel = Constants.INTERNSHIP.UPDATE_CHANNEL_RESPONSE;
+    const args = {
       id,
-      data: { bedId },
+      data,
     };
 
-    return this.ipcService.send(channel, backChannel, data);
+    return this.ipcService.send(channel, backChannel, args);
   }
 }

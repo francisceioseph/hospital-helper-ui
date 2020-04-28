@@ -7,10 +7,7 @@ const ipcMain = electron.ipcMain;
 
 const initInternshipsIPC = () => {
   ipcMain.on(constants.INTERNSHIP.LIST_INTERNISHIPS, InternshipController.list);
-  ipcMain.on(
-    constants.INTERNSHIP.UPDATE_BED_CHANNEL,
-    InternshipController.updateBed
-  );
+  ipcMain.on(constants.INTERNSHIP.UPDATE_CHANNEL, InternshipController.update);
 };
 
 module.exports = initInternshipsIPC;

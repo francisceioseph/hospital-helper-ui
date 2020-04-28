@@ -27,19 +27,23 @@ class InternshipController {
     }
   }
 
-  static async updateBed(event, args) {
+  static async update(event, args) {
     const { data, id } = args;
-    const replayChannel = IPCConstants.INTERNSHIP.UPDATE_BED_CHANNEL_RESPONSE;
+    const replayChannel = IPCConstants.INTERNSHIP.UPDATE_CHANNEL_RESPONSE;
 
     try {
+      await Internship.update(data, {
+        where: {
+          id: id,
+        },
+      });
+
       const internship = await Internship.findOne({
         where: {
           id: id,
         },
       });
 
-      internship.bedId = data.bedId;
-      await internship.save();
       event.reply(replayChannel, { data: internship });
     } catch (error) {
       event.reply(replayChannel, {
