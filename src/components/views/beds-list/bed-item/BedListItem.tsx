@@ -1,4 +1,5 @@
 import React, { FC, useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { Card } from "@uifabric/react-cards";
 import {
   Text,
@@ -17,14 +18,16 @@ import {
 import { cardTokens, footerCardSectionTokens } from "./BedListItem.tokens";
 import { ChangeBedDialog } from "../change-bed/change-bed";
 import { InternshipService } from "../../../../service/internship.service";
+import { loadInternships } from "../../../../redux/actions/internship-actions";
 
 interface IBedListItemProps {
   internship: IInternship;
 }
 
 export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
-  const [showMoreMenu, setShowMoreMenu] = useState(true);
+  const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [showChangeBedDialog, setShowChangeBedDialog] = useState(false);
+  const dispatch = useDispatch();
 
   const menuItems: IContextualMenuItem[] = [
     {
@@ -48,6 +51,7 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
 
     internshipService.updateBed(internship.id, newBedId).then(() => {
       setShowChangeBedDialog(false);
+      dispatch(loadInternships());
     });
   };
 

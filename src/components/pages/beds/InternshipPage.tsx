@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { BedsList } from "../../views/beds-list/BedsList";
 import {
   Stack,
@@ -8,6 +8,12 @@ import {
   IStackStyles,
 } from "@fluentui/react";
 import { InternshipService } from "../../../service/internship.service";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  loadInternships,
+  loadInternshipsSuccess,
+  loadInternshipsFailure,
+} from "../../../redux/actions/internship-actions";
 
 export const internshipRoute = "/auth/internship";
 
@@ -22,7 +28,11 @@ const titleStyles: IStackItemStyles = {
 };
 
 export const InternshipPage: React.FC = () => {
-  const [interns, setInterns] = useState<Array<any>>([]);
+  const { interns, loading } = useSelector((state: any) => state.internships);
+  const dispatch = useDispatch();
+
+  const isLoading = useCallback(() => loading === true, [loading]);
+
   const stackStyles: IStackStyles = {
     root: {
       width: "100%",
@@ -33,13 +43,16 @@ export const InternshipPage: React.FC = () => {
     const internshipService = new InternshipService();
 
     const fetchInterns = async () => {
-      const { data: interns } = await internshipService.list();
-      console.log(interns);
-      setInterns(interns || []);
+      try {
+        const { data } = await internshipService.list();
+        dispatch(loadInternshipsSuccess({ data }));
+      } catch (error) {
+        dispatch(loadInternshipsFailure({ error }));
+      }
     };
 
     fetchInterns();
-  }, []);
+  }, [dispatch, isLoading]);
 
   return (
     <Stack verticalFill styles={stackStyles}>
