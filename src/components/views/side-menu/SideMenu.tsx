@@ -6,6 +6,7 @@ import { internshipRoute } from "../../pages/beds/InternshipPage";
 import { homeRoute } from "../../pages/home/home";
 import { Constants } from "../../../constants/constants";
 import { addPacientRoute } from "../../pages/pacient/AddPacientPage";
+import { pacientListRouteName } from "../../pages/pacient/PacientListPage";
 
 export const SideMenu: React.FC = () => {
   const navStyles: Partial<INavStyles> = {
@@ -50,6 +51,10 @@ export const SideMenu: React.FC = () => {
       }
       case Constants.kNewPacientRouteKey: {
         history.push(addPacientRoute);
+        break;
+      }
+      case Constants.kSearchPacientRouteKey: {
+        history.push(pacientListRouteName);
         break;
       }
       default: {

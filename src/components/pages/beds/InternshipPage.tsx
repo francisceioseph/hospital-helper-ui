@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import { BedsList } from "../../views/beds-list/BedsList";
 import {
   Stack,
@@ -10,7 +10,6 @@ import {
 import { InternshipService } from "../../../service/internship.service";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  loadInternships,
   loadInternshipsSuccess,
   loadInternshipsFailure,
 } from "../../../redux/actions/internship-actions";

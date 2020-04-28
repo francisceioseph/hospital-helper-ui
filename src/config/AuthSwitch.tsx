@@ -12,6 +12,10 @@ import {
   addPacientRoute,
   AddPacientPage,
 } from "../components/pages/pacient/AddPacientPage";
+import {
+  pacientListRouteName,
+  PacientPageList,
+} from "../components/pages/pacient/PacientListPage";
 
 export const AuthSwitch: FC = () => {
   return (
@@ -26,6 +30,7 @@ export const AuthSwitch: FC = () => {
       <Switch>
         <Route exact path={homeRoute} component={HomePage} />
         <Route exact path={internshipRoute} component={InternshipPage} />
+        <Route exact path={pacientListRouteName} component={PacientPageList} />
         <Route exact path={addPacientRoute} component={AddPacientPage} />
       </Switch>
     </Stack>
