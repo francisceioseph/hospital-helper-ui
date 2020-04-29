@@ -8,6 +8,7 @@ import {
   StackItem,
   ContextualMenu,
   IContextualMenuItem,
+  TooltipHost,
 } from "@fluentui/react";
 import { IInternship } from "../../../../types/models/internship.interface";
 import {
@@ -87,19 +88,25 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
           styles={footerCardSectionStyles}
           tokens={footerCardSectionTokens}
         >
-          <Icon iconName="RedEye" styles={iconStyles} />
-          <Icon iconName="SingleBookmark" styles={iconStyles} />
+          <TooltipHost content="Visualizar Detalhes" id="visualizar-detalhes">
+            <Icon iconName="RedEye" styles={iconStyles} />
+          </TooltipHost>
+          <TooltipHost content="Evolução" id="tooltip-evolucao">
+            <Icon iconName="Health" styles={iconStyles} />
+          </TooltipHost>
           <Stack.Item grow>
             <span />
           </Stack.Item>
 
-          <div ref={moreIconRef}>
-            <Icon
-              iconName="MoreVertical"
-              styles={iconStyles}
-              onClick={() => setShowMoreMenu(true)}
-            ></Icon>
-          </div>
+          <TooltipHost content="Mais" id="tooltip-more">
+            <div ref={moreIconRef}>
+              <Icon
+                iconName="MoreVertical"
+                styles={iconStyles}
+                onClick={() => setShowMoreMenu(true)}
+              ></Icon>
+            </div>
+          </TooltipHost>
           <ContextualMenu
             target={moreIconRef}
             items={menuItems}
