@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./components/app/App";
 import * as serviceWorker from "./serviceWorker";
 import { initializeIcons } from "@uifabric/icons";
+
+import "./index.css";
 
 initializeIcons();
 

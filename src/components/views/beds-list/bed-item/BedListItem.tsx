@@ -21,6 +21,7 @@ import { ChangeBedDialog } from "../change-bed/change-bed";
 import { InternshipService } from "../../../../service/internship.service";
 import { loadInternships } from "../../../../redux/actions/internship-actions";
 import { ConfirmDialog } from "../../confirm-dialog/confirm-dialog";
+import { useHistory } from "react-router";
 
 interface IBedListItemProps {
   internship: IInternship;
@@ -34,6 +35,7 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const menuItems: IContextualMenuItem[] = [
     {
@@ -76,6 +78,13 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
     });
   };
 
+  const handleEvolutionClick = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+    history.push(`/auth/internship/${internship.id}/evolution`);
+  };
+
   return (
     <StackItem styles={rootStackItemStyles}>
       <Card tokens={cardTokens}>
@@ -92,7 +101,11 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
             <Icon iconName="RedEye" styles={iconStyles} />
           </TooltipHost>
           <TooltipHost content="Evolução" id="tooltip-evolucao">
-            <Icon iconName="Health" styles={iconStyles} />
+            <Icon
+              iconName="Chart"
+              styles={iconStyles}
+              onClick={handleEvolutionClick}
+            />
           </TooltipHost>
           <Stack.Item grow>
             <span />

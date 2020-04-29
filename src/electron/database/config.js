@@ -5,6 +5,7 @@ const Sequelize = require("sequelize");
 const Internship = require("./models/internship.model");
 const Pacient = require("./models/pacient.model");
 const Bed = require("./models/bed.model");
+const Evolution = require("./models/evolution.model");
 
 const dbPath = path.resolve(os.homedir(), "hospital_helper_database.sqlite3");
 
@@ -19,6 +20,7 @@ const db = {
   Pacient: Pacient(sequelize, Sequelize),
   Bed: Bed(sequelize, Sequelize),
   Internship: Internship(sequelize, Sequelize),
+  Evolution: Evolution(sequelize, Sequelize),
 };
 
 // Set all the models associassions

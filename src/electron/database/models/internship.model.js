@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
   Internship.associate = (models) => {
     Internship.Bed = Internship.belongsTo(models.Bed);
     Internship.Pacient = Internship.belongsTo(models.Pacient);
+    Internship.Evolutions = Internship.hasMany(models.Evolution);
   };
 
   return Internship;

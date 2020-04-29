@@ -32,7 +32,7 @@ export const menuItems: INavLinkGroup[] = [
     links: [
       {
         key: Constants.kInternshipRouteKey,
-        name: "Pacientes",
+        name: "Pacientes Internados",
         url: "",
       },
     ],
