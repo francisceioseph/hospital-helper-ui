@@ -4,6 +4,10 @@ import {
   SelectionMode,
   DetailsListLayoutMode,
   IColumn,
+  Stack,
+  TextField,
+  StackItem,
+  IStackItemStyles,
 } from "@fluentui/react";
 import { IPacient } from "../../../types/models/pacient.interface";
 
@@ -15,6 +19,13 @@ interface IPacientTableState {
   items: IPacient[];
   columns: IColumn[];
 }
+
+const searchFieldStyles: IStackItemStyles = {
+  root: {
+    margin: 8,
+    width: "33%",
+  },
+};
 
 export class PacientTable extends Component<
   IPacientTableProps,
@@ -80,26 +91,52 @@ export class PacientTable extends Component<
   }
 
   componentWillReceiveProps(nextProps: IPacientTableProps) {
-    if (nextProps.pacients.length !== this.props.pacients.length) {
+    if (nextProps.pacients.length !== this.state.items.length) {
       this.setState({ items: copyAndSort(nextProps.pacients, true) });
     }
   }
 
   render() {
     return (
-      <DetailsList
-        items={this.state.items}
-        columns={this.state.columns}
-        getKey={this.getKey}
-        setKey="none"
-        selectionMode={SelectionMode.none}
-        layoutMode={DetailsListLayoutMode.justified}
-        compact
-        isHeaderVisible
-        //   onItemInvoked={this._onItemInvoked}
-      />
+      <Stack>
+        <Stack horizontal>
+          <StackItem styles={searchFieldStyles}>
+            <TextField
+              label="Pesquisar pelo nome"
+              onChange={this.onSearchItemChange}
+            />
+          </StackItem>
+        </Stack>
+        <DetailsList
+          items={this.state.items}
+          columns={this.state.columns}
+          getKey={this.getKey}
+          setKey="none"
+          selectionMode={SelectionMode.none}
+          layoutMode={DetailsListLayoutMode.justified}
+          compact
+          isHeaderVisible
+        />
+      </Stack>
     );
   }
+
+  onSearchItemChange = (
+    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+    value?: string | undefined
+  ) => {
+    if (value === undefined) {
+      this.setState({ items: copyAndSort(this.props.pacients, true) });
+    } else if (value.length === 0) {
+      this.setState({ items: copyAndSort(this.props.pacients, true) });
+    } else {
+      const items = this.state.items.filter((p) =>
+        p.fullName.toLowerCase().includes(value.toLowerCase())
+      );
+
+      this.setState({ items });
+    }
+  };
 
   onColumnClick = (ev: React.MouseEvent<HTMLElement>, column: IColumn) => {
     const { columns, items } = this.state;
