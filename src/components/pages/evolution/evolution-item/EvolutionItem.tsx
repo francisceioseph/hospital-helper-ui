@@ -1,11 +1,16 @@
 import React, { FC } from "react";
-import { ActivityItem, Icon, mergeStyleSets } from "@fluentui/react";
-import { IEvolution } from "../../../../types/models/evolution.interface";
-import { EvolutionTitle } from "./EvolutionTitle";
-
 import Moment from "react-moment";
 import "moment/locale/pt-br";
 import "moment-timezone";
+
+import { ActivityItem, mergeStyleSets, Image, Text } from "@fluentui/react";
+import { IEvolution } from "../../../../types/models/evolution.interface";
+import { EvolutionTitle } from "./EvolutionTitle";
+
+import nurseIcon from "../../../images/icons/enfermagem.png";
+import fisioIcon from "../../../images/icons/fisioterapia.png";
+import doctorIcon from "../../../images/icons/medico.png";
+import unknownIcon from "../../../images/icons/desconhecido.png";
 
 interface IEvolutionItemProps {
   evolution: IEvolution;
@@ -27,17 +32,32 @@ const classNames = mergeStyleSets({
   },
 });
 
+const getIcon = (type: "medico" | "enfermagem" | "fisioterapia") => {
+  switch (type) {
+    case "medico":
+      return doctorIcon;
+    case "enfermagem":
+      return nurseIcon;
+    case "fisioterapia":
+      return fisioIcon;
+    default:
+      return unknownIcon;
+  }
+};
+
 export const EvolutionItem: FC<IEvolutionItemProps> = ({ evolution }) => {
   const item = {
     key: evolution.id,
     activityDescription: [<EvolutionTitle evolution={evolution} />],
-    comments: [<span>{evolution.text}</span>],
-    activityIcon: <Icon iconName={"EntitlementRedemption"} />,
+    comments: [<Text variant="mediumPlus">{evolution.text}</Text>],
+    activityIcon: (
+      <Image src={getIcon(evolution.type)} width={50} height={50} />
+    ),
     timeStamp: (
       <div className={classNames.timestampContainer}>
-        <span className={classNames.timestamp}>
+        <Text variant="medium" className={classNames.timestamp}>
           <Moment fromNow date={evolution.createdAt} />
-        </span>
+        </Text>
       </div>
     ),
   };

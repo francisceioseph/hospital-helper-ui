@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { mergeStyleSets, Stack, StackItem } from "@fluentui/react";
+import { mergeStyleSets, Text } from "@fluentui/react";
 import { IEvolution } from "../../../../types/models/evolution.interface";
 
 import Moment from "react-moment";
@@ -24,15 +24,6 @@ export const EvolutionTitle: FC<IEvolutionItemProps> = ({ evolution }) => {
     subtitle: {
       fontWeight: "bold",
     },
-
-    date: {
-      backgroundColor: "blue",
-      color: "white",
-      border: "1px solid blue",
-      borderRadius: 4,
-      padding: 2,
-      marginLeft: 8,
-    },
   });
 
   switch (evolution.type) {
@@ -56,13 +47,14 @@ export const EvolutionTitle: FC<IEvolutionItemProps> = ({ evolution }) => {
   return (
     <div className={classes.root}>
       <div>
-        <span className={classes.title}>{title}</span>
-        <span className={classes.date}>
-          <Moment format="DD/MM/YYYY" date={evolution.createdAt} />
-        </span>
+        <Text variant="mediumPlus" className={classes.title}>
+          {title}
+        </Text>
       </div>
       <div>
-        <span className={classes.subtitle}>{evolution.author}</span>
+        <Text variant="mediumPlus" className={classes.subtitle}>
+          {evolution.author}
+        </Text>
       </div>
     </div>
   );
