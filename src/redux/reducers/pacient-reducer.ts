@@ -13,11 +13,11 @@ const comparePacientAsc = (previous: IPacient, current: IPacient): number => {
   const currentName = current.fullName.toLowerCase();
   const previousName = previous.fullName.toLowerCase();
 
-  if (currentName < previousName) {
+  if (previousName < currentName) {
     return -1;
   }
 
-  if (currentName > previousName) {
+  if (previousName > currentName) {
     return 1;
   }
 
@@ -28,11 +28,11 @@ const comparePacientDesc = (previous: IPacient, current: IPacient): number => {
   const currentName = current.fullName.toLowerCase();
   const previousName = previous.fullName.toLowerCase();
 
-  if (currentName > previousName) {
+  if (previousName > currentName) {
     return -1;
   }
 
-  if (currentName < previousName) {
+  if (previousName < currentName) {
     return 1;
   }
 

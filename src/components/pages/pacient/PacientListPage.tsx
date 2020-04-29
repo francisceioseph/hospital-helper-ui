@@ -1,7 +1,6 @@
 import React, { FC, useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { PacientTable } from "../../views/pacients-table/PacientTable";
-import { IAppState } from "../../../redux/reducers";
 import { PacientService } from "../../../service/pacient.service";
 import {
   loadPacientsSuccess,
@@ -14,6 +13,7 @@ import {
   Text,
   IStackStyles,
 } from "@fluentui/react";
+import { IAppState } from "../../../types/state/app-state.interface";
 
 export const pacientListRouteName = "/auth/pacients";
 
