@@ -1,6 +1,8 @@
 export const LOAD_PACIENTS = "LOAD_PACIENTS";
 export const LOAD_PACIENTS_SUCESS = "LOAD_PACIENTS_SUCESS";
 export const LOAD_PACIENTS_FAILURE = "LOAD_PACIENTS_FAILURE";
+export const SORT_PACIENT_LIST_ASC = "SORT_PACIENT_LIST_ASC";
+export const SORT_PACIENT_LIST_DESC = "SORT_PACIENT_LIST_DESC";
 
 export const loadPacients = () => ({
   type: LOAD_PACIENTS,
@@ -18,4 +20,12 @@ export const loadPacientsFailure = (content: any) => ({
   payload: {
     error: content.error,
   },
+});
+
+export const sortPacientListAsc = () => ({
+  type: SORT_PACIENT_LIST_ASC,
+});
+
+export const sortPacientListDesc = () => ({
+  type: SORT_PACIENT_LIST_DESC,
 });

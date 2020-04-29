@@ -1,16 +1,43 @@
-import { Pacient } from "../../models/pacient";
 import { SimpleAction } from "../../types/simple-action.interface";
 import {
   LOAD_PACIENTS,
   LOAD_PACIENTS_SUCESS,
   LOAD_PACIENTS_FAILURE,
+  SORT_PACIENT_LIST_DESC,
+  SORT_PACIENT_LIST_ASC,
 } from "../actions/pacient-actions";
+import { IPacient } from "../../types/models/pacient.interface";
+import { IPacientState } from "../../types/state/pacient-state.interface";
 
-export interface IPacientState {
-  loading: boolean;
-  pacients: Pacient[];
-  error: any;
-}
+const comparePacientAsc = (previous: IPacient, current: IPacient): number => {
+  const currentName = current.fullName.toLowerCase();
+  const previousName = previous.fullName.toLowerCase();
+
+  if (currentName < previousName) {
+    return -1;
+  }
+
+  if (currentName > previousName) {
+    return 1;
+  }
+
+  return 0;
+};
+
+const comparePacientDesc = (previous: IPacient, current: IPacient): number => {
+  const currentName = current.fullName.toLowerCase();
+  const previousName = previous.fullName.toLowerCase();
+
+  if (currentName > previousName) {
+    return -1;
+  }
+
+  if (currentName < previousName) {
+    return 1;
+  }
+
+  return 0;
+};
 
 const initialState: IPacientState = {
   pacients: [],
@@ -43,6 +70,19 @@ export const pacientsReducer = (
         loading: false,
         pacients: [],
         error: action.payload.error,
+      };
+    }
+    case SORT_PACIENT_LIST_ASC: {
+      return {
+        ...state,
+        pacients: state.pacients.sort(comparePacientAsc),
+      };
+    }
+
+    case SORT_PACIENT_LIST_DESC: {
+      return {
+        ...state,
+        pacients: state.pacients.sort(comparePacientDesc),
       };
     }
     default:

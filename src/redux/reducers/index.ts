@@ -1,11 +1,6 @@
 import { combineReducers } from "redux";
-import { internshipReducer, IInternshipState } from "./internship-reducer";
-import { pacientsReducer, IPacientState } from "./pacient-reducer";
-
-export interface IAppState {
-  internships: IInternshipState;
-  pacients: IPacientState;
-}
+import { internshipReducer } from "./internship-reducer";
+import { pacientsReducer } from "./pacient-reducer";
 
 export const rootReducer = combineReducers({
   internships: internshipReducer,

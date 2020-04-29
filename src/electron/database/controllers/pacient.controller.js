@@ -30,7 +30,9 @@ class PacientController {
     const replayChannel = IPCConstants.PACIENT.LIST_RESPONSE_CHANNEL;
 
     try {
-      const query = await Pacient.findAll();
+      const query = await Pacient.findAll({
+        order: [["fullName", "ASC"]],
+      });
       const pacients = query.map((result) => result.toJSON());
 
       event.reply(replayChannel, { data: pacients });

@@ -1,16 +1,10 @@
-import { IInternship } from "../../types/internship.interface";
 import { SimpleAction } from "../../types/simple-action.interface";
 import {
   LOAD_INTERNSHIPS,
   LOAD_INTERNSHIPS_SUCCESS,
   LOAD_INTERNSHIPS_FAILURE,
 } from "../actions/internship-actions";
-
-export interface IInternshipState {
-  interns: IInternship[];
-  loading: boolean;
-  error?: any;
-}
+import { IInternshipState } from "../../types/state/internship-state.interface";
 
 const initialState: IInternshipState = {
   interns: [],

@@ -50,7 +50,7 @@ export const PacientPageList: FC = () => {
         const { data } = await pacientService.listPacient();
         dispatch(loadPacientsSuccess({ data }));
       } catch (error) {
-        dispatch(loadPacientsFailure);
+        dispatch(loadPacientsFailure(error));
       }
     };
 

@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
-import { IInternship } from "../../../../types/internship.interface";
+import { IInternship } from "../../../../types/models/internship.interface";
 import {
   Dialog,
   DialogType,

@@ -5,10 +5,10 @@ import {
   DetailsListLayoutMode,
   IColumn,
 } from "@fluentui/react";
-import { Pacient } from "../../../models/pacient";
+import { IPacient } from "../../../types/models/pacient.interface";
 
 interface IPacientTable {
-  pacients: Pacient[];
+  pacients: IPacient[];
 }
 
 export const PacientTable: FC<IPacientTable> = ({ pacients }) => {
