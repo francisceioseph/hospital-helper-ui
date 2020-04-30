@@ -1,19 +1,32 @@
-import React, { FC, useState, useEffect } from "react";
-import { Stack, IContextualMenuItem } from "@fluentui/react";
-import { IInternship } from "../../../types/models/internship.interface";
+import React, { FC, useEffect, useCallback, useReducer } from "react";
+import { Stack } from "@fluentui/react";
 import { InternshipService } from "../../../service/internship.service";
 import { useParams } from "react-router";
-import { EvolutionList } from "./evolution-list/EvolutionList";
-import { EvolutionTitle } from "./evolution-title/evolution-title";
-import { EvolutionListPlaceholder } from "./evolution-list/EvolutionListPlaceholder";
-import { EvolutionFormDialog } from "./evolution-form/EvolutionFormDialog";
+import { EvolutionList } from "../../views/evolution-list/EvolutionList";
+import { EvolutionTitle } from "../../views/evolution-title/evolution-title";
+import { EvolutionListPlaceholder } from "../../views/evolution-list/EvolutionListPlaceholder";
+import { EvolutionFormDialog } from "../../views/evolution-form/EvolutionFormDialog";
+import { IEvolutionPageState } from "../../../types/state/pacient-page-state.interface";
+import {
+  evolutionPageReducer,
+  setReload,
+  setShowDialog,
+  setInternship,
+} from "./evolution-reducer";
+
+const initialState: IEvolutionPageState = {
+  reload: false,
+  showDialog: false,
+};
 
 export const pacientEvolutionRoute = "/auth/internship/:id/evolution";
 
 export const PacientEvolutionPage: FC = () => {
   const { id } = useParams();
-  const [internship, setInternship] = useState<IInternship>();
-  const [showDialog, setShowDialog] = useState<boolean>(false);
+
+  const [state, dispatch] = useReducer(evolutionPageReducer, initialState);
+
+  const reloadMemo = useCallback(() => state.reload === true, [state.reload]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -23,44 +36,42 @@ export const PacientEvolutionPage: FC = () => {
           parseInt(id!)
         );
 
-        setInternship(internship);
+        dispatch(setInternship(internship));
+        dispatch(setReload(false));
       } catch (error) {
-        setInternship(undefined);
+        dispatch(setInternship(undefined));
       }
     };
 
     loadData();
-  }, [id]);
+  }, [id, reloadMemo]);
 
-  const closeModalHandler = () => {
-    setShowDialog(false);
+  const closeModalHandler = (reload?: boolean) => {
+    if (reload) {
+      dispatch(setReload(true));
+    }
+    dispatch(setShowDialog(false));
   };
 
-  const addEvolutionClickHandler = (
-    ev?:
-      | React.MouseEvent<HTMLElement, MouseEvent>
-      | React.KeyboardEvent<HTMLElement>
-      | undefined,
-    item?: IContextualMenuItem | undefined
-  ): boolean => {
-    setShowDialog(true);
+  const addEvolutionClickHandler = (): boolean => {
+    dispatch(setShowDialog(true));
     return true;
   };
 
   return (
     <Stack grow verticalFill>
       <EvolutionTitle
-        internship={internship!}
+        internship={state.internship!}
         addEvolutionClick={addEvolutionClickHandler}
       />
-      {internship?.Evolution?.length ? (
-        <EvolutionList internship={internship!} />
+      {state.internship?.Evolution?.length ? (
+        <EvolutionList internship={state.internship!} />
       ) : (
         <EvolutionListPlaceholder />
       )}
       <EvolutionFormDialog
-        showDialog={showDialog}
-        internship={internship!}
+        showDialog={state.showDialog}
+        internship={state.internship!}
         onCloseCallback={closeModalHandler}
       />
     </Stack>

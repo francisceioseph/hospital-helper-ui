@@ -11,9 +11,9 @@ import {
   Separator,
   mergeStyleSets,
 } from "@fluentui/react";
-import { IInternship } from "../../../../types/models/internship.interface";
+import { IInternship } from "../../../types/models/internship.interface";
 import { EvolutionItem } from "../evolution-item/EvolutionItem";
-import { IEvolution } from "../../../../types/models/evolution.interface";
+import { IEvolution } from "../../../types/models/evolution.interface";
 import Moment from "react-moment";
 
 interface IEvolutionListProps {

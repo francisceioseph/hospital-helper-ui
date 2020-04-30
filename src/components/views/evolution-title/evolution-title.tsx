@@ -10,9 +10,9 @@ import {
   ICommandBarItemProps,
   IContextualMenuItem,
 } from "@fluentui/react";
-import { internshipRoute } from "../../beds/InternshipPage";
+import { internshipRoute } from "../../pages/beds/InternshipPage";
 import { useHistory } from "react-router";
-import { IInternship } from "../../../../types/models/internship.interface";
+import { IInternship } from "../../../types/models/internship.interface";
 
 interface IEvolutionTitleProps {
   internship?: IInternship;

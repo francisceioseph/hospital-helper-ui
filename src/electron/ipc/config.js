@@ -2,6 +2,7 @@ const events = require("events");
 const database = require("../database/config");
 
 const initPacientIPC = require("./channels/pacient.channel");
+const initEvolutionIPC = require("./channels/evolution.channel");
 const initInternshipsIPC = require("./channels/internship.channel");
 const initBedIPC = require("./channels/bed.channel");
 
@@ -16,6 +17,7 @@ const initIPC = () => {
       initBedIPC();
       initPacientIPC();
       initInternshipsIPC();
+      initEvolutionIPC();
     })
     .catch((error) => console.log(error));
 };

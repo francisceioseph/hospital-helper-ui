@@ -11,12 +11,12 @@ import {
   ITextStyles,
 } from "@fluentui/react";
 import { EvolutionForm } from "./EvolutionForm";
-import { IInternship } from "../../../../types/models/internship.interface";
+import { IInternship } from "../../../types/models/internship.interface";
 
 interface IEvolutionFormDialog {
   showDialog: boolean;
   internship: IInternship;
-  onCloseCallback: () => void;
+  onCloseCallback: (reload?: boolean) => void;
 }
 
 const stackHeaderStyles: IStackStyles = {
@@ -43,7 +43,7 @@ export const EvolutionFormDialog: FC<IEvolutionFormDialog> = ({
   onCloseCallback,
 }) => {
   const onSubmitClickHandler = () => {
-    onCloseCallback();
+    onCloseCallback(true);
   };
 
   const onCancelClickHandler = (ev: React.MouseEvent<HTMLDivElement>) => {

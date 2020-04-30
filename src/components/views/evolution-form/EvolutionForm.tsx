@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { IInternship } from "../../../../types/models/internship.interface";
+import { IInternship } from "../../../types/models/internship.interface";
 import {
   Stack,
   StackItem,
@@ -12,6 +12,8 @@ import {
   IStackTokens,
   IDropdownOption,
 } from "@fluentui/react";
+import { EvolutionService } from "../../../service/evolution.service";
+import { IEvolution } from "../../../types/models/evolution.interface";
 
 interface IEvolutionFormProps {
   internship: IInternship;
@@ -35,6 +37,7 @@ const footerStackTokens: IStackTokens = {
 };
 
 export const EvolutionForm: FC<IEvolutionFormProps> = ({
+  internship,
   onCancelClick,
   onSubmitClick,
 }) => {
@@ -46,9 +49,21 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
     { key: "fisioterapia", text: "Evolução da Fisioterapia" },
   ];
 
-  const handleSubmitCallback = (data: any) => {
-    console.log(data);
-    onSubmitClick();
+  const handleSubmitCallback = async (data: any) => {
+    const service: EvolutionService = new EvolutionService();
+
+    try {
+      const evolutionData: IEvolution = {
+        ...data,
+        internshipId: internship.id,
+      };
+
+      await service.createEvolution(evolutionData);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      onSubmitClick();
+    }
   };
 
   const handleDropdownChange = (

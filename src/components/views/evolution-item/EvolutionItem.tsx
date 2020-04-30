@@ -4,13 +4,13 @@ import "moment/locale/pt-br";
 import "moment-timezone";
 
 import { ActivityItem, mergeStyleSets, Image, Text } from "@fluentui/react";
-import { IEvolution } from "../../../../types/models/evolution.interface";
+import { IEvolution } from "../../../types/models/evolution.interface";
 import { EvolutionTitle } from "./EvolutionTitle";
 
-import nurseIcon from "../../../images/icons/enfermagem.png";
-import fisioIcon from "../../../images/icons/fisioterapia.png";
-import doctorIcon from "../../../images/icons/medico.png";
-import unknownIcon from "../../../images/icons/desconhecido.png";
+import nurseIcon from "../../images/icons/enfermagem.png";
+import fisioIcon from "../../images/icons/fisioterapia.png";
+import doctorIcon from "../../images/icons/medico.png";
+import unknownIcon from "../../images/icons/desconhecido.png";
 
 interface IEvolutionItemProps {
   evolution: IEvolution;
@@ -56,7 +56,7 @@ export const EvolutionItem: FC<IEvolutionItemProps> = ({ evolution }) => {
     timeStamp: (
       <div className={classNames.timestampContainer}>
         <Text variant="medium" className={classNames.timestamp}>
-          <Moment fromNow date={evolution.createdAt} />
+          <Moment locale="pt-br" fromNow date={evolution.createdAt} />
         </Text>
       </div>
     ),
