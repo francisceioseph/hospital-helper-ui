@@ -22,6 +22,7 @@ import { InternshipService } from "../../../../service/internship.service";
 import { loadInternships } from "../../../../redux/actions/internship-actions";
 import { ConfirmDialog } from "../../confirm-dialog/confirm-dialog";
 import { useHistory } from "react-router";
+import { getPacientDetailsRoute } from "../../../pages/pacient/PacientDetailsPage";
 
 interface IBedListItemProps {
   internship: IInternship;
@@ -85,6 +86,13 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
     history.push(`/auth/internship/${internship.id}/evolution`);
   };
 
+  const viewDetailsClickHandler = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+    history.push(getPacientDetailsRoute(internship.pacientId));
+  };
+
   return (
     <StackItem styles={rootStackItemStyles}>
       <Card tokens={cardTokens}>
@@ -98,7 +106,11 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
           tokens={footerCardSectionTokens}
         >
           <TooltipHost content="Visualizar Detalhes" id="visualizar-detalhes">
-            <Icon iconName="RedEye" styles={iconStyles} />
+            <Icon
+              iconName="RedEye"
+              styles={iconStyles}
+              onClick={viewDetailsClickHandler}
+            />
           </TooltipHost>
           <TooltipHost content="Evolução" id="tooltip-evolucao">
             <Icon

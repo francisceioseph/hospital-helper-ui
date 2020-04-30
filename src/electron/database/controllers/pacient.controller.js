@@ -45,11 +45,12 @@ class PacientController {
   }
 
   static async show(event, args) {
+    const { id } = args;
     const replayChannel = IPCConstants.PACIENT.SHOW_RESPONSE_CHANNEL;
 
     try {
       const pacient = await Pacient.findOne({
-        where: { id: args.data.id },
+        where: { id: id },
       });
 
       event.reply(replayChannel, { data: pacient.toJSON() });
@@ -62,11 +63,12 @@ class PacientController {
   }
 
   static async update(event, args) {
+    const { data, id } = args;
     const replayChannel = IPCConstants.PACIENT.UPDATE_RESPONSE_CHANNEL;
 
     try {
-      const pacient = await Pacient.update(args.data, {
-        where: { id: args.data.id },
+      const pacient = await Pacient.update(data, {
+        where: { id: id },
         returning: true,
       });
       event.reply(replayChannel, { data: pacient.toJSON() });
@@ -79,11 +81,12 @@ class PacientController {
   }
 
   static async destroy(event, args) {
+    const { id } = args;
     const replayChannel = IPCConstants.PACIENT.DESTROY_RESPONSE_CHANNEL;
 
     try {
       await Pacient.destroy({
-        where: args.data.id,
+        where: id,
       });
 
       event.reply(replayChannel, { data: {} });
