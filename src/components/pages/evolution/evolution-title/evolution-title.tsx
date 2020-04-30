@@ -8,6 +8,7 @@ import {
   CommandBar,
   IStackItemStyles,
   ICommandBarItemProps,
+  IContextualMenuItem,
 } from "@fluentui/react";
 import { internshipRoute } from "../../beds/InternshipPage";
 import { useHistory } from "react-router";
@@ -15,6 +16,13 @@ import { IInternship } from "../../../../types/models/internship.interface";
 
 interface IEvolutionTitleProps {
   internship?: IInternship;
+  addEvolutionClick: (
+    ev?:
+      | React.MouseEvent<HTMLElement, MouseEvent>
+      | React.KeyboardEvent<HTMLElement>
+      | undefined,
+    item?: IContextualMenuItem | undefined
+  ) => boolean;
 }
 
 const titleStyles: IStackItemStyles = {
@@ -27,7 +35,10 @@ const titleStyles: IStackItemStyles = {
   },
 };
 
-export const EvolutionTitle: FC<IEvolutionTitleProps> = ({ internship }) => {
+export const EvolutionTitle: FC<IEvolutionTitleProps> = ({
+  internship,
+  addEvolutionClick,
+}) => {
   const history = useHistory();
 
   const commandItems: ICommandBarItemProps[] = [
@@ -35,6 +46,7 @@ export const EvolutionTitle: FC<IEvolutionTitleProps> = ({ internship }) => {
       key: "add-evolution",
       text: "Nova Evolução",
       iconProps: { iconName: "Add" },
+      onClick: addEvolutionClick,
     },
   ];
 

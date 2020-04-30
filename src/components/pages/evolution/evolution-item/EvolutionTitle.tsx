@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { mergeStyleSets, Text } from "@fluentui/react";
 import { IEvolution } from "../../../../types/models/evolution.interface";
 
-import Moment from "react-moment";
 import "moment/locale/pt-br";
 import "moment-timezone";
 
