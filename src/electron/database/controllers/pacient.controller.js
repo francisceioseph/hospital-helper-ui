@@ -1,5 +1,6 @@
 const IPCConstants = require("../../ipc/constants");
 const { Pacient, Internship } = require("../config");
+const toSearchRegex = require("../../utils/toSearchRegex");
 
 class PacientController {
   static async create(event, args) {
@@ -36,6 +37,30 @@ class PacientController {
         order: [["fullName", "ASC"]],
       });
       const pacients = query.map((result) => result.toJSON());
+
+      event.reply(replayChannel, { data: pacients });
+    } catch (error) {
+      event.reply(replayChannel, {
+        error,
+        data: null,
+      });
+    }
+  }
+
+  static async search(event, args) {
+    const { fieldName, value } = args;
+    const replayChannel = IPCConstants.PACIENT.SEARCH_RESPONSE_CHANNEL;
+
+    const regex = toSearchRegex(value);
+
+    try {
+      const query = await Pacient.findAll({
+        order: [["fullName", "ASC"]],
+      });
+
+      const pacients = query
+        .map((result) => result.toJSON())
+        .filter((result) => result[fieldName].match(regex));
 
       event.reply(replayChannel, { data: pacients });
     } catch (error) {

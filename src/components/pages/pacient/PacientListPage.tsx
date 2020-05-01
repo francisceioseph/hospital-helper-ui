@@ -1,11 +1,5 @@
-import React, { FC, useCallback, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { FC } from "react";
 import { PacientTable } from "../../views/pacients-table/PacientTable";
-import { PacientService } from "../../../service/pacient.service";
-import {
-  loadPacientsSuccess,
-  loadPacientsFailure,
-} from "../../../redux/actions/pacient-actions";
 import {
   Stack,
   StackItem,
@@ -13,7 +7,6 @@ import {
   Text,
   IStackStyles,
 } from "@fluentui/react";
-import { IAppState } from "../../../types/state/app-state.interface";
 
 export const pacientListRouteName = "/auth/pacients";
 
@@ -34,36 +27,13 @@ const stackStyles: IStackStyles = {
 };
 
 export const PacientPageList: FC = () => {
-  const { pacients, loading } = useSelector(
-    (state: IAppState) => state.pacients
-  );
-
-  const dispatch = useDispatch();
-
-  const isLoading = useCallback(() => loading === true, [loading]);
-
-  useEffect(() => {
-    const pacientService = new PacientService();
-
-    const loadPacients = async () => {
-      try {
-        const { data } = await pacientService.listPacient();
-        dispatch(loadPacientsSuccess({ data }));
-      } catch (error) {
-        dispatch(loadPacientsFailure(error));
-      }
-    };
-
-    loadPacients();
-  }, [dispatch, isLoading]);
-
   return (
     <Stack verticalFill styles={stackStyles}>
       <StackItem styles={titleStyles}>
         <Text variant="large">Pacientes</Text>
       </StackItem>
       <StackItem>
-        <PacientTable pacients={pacients} />
+        <PacientTable />
       </StackItem>
     </Stack>
   );

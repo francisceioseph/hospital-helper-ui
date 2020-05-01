@@ -1,6 +1,7 @@
 import * as Constants from "../electron/ipc/constants";
 import { IpcService } from "./ipc.service";
 import { IIPCResponse } from "../types/ipc.response.interface";
+import { IPacient } from "../types/models/pacient.interface";
 
 export class PacientService {
   private ipcService: IpcService = new IpcService();
@@ -17,6 +18,17 @@ export class PacientService {
     const backChannel = Constants.PACIENT.LIST_RESPONSE_CHANNEL;
 
     return this.ipcService.send(channel, backChannel, null);
+  }
+  searchPacient(value: string): Promise<IIPCResponse<IPacient[]>> {
+    const channel = Constants.PACIENT.SEARCH_CHANNEL;
+    const backChannel = Constants.PACIENT.SEARCH_RESPONSE_CHANNEL;
+
+    const args = {
+      fieldName: "fullName",
+      value,
+    };
+
+    return this.ipcService.send(channel, backChannel, args);
   }
 
   showPacient(id: number): Promise<IIPCResponse<any>> {

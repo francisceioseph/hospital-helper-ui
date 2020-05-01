@@ -5,6 +5,7 @@ import {
   TextField,
   PrimaryButton,
   IStackItemStyles,
+  IStackTokens,
 } from "@fluentui/react";
 import { useHistory } from "react-router";
 import { addPacientRoute } from "../../pages/pacient/AddPacientPage";
