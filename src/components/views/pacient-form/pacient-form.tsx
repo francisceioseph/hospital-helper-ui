@@ -3,7 +3,6 @@ import {
   Stack,
   StackItem,
   TextField,
-  MaskedTextField,
   PrimaryButton,
   IStackTokens,
   IStackStyles,
@@ -95,9 +94,8 @@ export const PacientForm: FC = () => {
           <Controller
             name="birthDate"
             label="Data de Nascimento"
-            type="text"
-            mask="99/99/9999"
-            as={MaskedTextField}
+            type="date"
+            as={TextField}
             control={control}
             errorMessage={errors.birthDate?.message}
             rules={{ required: "campo obrigatório" }}

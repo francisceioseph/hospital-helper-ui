@@ -8,6 +8,7 @@ import {
 } from "@fluentui/react";
 import { IPacient } from "../../../types/models/pacient.interface";
 import { PacientTableHeader } from "./PacientTableHeader";
+import Moment from "react-moment";
 
 interface IPacientTableProps {
   pacients: IPacient[];
@@ -60,6 +61,9 @@ export class PacientTable extends Component<
         isRowHeader: true,
         isResizable: true,
         isPadded: true,
+        onRender: (item: IPacient) => {
+          return <Moment date={item.birthDate} format="DD/MM/YYYY" />;
+        },
       },
       {
         key: "column-04",

@@ -5,10 +5,9 @@ import {
   TooltipHost,
   CommandButton,
   Text,
-  CommandBar,
-  IStackItemStyles,
-  ICommandBarItemProps,
-  IContextualMenuItem,
+  IStackStyles,
+  IStackTokens,
+  PrimaryButton,
 } from "@fluentui/react";
 import { internshipRoute } from "../../pages/beds/InternshipPage";
 import { useHistory } from "react-router";
@@ -16,23 +15,17 @@ import { IInternship } from "../../../types/models/internship.interface";
 
 interface IEvolutionTitleProps {
   internship?: IInternship;
-  addEvolutionClick: (
-    ev?:
-      | React.MouseEvent<HTMLElement, MouseEvent>
-      | React.KeyboardEvent<HTMLElement>
-      | undefined,
-    item?: IContextualMenuItem | undefined
-  ) => boolean;
+  addEvolutionClick: (ev: React.MouseEvent<HTMLButtonElement>) => boolean;
 }
 
-const titleStyles: IStackItemStyles = {
+const headerStyles: IStackStyles = {
   root: {
-    padding: "0 1rem 1rem 1rem",
-    height: "8vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-start",
+    margin: "16px 2% 16px 2%",
   },
+};
+
+const headerTokens: IStackTokens = {
+  childrenGap: 16,
 };
 
 export const EvolutionTitle: FC<IEvolutionTitleProps> = ({
@@ -41,18 +34,14 @@ export const EvolutionTitle: FC<IEvolutionTitleProps> = ({
 }) => {
   const history = useHistory();
 
-  const commandItems: ICommandBarItemProps[] = [
-    {
-      key: "add-evolution",
-      text: "Nova Evolução",
-      iconProps: { iconName: "Add" },
-      onClick: addEvolutionClick,
-    },
-  ];
-
   return (
-    <Stack horizontal>
-      <StackItem styles={titleStyles}>
+    <Stack
+      horizontal
+      tokens={headerTokens}
+      styles={headerStyles}
+      verticalAlign="center"
+    >
+      <StackItem>
         <TooltipHost content="Voltar">
           <CommandButton
             iconProps={{ iconName: "Back" }}
@@ -63,14 +52,14 @@ export const EvolutionTitle: FC<IEvolutionTitleProps> = ({
           />
         </TooltipHost>
       </StackItem>
-      <StackItem styles={titleStyles}>
+      <StackItem>
         <Text variant="large">Evolução de {internship?.Pacient?.fullName}</Text>
       </StackItem>
       <StackItem grow>
         <div></div>
       </StackItem>
-      <StackItem styles={titleStyles}>
-        <CommandBar items={commandItems} />
+      <StackItem>
+        <PrimaryButton onClick={addEvolutionClick}>Nova Evolução</PrimaryButton>
       </StackItem>
     </Stack>
   );

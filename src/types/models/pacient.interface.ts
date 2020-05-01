@@ -1,7 +1,7 @@
 export interface IPacient {
   id: number;
   fullName: string;
-  birthDate: string;
+  birthDate: Date;
   motherName: string;
   prontuario: string;
   createdAt?: Date;
