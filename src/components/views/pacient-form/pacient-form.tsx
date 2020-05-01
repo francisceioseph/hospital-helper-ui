@@ -115,6 +115,8 @@ export const PacientForm: FC = () => {
               name="prontuario"
               label="Número do Prontuario"
               type="text"
+              pattern={"[0-9]{3,}"}
+              title="pelo menos três números"
               as={TextField}
               control={control}
               errorMessage={errors.prontuario?.message}

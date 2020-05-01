@@ -32,7 +32,7 @@ export class PacientTable extends Component<
         name: "Name",
         fieldName: "fullName",
         minWidth: 210,
-        maxWidth: 350,
+        maxWidth: 280,
         isRowHeader: true,
         isResizable: true,
         isSorted: true,
@@ -48,7 +48,7 @@ export class PacientTable extends Component<
         name: "Nome da Mãe",
         fieldName: "motherName",
         minWidth: 210,
-        maxWidth: 350,
+        maxWidth: 210,
         isRowHeader: true,
         isResizable: true,
       },
@@ -56,8 +56,8 @@ export class PacientTable extends Component<
         key: "column-03",
         name: "Data Nascimento",
         fieldName: "birthDate",
-        minWidth: 210,
-        maxWidth: 350,
+        minWidth: 100,
+        maxWidth: 100,
         isRowHeader: true,
         isResizable: true,
         isPadded: true,
@@ -69,8 +69,8 @@ export class PacientTable extends Component<
         key: "column-04",
         name: "Prontuário Nº",
         fieldName: "prontuario",
-        minWidth: 180,
-        maxWidth: 200,
+        minWidth: 150,
+        maxWidth: 150,
         isRowHeader: true,
         isResizable: true,
         isPadded: true,
@@ -95,16 +95,18 @@ export class PacientTable extends Component<
     return (
       <Stack>
         <PacientTableHeader onSearchItemChange={this.onSearchItemChange} />
-        <DetailsList
-          items={this.state.items}
-          columns={this.state.columns}
-          getKey={this.getKey}
-          setKey="none"
-          selectionMode={SelectionMode.none}
-          layoutMode={DetailsListLayoutMode.justified}
-          compact
-          isHeaderVisible
-        />
+        <Stack styles={{ root: { maxHeight: "75vh", overflowY: "scroll" } }}>
+          <DetailsList
+            items={this.state.items}
+            columns={this.state.columns}
+            getKey={this.getKey}
+            setKey="none"
+            selectionMode={SelectionMode.none}
+            layoutMode={DetailsListLayoutMode.justified}
+            compact
+            isHeaderVisible
+          />
+        </Stack>
       </Stack>
     );
   }

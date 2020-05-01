@@ -9,11 +9,13 @@ class PacientController {
       const { bed_id, ...pacientData } = args.data;
       const pacient = await Pacient.create(pacientData);
 
-      await Internship.create({
-        pacientId: pacient.id,
-        bedId: bed_id,
-        startDate: new Date(),
-      });
+      if (pacient.bed_id) {
+        await Internship.create({
+          pacientId: pacient.id,
+          bedId: bed_id,
+          startDate: new Date(),
+        });
+      }
 
       event.reply(replayChannel, {
         data: pacient.toJSON(),
