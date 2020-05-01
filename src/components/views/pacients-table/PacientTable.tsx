@@ -9,6 +9,7 @@ import {
 import { IPacient } from "../../../types/models/pacient.interface";
 import { PacientTableHeader } from "./PacientTableHeader";
 import Moment from "react-moment";
+import { toSearchRegex } from "../../../utils/toSearchRegex";
 
 interface IPacientTableProps {
   pacients: IPacient[];
@@ -122,8 +123,10 @@ export class PacientTable extends Component<
     } else if (value.length === 0) {
       this.setState({ items: copyAndSort(this.props.pacients, true) });
     } else {
+      const valuesRegex = toSearchRegex(value);
+
       const items = this.state.items.filter((p) =>
-        p.fullName.toLowerCase().includes(value.toLowerCase())
+        p.fullName.match(valuesRegex)
       );
 
       this.setState({ items });
