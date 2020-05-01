@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
-import { Stack } from "@fluentui/react";
+import { Stack, StackItem, IStackItemStyles } from "@fluentui/react";
 import { PacientDetailsHeader } from "../../views/pacient-details-header/PacientDetailsHeader";
 import { useParams } from "react-router";
 import { IPacient } from "../../../types/models/pacient.interface";

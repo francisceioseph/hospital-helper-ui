@@ -12,7 +12,7 @@ import {
 
 const headerStyles: IStackStyles = {
   root: {
-    margin: 16,
+    margin: "16px 2% 16px 2%",
   },
 };
 
