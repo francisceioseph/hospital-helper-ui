@@ -16,11 +16,6 @@ export const menuItems: INavLinkGroup[] = [
     name: "Paciente",
     links: [
       {
-        key: Constants.kNewPacientRouteKey,
-        name: "Cadastrar Paciente",
-        url: "",
-      },
-      {
         key: Constants.kSearchPacientRouteKey,
         name: "Buscar Paciente",
         url: "",

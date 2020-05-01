@@ -5,11 +5,9 @@ import {
   DetailsListLayoutMode,
   IColumn,
   Stack,
-  TextField,
-  StackItem,
-  IStackItemStyles,
 } from "@fluentui/react";
 import { IPacient } from "../../../types/models/pacient.interface";
+import { PacientTableHeader } from "./PacientTableHeader";
 
 interface IPacientTableProps {
   pacients: IPacient[];
@@ -19,13 +17,6 @@ interface IPacientTableState {
   items: IPacient[];
   columns: IColumn[];
 }
-
-const searchFieldStyles: IStackItemStyles = {
-  root: {
-    margin: 8,
-    width: "33%",
-  },
-};
 
 export class PacientTable extends Component<
   IPacientTableProps,
@@ -99,14 +90,7 @@ export class PacientTable extends Component<
   render() {
     return (
       <Stack>
-        <Stack horizontal>
-          <StackItem styles={searchFieldStyles}>
-            <TextField
-              label="Pesquisar pelo nome"
-              onChange={this.onSearchItemChange}
-            />
-          </StackItem>
-        </Stack>
+        <PacientTableHeader onSearchItemChange={this.onSearchItemChange} />
         <DetailsList
           items={this.state.items}
           columns={this.state.columns}
@@ -120,6 +104,8 @@ export class PacientTable extends Component<
       </Stack>
     );
   }
+
+  onNewButtonClick = () => {};
 
   onSearchItemChange = (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,

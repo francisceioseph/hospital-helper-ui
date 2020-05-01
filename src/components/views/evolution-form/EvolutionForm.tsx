@@ -100,7 +100,7 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
         <StackItem>
           <Controller
             name="author"
-            label="Autor"
+            label="Nome do Profissional"
             as={TextField}
             type="text"
             control={control}
