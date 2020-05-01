@@ -1,3 +1,5 @@
+import { IInternship } from "./internship.interface";
+
 export interface IPacient {
   id: number;
   fullName: string;
@@ -6,4 +8,5 @@ export interface IPacient {
   prontuario: string;
   createdAt?: Date;
   updatedAt?: Date;
+  Internships?: IInternship[];
 }

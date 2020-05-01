@@ -10,14 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     { underscored: true }
   );
 
-  Bed.associate = (models) => {
-    Bed.Pacients = Bed.belongsToMany(models.Pacient, {
-      through: "Internships",
-      as: "pacients",
-      foreignKey: "bedId",
-      otherKey: "pacientId",
-    });
-  };
+  Bed.associate = (models) => {};
 
   return Bed;
 };

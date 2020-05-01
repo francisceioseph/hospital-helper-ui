@@ -53,6 +53,7 @@ class PacientController {
     try {
       const pacient = await Pacient.findOne({
         where: { id: id },
+        include: [Internship],
       });
 
       event.reply(replayChannel, { data: pacient.toJSON() });

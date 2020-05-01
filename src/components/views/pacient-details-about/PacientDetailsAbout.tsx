@@ -1,12 +1,6 @@
 import React, { FC } from "react";
 import { IPacient } from "../../../types/models/pacient.interface";
-import {
-  Stack,
-  Text,
-  StackItem,
-  ITextStyles,
-  FontWeights,
-} from "@fluentui/react";
+import { Text, ITextStyles, FontWeights } from "@fluentui/react";
 import {
   Card,
   CardSection,
@@ -47,6 +41,16 @@ export const PacientDetailsAbout: FC<IPacientDetailsAboutProps> = ({
         <Text variant="large">{pacient?.fullName}</Text>
         <CardSection
           horizontal
+          verticalAlign="center"
+          tokens={{ childrenGap: 16 }}
+        >
+          <Text variant="medium" styles={titleStyles}>
+            Nome da Mãe
+          </Text>
+          <Text variant="medium">{pacient?.motherName}</Text>
+        </CardSection>
+        <CardSection
+          horizontal
           verticalAlign="baseline"
           tokens={{ childrenGap: 16 }}
         >
@@ -81,7 +85,6 @@ export const PacientDetailsAbout: FC<IPacientDetailsAboutProps> = ({
           </Text>
         </CardSection>
       </CardSection>
-      <StackItem></StackItem>
     </Card>
   );
 };
