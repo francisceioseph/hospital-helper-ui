@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useRef } from "react";
 import {
   DetailsList,
   SelectionMode,
@@ -6,6 +6,9 @@ import {
   IColumn,
   Stack,
   StackItem,
+  ContextualMenu,
+  IContextualMenuItem,
+  Text,
 } from "@fluentui/react";
 import { IPacient } from "../../../types/models/pacient.interface";
 import { PacientTableHeader } from "./PacientTableHeader";
@@ -17,6 +20,45 @@ interface IPacientTableState {
   items: IPacient[];
   columns: IColumn[];
 }
+
+interface ITableItem {
+  item: IPacient;
+}
+
+const TableItem: FC<ITableItem> = ({ item }) => {
+  const [showContextualMenu, setShowContextualMenu] = useState(false);
+  const itemRef = useRef(null);
+
+  const menuItems: IContextualMenuItem[] = [
+    {
+      key: "internar-paciente",
+      text: "Internar Paciente",
+      onClick: () => {},
+    },
+  ];
+
+  return (
+    <div
+      ref={itemRef}
+      onAuxClick={() => {
+        setShowContextualMenu(true);
+      }}
+    >
+      <Text>{item.fullName}</Text>
+      <ContextualMenu
+        target={itemRef}
+        hidden={!showContextualMenu}
+        items={menuItems}
+        onItemClick={() => {
+          setShowContextualMenu(false);
+        }}
+        onDismiss={() => {
+          setShowContextualMenu(false);
+        }}
+      />
+    </div>
+  );
+};
 
 export const PacientTable: FC = () => {
   const [pacients, setPacients] = useState<IPacient[]>([]);
@@ -55,6 +97,8 @@ export const PacientTable: FC = () => {
       isResizable: true,
       data: "string",
       isPadded: true,
+
+      onRender: (item: IPacient) => <TableItem item={item} />,
     },
     {
       key: "column-02",
