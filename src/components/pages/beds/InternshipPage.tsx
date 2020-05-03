@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   loadInternshipsSuccess,
   loadInternshipsFailure,
-} from "../../../redux/actions/internship-actions";
+} from "../../../redux/actions/internship.actions";
 
 export const internshipRoute = "/auth/internship";
 

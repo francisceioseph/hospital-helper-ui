@@ -19,7 +19,7 @@ import {
 import { cardTokens, footerCardSectionTokens } from "./BedListItem.tokens";
 import { ChangeBedDialog } from "../change-bed/change-bed";
 import { InternshipService } from "../../../../service/internship.service";
-import { loadInternships } from "../../../../redux/actions/internship-actions";
+import { loadInternships } from "../../../../redux/actions/internship.actions";
 import { ConfirmDialog } from "../../confirm-dialog/confirm-dialog";
 import { useHistory } from "react-router";
 import { getPacientDetailsRoute } from "../../../pages/pacient/PacientDetailsPage";

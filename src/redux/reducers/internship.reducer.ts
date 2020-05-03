@@ -3,7 +3,7 @@ import {
   LOAD_INTERNSHIPS,
   LOAD_INTERNSHIPS_SUCCESS,
   LOAD_INTERNSHIPS_FAILURE,
-} from "../actions/internship-actions";
+} from "../actions/internship.actions";
 import { IInternshipState } from "../../types/state/internship-state.interface";
 
 const initialState: IInternshipState = {

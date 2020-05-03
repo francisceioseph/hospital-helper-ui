@@ -1,11 +1,11 @@
 import { SimpleAction } from "../../types/simple-action.interface";
 import {
   LOAD_PACIENTS,
-  LOAD_PACIENTS_SUCESS,
+  LOAD_PACIENTS_SUCCESS,
   LOAD_PACIENTS_FAILURE,
   SORT_PACIENT_LIST_DESC,
   SORT_PACIENT_LIST_ASC,
-} from "../actions/pacient-actions";
+} from "../actions/pacient.actions";
 import { IPacient } from "../../types/models/pacient.interface";
 import { IPacientState } from "../../types/state/pacient-state.interface";
 
@@ -40,6 +40,7 @@ const comparePacientDesc = (previous: IPacient, current: IPacient): number => {
 };
 
 const initialState: IPacientState = {
+  showResults: false,
   pacients: [],
   loading: false,
   error: null,
@@ -56,7 +57,7 @@ export const pacientsReducer = (
         loading: true,
       };
     }
-    case LOAD_PACIENTS_SUCESS: {
+    case LOAD_PACIENTS_SUCCESS: {
       return {
         ...state,
         loading: false,

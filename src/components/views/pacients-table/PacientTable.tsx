@@ -13,6 +13,12 @@ import { PacientTableHeader } from "./PacientTableHeader";
 import Moment from "react-moment";
 import { PacientService } from "../../../service/pacient.service";
 import { TableItem } from "./PacientTableItem";
+import { useSelector, useDispatch } from "react-redux";
+import { IAppState } from "../../../types/state/app-state.interface";
+import {
+  loadPacientsSuccess,
+  loadPacientsFailure,
+} from "../../../redux/actions/pacient.actions";
 
 interface IPacientTableState {
   items: IPacient[];
@@ -20,7 +26,9 @@ interface IPacientTableState {
 }
 
 export const PacientTable: FC = () => {
-  const [pacients, setPacients] = useState<IPacient[]>([]);
+  const dispatch = useDispatch();
+
+  const { pacients } = useSelector((state: IAppState) => state.pacients);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const showNewButton = useCallback((): boolean => {
@@ -34,21 +42,19 @@ export const PacientTable: FC = () => {
     const pacientService = new PacientService();
     const searchPacients = async () => {
       try {
-        const { data: pacients } = await pacientService.searchPacient(
-          searchTerm!
-        );
-        setPacients(pacients || []);
+        const response = await pacientService.searchPacient(searchTerm!);
+        dispatch(loadPacientsSuccess(response));
       } catch (error) {
-        console.log(error);
+        dispatch(loadPacientsFailure(error));
       }
     };
 
     if (!searchTerm || !searchTerm.length) {
-      setPacients([]);
+      dispatch(loadPacientsSuccess({ data: [] }));
     } else {
       searchPacients();
     }
-  }, [searchTerm]);
+  }, [dispatch, searchTerm]);
 
   const columns: IColumn[] = [
     {
