@@ -77,7 +77,7 @@ export const toSearchRegex = (str: string) => {
   }
 
   // junta as alternativas
-  var regexp = words.join("|");
+  var regexp = words.join(" ");
   return new RegExp(regexp, "g");
 };
 

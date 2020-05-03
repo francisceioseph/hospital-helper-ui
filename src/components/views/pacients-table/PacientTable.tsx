@@ -109,7 +109,7 @@ export const PacientTable: FC = () => {
       <StackItem>
         <PacientTableHeader
           showNewButton={showNewButton()}
-          onSearchItemClick={(event: any, value?: string) => {
+          onSearchItemClick={(value?: string) => {
             setSearchTerm(value!);
           }}
         />

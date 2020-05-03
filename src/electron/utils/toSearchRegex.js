@@ -58,8 +58,14 @@ const accented = {
 };
 
 const toSearchRegex = (str) => {
+  str = str
+    .normalize("NFD")
+    .split(" ")
+    .map((x) =>
+      x.replace(/[^a-zA-Zs]/g, "").replace(/([|()[{.+*?^$\\])/g, "\\$1")
+    )
+    .join(" ");
   // remove os meta caracteres
-  str = str.replace(/([|()[{.+*?^$\\])/g, "\\$1");
 
   // Separa em palavras
   var words = str.split(/\s+/);

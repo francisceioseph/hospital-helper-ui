@@ -12,10 +12,7 @@ import { useHistory } from "react-router";
 import { addPacientRoute } from "../../pages/pacient/AddPacientPage";
 
 interface IPacientTableHeader {
-  onSearchItemClick: (
-    event: React.MouseEvent<anys>,
-    value?: string | undefined
-  ) => void;
+  onSearchItemClick: (value?: string | undefined) => void;
   showNewButton: boolean;
 }
 
@@ -44,6 +41,14 @@ export const PacientTableHeader: FC<IPacientTableHeader> = ({
     setSearchTerm(value!);
   };
 
+  const handleKeydown = (
+    event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    if (event.keyCode === 13) {
+      onSearchItemClick(searchTerm);
+    }
+  };
+
   const handleNewPacientClick = () => {
     history.push(addPacientRoute);
   };
@@ -56,12 +61,13 @@ export const PacientTableHeader: FC<IPacientTableHeader> = ({
           value={searchTerm}
           iconProps={{ iconName: "Search" }}
           onChange={handleSearchChange}
+          onKeyDown={handleKeydown}
         />
       </StackItem>
       <StackItem styles={{ root: { marginRight: 16, marginBottom: 8 } }}>
         <PrimaryButton
-          onClick={(ev) => {
-            onSearchItemClick(ev, searchTerm);
+          onClick={() => {
+            onSearchItemClick(searchTerm);
           }}
         >
           Buscar
