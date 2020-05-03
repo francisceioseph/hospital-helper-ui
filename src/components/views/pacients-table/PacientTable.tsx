@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useCallback } from "react";
 import {
   DetailsList,
   SelectionMode,
@@ -6,11 +6,11 @@ import {
   IColumn,
   Stack,
   StackItem,
+  Text,
 } from "@fluentui/react";
 import { IPacient } from "../../../types/models/pacient.interface";
 import { PacientTableHeader } from "./PacientTableHeader";
 import Moment from "react-moment";
-import useDebounce from "../../hooks/useDebounce";
 import { PacientService } from "../../../service/pacient.service";
 import { TableItem } from "./PacientTableItem";
 
@@ -21,15 +21,21 @@ interface IPacientTableState {
 
 export const PacientTable: FC = () => {
   const [pacients, setPacients] = useState<IPacient[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>();
-  const debouncedSearchTerm = useDebounce<string>(searchTerm!, 400);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const showNewButton = useCallback((): boolean => {
+    const searchActive = !!searchTerm && searchTerm.length > 0;
+    const hasPacients = pacients.length === 0;
+
+    return searchActive && hasPacients;
+  }, [pacients, searchTerm]);
 
   useEffect(() => {
     const pacientService = new PacientService();
     const searchPacients = async () => {
       try {
         const { data: pacients } = await pacientService.searchPacient(
-          debouncedSearchTerm
+          searchTerm!
         );
         setPacients(pacients || []);
       } catch (error) {
@@ -37,13 +43,12 @@ export const PacientTable: FC = () => {
       }
     };
 
-    if (!debouncedSearchTerm || !debouncedSearchTerm.length) {
+    if (!searchTerm || !searchTerm.length) {
       setPacients([]);
     } else {
-      console.log("search");
       searchPacients();
     }
-  }, [debouncedSearchTerm]);
+  }, [searchTerm]);
 
   const columns: IColumn[] = [
     {
@@ -94,20 +99,30 @@ export const PacientTable: FC = () => {
   ];
 
   return (
-    <Stack>
+    <Stack verticalFill>
       <StackItem>
         <PacientTableHeader
-          onSearchItemChange={(event: any, value?: string) => {
-            setSearchTerm(value);
+          showNewButton={showNewButton()}
+          onSearchItemClick={(event: any, value?: string) => {
+            setSearchTerm(value!);
           }}
         />
-        <DetailsList
-          items={pacients}
-          columns={columns}
-          getKey={(item: IColumn): string => item.key}
-          selectionMode={SelectionMode.none}
-          layoutMode={DetailsListLayoutMode.justified}
-        />
+        {pacients.length <= 0 && searchTerm.length > 0 && (
+          <Stack verticalFill verticalAlign="center" horizontalAlign="center">
+            <StackItem>
+              <Text variant="large">Nenhum paciente encontrado</Text>
+            </StackItem>
+          </Stack>
+        )}
+        {pacients.length > 0 && (
+          <DetailsList
+            items={pacients}
+            columns={columns}
+            getKey={(item: IColumn): string => item.key}
+            selectionMode={SelectionMode.none}
+            layoutMode={DetailsListLayoutMode.justified}
+          />
+        )}
       </StackItem>
     </Stack>
   );

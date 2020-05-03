@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import {
   Stack,
   StackItem,
@@ -6,15 +6,17 @@ import {
   PrimaryButton,
   IStackItemStyles,
   IStackTokens,
+  DefaultButton,
 } from "@fluentui/react";
 import { useHistory } from "react-router";
 import { addPacientRoute } from "../../pages/pacient/AddPacientPage";
 
 interface IPacientTableHeader {
-  onSearchItemChange: (
-    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+  onSearchItemClick: (
+    event: React.MouseEvent<anys>,
     value?: string | undefined
   ) => void;
+  showNewButton: boolean;
 }
 
 const searchFieldStyles: IStackItemStyles = {
@@ -29,9 +31,18 @@ const searchConatinerTokens: IStackTokens = {
 };
 
 export const PacientTableHeader: FC<IPacientTableHeader> = ({
-  onSearchItemChange,
+  showNewButton,
+  onSearchItemClick,
 }) => {
+  const [searchTerm, setSearchTerm] = useState("");
   const history = useHistory();
+
+  const handleSearchChange = (
+    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+    value?: string | undefined
+  ) => {
+    setSearchTerm(value!);
+  };
 
   const handleNewPacientClick = () => {
     history.push(addPacientRoute);
@@ -40,16 +51,30 @@ export const PacientTableHeader: FC<IPacientTableHeader> = ({
   return (
     <Stack horizontal verticalAlign="end" tokens={searchConatinerTokens}>
       <StackItem styles={searchFieldStyles}>
-        <TextField label="Pesquisar pelo nome" onChange={onSearchItemChange} />
+        <TextField
+          label="Pesquisar pelo nome"
+          value={searchTerm}
+          iconProps={{ iconName: "Search" }}
+          onChange={handleSearchChange}
+        />
       </StackItem>
-      <StackItem grow>
-        <div></div>
-      </StackItem>
-      <StackItem styles={{ root: { marginRight: 16 } }}>
-        <PrimaryButton onClick={handleNewPacientClick}>
-          Cadastrar Paciente
+      <StackItem styles={{ root: { marginRight: 16, marginBottom: 8 } }}>
+        <PrimaryButton
+          onClick={(ev) => {
+            onSearchItemClick(ev, searchTerm);
+          }}
+        >
+          Buscar
         </PrimaryButton>
       </StackItem>
+
+      {showNewButton && (
+        <StackItem styles={{ root: { marginRight: 16, marginBottom: 8 } }}>
+          <DefaultButton onClick={handleNewPacientClick}>
+            Cadastrar Paciente
+          </DefaultButton>
+        </StackItem>
+      )}
     </Stack>
   );
 };
