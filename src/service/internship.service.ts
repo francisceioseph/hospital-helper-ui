@@ -6,6 +6,16 @@ import { IInternship } from "../types/models/internship.interface";
 export class InternshipService {
   private ipcService: IpcService = new IpcService();
 
+  create(data: any): Promise<IIPCResponse<any>> {
+    const channel = Constants.INTERNSHIP.CREATE_CHANNEL;
+    const backChannel = Constants.INTERNSHIP.CREATE_CHANNEL;
+    const args = {
+      data,
+    };
+
+    return this.ipcService.send(channel, backChannel, args);
+  }
+
   list(): Promise<IIPCResponse<any[]>> {
     const channel = Constants.INTERNSHIP.LIST_INTERNSHIPS;
     const backChannel = Constants.INTERNSHIP.LIST_INTERNSHIPS_RESPONSE;

@@ -3,6 +3,41 @@ const IPCConstants = require("../../ipc/constants");
 const { Pacient, Bed, Internship, Evolution } = require("../config");
 
 class InternshipController {
+  static async create(event, args) {
+    const { pacientId, bedId } = args.data;
+
+    const replayChannel = IPCConstants.INTERNSHIP.CREATE_CHANNEL;
+
+    try {
+      let internship = await Internship.findOne({
+        where: {
+          pacientId,
+          endDate: {
+            [Sequelize.Op.eq]: null,
+          },
+        },
+      });
+
+      if (internship === null) {
+        console.log(pacientId, bedId);
+        internship = await Internship.create({
+          pacientId,
+          bedId,
+          startDate: new Date(),
+        });
+
+        event.reply(replayChannel, { data: internship });
+      } else {
+        throw new Error("Paciente já está interndo");
+      }
+    } catch (error) {
+      event.reply(replayChannel, {
+        error,
+        data: null,
+      });
+    }
+  }
+
   static async list(event, args) {
     const replayChannel = IPCConstants.INTERNSHIP.LIST_INTERNSHIPS_RESPONSE;
 

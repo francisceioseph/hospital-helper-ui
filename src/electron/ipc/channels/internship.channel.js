@@ -6,6 +6,7 @@ const InternshipController = require("../../database/controllers/internships.con
 const ipcMain = electron.ipcMain;
 
 const initInternshipsIPC = () => {
+  ipcMain.on(constants.INTERNSHIP.CREATE_CHANNEL, InternshipController.create);
   ipcMain.on(constants.INTERNSHIP.LIST_INTERNSHIPS, InternshipController.list);
   ipcMain.on(
     constants.INTERNSHIP.SHOW_INTERNSHIP_CHANNEL,
