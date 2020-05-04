@@ -5,6 +5,7 @@ const initPacientIPC = require("./channels/pacient.channel");
 const initEvolutionIPC = require("./channels/evolution.channel");
 const initInternshipsIPC = require("./channels/internship.channel");
 const initBedIPC = require("./channels/bed.channel");
+const initPDFChannels = require("./channels/pdf.channel");
 
 const sequelize = database.sequelize;
 
@@ -18,6 +19,7 @@ const initIPC = () => {
       initPacientIPC();
       initInternshipsIPC();
       initEvolutionIPC();
+      initPDFChannels();
     })
     .catch((error) => console.log(error));
 };
