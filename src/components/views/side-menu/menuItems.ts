@@ -33,11 +33,11 @@ export const menuItems: INavLinkGroup[] = [
     ],
   },
   {
-    name: "Utilidades",
+    name: "Relatórios",
     links: [
       {
-        key: "imprimir",
-        name: "Imprimir 01",
+        key: Constants.kEvolutionReport,
+        name: "Evoluções",
         url: "",
       },
       {

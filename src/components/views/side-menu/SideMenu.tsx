@@ -7,6 +7,7 @@ import { homeRoute } from "../../pages/home/home";
 import { Constants } from "../../../constants/constants";
 import { addPacientRoute } from "../../pages/pacient/AddPacientPage";
 import { pacientListRouteName } from "../../pages/pacient/PacientListPage";
+import { evolutionReportRoute } from "../../pages/report-evolution/EvolutionReportPage";
 
 export const SideMenu: React.FC = () => {
   const navStyles: Partial<INavStyles> = {
@@ -55,6 +56,10 @@ export const SideMenu: React.FC = () => {
       }
       case Constants.kSearchPacientRouteKey: {
         history.push(pacientListRouteName);
+        break;
+      }
+      case Constants.kEvolutionReport: {
+        history.push(evolutionReportRoute);
         break;
       }
       default: {

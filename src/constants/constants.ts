@@ -5,4 +5,5 @@ export enum Constants {
   kInternshipRouteKey = "internship",
   kNewPacientRouteKey = "new-pacient",
   kSearchPacientRouteKey = "search-pacient",
+  kEvolutionReport = "evolution-report",
 }
