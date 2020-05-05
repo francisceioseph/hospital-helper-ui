@@ -14,6 +14,12 @@ import {
 } from "@fluentui/react";
 import { EvolutionService } from "../../../service/evolution.service";
 import { IEvolution } from "../../../types/models/evolution.interface";
+import { useDispatch } from "react-redux";
+import {
+  savePacientEvolution,
+  savePacientEvolutionSuccess,
+  savePacientEvolutionFailure,
+} from "../../pages/evolution/evolution-reducer";
 
 interface IEvolutionFormProps {
   internship: IInternship;
@@ -42,6 +48,7 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
   onSubmitClick,
 }) => {
   const { handleSubmit, control, errors } = useForm();
+  const dispatch = useDispatch();
 
   const options: IDropdownOption[] = [
     { key: "medico", text: "Evolução Médica" },
@@ -50,6 +57,7 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
   ];
 
   const handleSubmitCallback = async (data: any) => {
+    dispatch(savePacientEvolution());
     const service: EvolutionService = new EvolutionService();
 
     try {
@@ -59,8 +67,10 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
       };
 
       await service.createEvolution(evolutionData);
+      dispatch(savePacientEvolutionSuccess());
     } catch (error) {
       console.error(error);
+      dispatch(savePacientEvolutionFailure());
     } finally {
       onSubmitClick();
     }

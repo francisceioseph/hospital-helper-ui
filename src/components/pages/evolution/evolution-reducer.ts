@@ -6,6 +6,10 @@ export const SET_INTERNSHIP_ACTION = "SET_INTERNSHIP";
 export const SET_SHOW_DIALOG_ACTION = "SET_SHOW_DIALOG";
 export const SET_SHOW_REPORT_DIALOG_ACTION = "SET_SHOW_REPORT_DIALOG_ACTION";
 
+export const SAVE_PACIENT_EVOLUTION = "SAVE_PACIENT_EVOLUTION";
+export const SAVE_PACIENT_EVOLUTION_SUCCESS = "SAVE_PACIENT_EVOLUTION_SUCCESS";
+export const SAVE_PACIENT_EVOLUTION_FAILURE = "SAVE_PACIENT_EVOLUTION_FAILURE";
+
 export const REPORT_PACIENT_EVOLUTION = "REPORT_PACIENT_EVOLUTION";
 export const REPORT_PACIENT_EVOLUTION_SUCCESS =
   "REPORT_PACIENT_EVOLUTION_SUCCESS";
@@ -61,6 +65,27 @@ export const reportPacientEvolutionFailure = (): SimpleAction => {
   };
 };
 
+export const savePacientEvolution = (): SimpleAction => {
+  return {
+    type: SAVE_PACIENT_EVOLUTION,
+    payload: null,
+  };
+};
+
+export const savePacientEvolutionSuccess = (): SimpleAction => {
+  return {
+    type: SAVE_PACIENT_EVOLUTION_SUCCESS,
+    payload: null,
+  };
+};
+
+export const savePacientEvolutionFailure = (): SimpleAction => {
+  return {
+    type: SAVE_PACIENT_EVOLUTION_FAILURE,
+    payload: null,
+  };
+};
+
 export const evolutionPageReducer = (state: any, action: SimpleAction): any => {
   switch (action.type) {
     case SET_RELOAD_ACTION: {
@@ -107,6 +132,29 @@ export const evolutionPageReducer = (state: any, action: SimpleAction): any => {
       return {
         ...state,
         showReportDialog: false,
+        loading: false,
+      };
+    }
+
+    case SAVE_PACIENT_EVOLUTION: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case SAVE_PACIENT_EVOLUTION_SUCCESS: {
+      return {
+        ...state,
+        showDialog: false,
+        loading: false,
+      };
+    }
+
+    case SAVE_PACIENT_EVOLUTION_FAILURE: {
+      return {
+        ...state,
+        showDialog: false,
         loading: false,
       };
     }
