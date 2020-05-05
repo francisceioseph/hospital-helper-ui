@@ -1,5 +1,4 @@
 import React, { FC, useState } from "react";
-import * as Constants from "../../../electron/ipc/constants";
 
 import {
   Stack,
@@ -12,7 +11,6 @@ import {
 } from "@fluentui/react";
 import { useHistory } from "react-router";
 import { addPacientRoute } from "../../pages/pacient/AddPacientPage";
-import { IpcService } from "../../../service/ipc.service";
 
 interface IPacientTableHeader {
   onSearchItemClick: (value?: string | undefined) => void;
@@ -70,21 +68,6 @@ export const PacientTableHeader: FC<IPacientTableHeader> = ({
       <StackItem styles={{ root: { marginRight: 16, marginBottom: 8 } }}>
         <PrimaryButton
           onClick={() => {
-            // const ipcService = new IpcService();
-
-            // ipcService
-            //   .send(
-            //     Constants.PDF.PRINT_EVOLUTIONS,
-            //     Constants.PDF.PRINT_EVOLUTIONS_RESPONSE,
-            //     {}
-            //   )
-            //   .then((result) => {
-            //     console.log(result);
-            //   })
-            //   .catch((error) => {
-            //     console.log(error);
-            //   });
-
             onSearchItemClick(searchTerm);
           }}
         >

@@ -32,7 +32,7 @@ const getDate = (dateStr) => {
 };
 
 const createEvolutionsPDF = async (event, args) => {
-  const { dateStr } = { dateStr: "2020-04-30 18:29:19.172 +00:00" };
+  const { dateStr } = args;
   const [date, startDate, endDate] = getDate(dateStr);
   const header = pageHeader(date);
 

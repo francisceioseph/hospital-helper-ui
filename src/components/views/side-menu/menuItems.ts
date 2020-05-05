@@ -37,7 +37,7 @@ export const menuItems: INavLinkGroup[] = [
     links: [
       {
         key: Constants.kEvolutionReport,
-        name: "Evoluções",
+        name: "Evoluções (Dia)",
         url: "",
       },
       {
