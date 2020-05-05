@@ -1,9 +1,14 @@
 {
   "name": "hospital-helper-ui",
+  "displayName": "Hospital Helper",
+  "author": {
+    "name": "Francisco Souza"
+  },
+  "description": "A simple electron app to help a hospital in Brazil",
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
-  "main": "src/electron/start.js",
+  "main": "src/electron/electron.js",
   "dependencies": {
     "@fluentui/react": "^7.107.5",
     "@testing-library/jest-dom": "^4.2.4",
@@ -18,8 +23,8 @@
     "@types/react-router-dom": "^5.1.4",
     "@types/redux": "^3.6.0",
     "@uifabric/react-cards": "^0.109.63",
-    "electron": "^8.2.3",
     "electron-debug": "^3.0.1",
+    "electron-is-dev": "^1.2.0",
     "electron-log": "^4.1.1",
     "electron-updater": "^4.2.5",
     "moment": "^2.24.0",
@@ -48,19 +53,25 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "electron": "electron --lang=pt-BR --inspect=5858 .",
-    "electron-start": "node src/electron/start-react",
     "react-start": "react-scripts start",
-    "pack": "build --dir",
-    "dist": "npm run build && build",
+    "pack": "npm run build electron-builder --dir",
     "postinstall": "install-app-deps"
   },
   "build": {
     "appId": "com.francisceioseph.hospital.helper",
-    "win": {
-      "iconUrl": "https://cdn2.iconfinder.com/data/icons/designer-skills/128/react-256.png"
-    },
+    "productName": "Hospital Helper",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
     "directories": {
-      "buildResources": "public"
+      "buildResources": "resources",
+      "output": "release"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
     }
   },
   "eslintConfig": {
@@ -79,6 +90,7 @@
     ]
   },
   "devDependencies": {
+    "electron": "^8.2.3",
     "electron-builder": "^22.5.1"
   }
 }

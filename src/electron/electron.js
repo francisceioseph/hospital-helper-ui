@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require("electron");
 
+const isDev = require("electron-is-dev");
 const path = require("path");
 const url = require("url");
 const initIPC = require("./ipc/config");
@@ -15,14 +16,17 @@ function createWindow() {
     },
   });
 
-  mainWindow.loadURL(
-    process.env.ELECTRON_START_URL ||
+  if (isDev) {
+    mainWindow.loadURL(process.env.ELECTRON_START_DEV_URL);
+  } else {
+    mainWindow.loadURL(
       url.format({
-        pathname: path.join(__dirname, "/../../public/index.html"),
+        pathname: path.join(__dirname, "../build/index.html"),
         protocol: "file:",
         slashes: true,
       })
-  );
+    );
+  }
 
   mainWindow.on("closed", () => {
     mainWindow = null;

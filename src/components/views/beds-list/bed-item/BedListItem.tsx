@@ -3,20 +3,17 @@ import { useDispatch } from "react-redux";
 import { Card } from "@uifabric/react-cards";
 import {
   Text,
-  Icon,
   Stack,
   StackItem,
   ContextualMenu,
   IContextualMenuItem,
   TooltipHost,
-  DefaultButton,
   CommandButton,
 } from "@fluentui/react";
 import { IInternship } from "../../../../types/models/internship.interface";
 import {
   rootStackItemStyles,
   footerCardSectionStyles,
-  iconStyles,
 } from "./BedListItem.style";
 import { cardTokens, footerCardSectionTokens } from "./BedListItem.tokens";
 import { ChangeBedDialog } from "../change-bed/change-bed";

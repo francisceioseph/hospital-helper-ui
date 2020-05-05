@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import { useHistory } from "react-router";
 import {
   Stack,
   StackItem,
@@ -19,8 +18,6 @@ const headerTokens: IStackTokens = {
 };
 
 export const EvolutionReportHeader: FC = () => {
-  const history = useHistory();
-
   return (
     <Stack
       horizontal
