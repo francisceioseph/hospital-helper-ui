@@ -44,13 +44,15 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
     {
       key: "alta-hospitalar",
       text: "Alta Hospitalar",
+      iconProps: { iconName: "OutOfOffice" },
       onClick: () => {
         setShowConfirmDialog(true);
       },
     },
     {
       key: "evoluções",
-      text: "Evoluções do Paciente",
+      text: "Evolução do Paciente",
+      iconProps: { iconName: "Health" },
       onClick: () => {
         handleEvolutionClick();
       },
@@ -58,11 +60,13 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
     {
       key: "histórico-internações",
       text: "Histórico de Internações",
+      iconProps: { iconName: "History" },
       onClick: () => viewDetailsClickHandler(),
     },
     {
       key: "trocar-de-leito",
       text: "Trocar de Leito",
+      iconProps: { iconName: "SchoolDataSyncLogo" },
       onClick: () => {
         setShowChangeBedDialog(true);
       },
