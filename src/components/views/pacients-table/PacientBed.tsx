@@ -66,7 +66,7 @@ export const PacientBedDialog: FC<IPacientBedDialog> = ({
       hidden={hidden}
       dialogContentProps={{
         type: DialogType.normal,
-        title: "Mudar de Leito",
+        title: "Selecionar Leito",
         subText: `Escolha o leito de ${pacient.fullName}`,
       }}
       modalProps={{

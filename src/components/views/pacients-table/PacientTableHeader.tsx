@@ -70,20 +70,20 @@ export const PacientTableHeader: FC<IPacientTableHeader> = ({
       <StackItem styles={{ root: { marginRight: 16, marginBottom: 8 } }}>
         <PrimaryButton
           onClick={() => {
-            const ipcService = new IpcService();
+            // const ipcService = new IpcService();
 
-            ipcService
-              .send(
-                Constants.PDF.PRINT_EVOLUTIONS,
-                Constants.PDF.PRINT_EVOLUTIONS_RESPONSE,
-                {}
-              )
-              .then((result) => {
-                console.log(result);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
+            // ipcService
+            //   .send(
+            //     Constants.PDF.PRINT_EVOLUTIONS,
+            //     Constants.PDF.PRINT_EVOLUTIONS_RESPONSE,
+            //     {}
+            //   )
+            //   .then((result) => {
+            //     console.log(result);
+            //   })
+            //   .catch((error) => {
+            //     console.log(error);
+            //   });
 
             onSearchItemClick(searchTerm);
           }}

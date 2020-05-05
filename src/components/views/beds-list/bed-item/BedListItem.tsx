@@ -9,6 +9,8 @@ import {
   ContextualMenu,
   IContextualMenuItem,
   TooltipHost,
+  DefaultButton,
+  CommandButton,
 } from "@fluentui/react";
 import { IInternship } from "../../../../types/models/internship.interface";
 import {
@@ -40,17 +42,29 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
 
   const menuItems: IContextualMenuItem[] = [
     {
-      key: "trocar-de-leito",
-      text: "Trocar de Leito",
-      onClick: () => {
-        setShowChangeBedDialog(true);
-      },
-    },
-    {
       key: "alta-hospitalar",
       text: "Alta Hospitalar",
       onClick: () => {
         setShowConfirmDialog(true);
+      },
+    },
+    {
+      key: "evoluções",
+      text: "Evoluções do Paciente",
+      onClick: () => {
+        handleEvolutionClick();
+      },
+    },
+    {
+      key: "histórico-internações",
+      text: "Histórico de Internações",
+      onClick: () => viewDetailsClickHandler(),
+    },
+    {
+      key: "trocar-de-leito",
+      text: "Trocar de Leito",
+      onClick: () => {
+        setShowChangeBedDialog(true);
       },
     },
   ];
@@ -79,17 +93,11 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
     });
   };
 
-  const handleEvolutionClick = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
-    event.stopPropagation();
+  const handleEvolutionClick = () => {
     history.push(`/auth/internship/${internship.id}/evolution`);
   };
 
-  const viewDetailsClickHandler = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
-    event.stopPropagation();
+  const viewDetailsClickHandler = () => {
     history.push(getPacientDetailsRoute(internship.pacientId));
   };
 
@@ -105,31 +113,37 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
           styles={footerCardSectionStyles}
           tokens={footerCardSectionTokens}
         >
-          <TooltipHost content="Visualizar Detalhes" id="visualizar-detalhes">
+          {/* <TooltipHost content="Visualizar Detalhes" id="visualizar-detalhes">
             <Icon
               iconName="RedEye"
               styles={iconStyles}
               onClick={viewDetailsClickHandler}
             />
-          </TooltipHost>
-          <TooltipHost content="Evolução" id="tooltip-evolucao">
+          </TooltipHost> */}
+          {/* <TooltipHost content="Evolução" id="tooltip-evolucao">
             <Icon
               iconName="Chart"
               styles={iconStyles}
               onClick={handleEvolutionClick}
             />
-          </TooltipHost>
+          </TooltipHost> */}
           <Stack.Item grow>
             <span />
           </Stack.Item>
-
           <TooltipHost content="Mais" id="tooltip-more">
             <div ref={moreIconRef}>
-              <Icon
+              {/* <Icon
                 iconName="MoreVertical"
                 styles={iconStyles}
                 onClick={() => setShowMoreMenu(true)}
-              ></Icon>
+              ></Icon> */}
+
+              <CommandButton
+                styles={{ root: { margin: 0 } }}
+                text="Opções"
+                iconProps={{ iconName: "AllApps" }}
+                onClick={() => setShowMoreMenu(true)}
+              />
             </div>
           </TooltipHost>
           <ContextualMenu
