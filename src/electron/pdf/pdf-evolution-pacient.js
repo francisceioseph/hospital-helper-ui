@@ -101,7 +101,7 @@ const createEvolutionsPDF = async (event, args) => {
           layout: "clean",
           table: {
             headerRows: 0,
-            widths: ["22%", "78%"],
+            widths: ["25%", "75%"],
             body: body,
           },
         };

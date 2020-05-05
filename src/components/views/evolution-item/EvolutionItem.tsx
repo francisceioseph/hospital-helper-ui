@@ -49,7 +49,11 @@ export const EvolutionItem: FC<IEvolutionItemProps> = ({ evolution }) => {
   const item = {
     key: evolution.id,
     activityDescription: [<EvolutionTitle evolution={evolution} />],
-    comments: [<Text variant="mediumPlus">{evolution.text}</Text>],
+    comments: evolution.text.split("\n").map((token) => (
+      <Text block variant="mediumPlus">
+        {token}
+      </Text>
+    )),
     activityIcon: (
       <Image src={getIcon(evolution.type)} width={50} height={50} />
     ),

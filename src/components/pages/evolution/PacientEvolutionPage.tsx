@@ -12,11 +12,14 @@ import {
   setReload,
   setShowDialog,
   setInternship,
+  setShowReportDialog,
 } from "./evolution-reducer";
+import { EvolutionPrintDialog } from "../../views/evolution-print-dialog/EvolutionPrintDialog";
 
 const initialState: IEvolutionPageState = {
   reload: false,
   showDialog: false,
+  showReportDialog: false,
 };
 
 export const pacientEvolutionRoute = "/auth/internship/:id/evolution";
@@ -58,11 +61,17 @@ export const PacientEvolutionPage: FC = () => {
     return true;
   };
 
+  const printEvolutionClickHandler = (): boolean => {
+    dispatch(setShowReportDialog(true));
+    return true;
+  };
+
   return (
     <Stack grow verticalFill>
       <EvolutionTitle
         internship={state.internship!}
         addEvolutionClick={addEvolutionClickHandler}
+        printEvolutionClick={printEvolutionClickHandler}
       />
       {state.internship?.Evolution?.length ? (
         <EvolutionList internship={state.internship!} />
@@ -73,6 +82,12 @@ export const PacientEvolutionPage: FC = () => {
         showDialog={state.showDialog}
         internship={state.internship!}
         onCloseCallback={closeModalHandler}
+      />
+      <EvolutionPrintDialog
+        internship={state.internship!}
+        showDialog={state.showReportDialog}
+        onSaveClick={() => dispatch(setShowReportDialog(false))}
+        onCancelClick={() => dispatch(setShowReportDialog(false))}
       />
     </Stack>
   );

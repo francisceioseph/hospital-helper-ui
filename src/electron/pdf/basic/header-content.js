@@ -2,7 +2,7 @@ const shortid = require("shortid");
 
 module.exports = () => [
   {
-    text: "PREFEITURA MUNICIPAL DE AQUIRAZ",
+    text: "HOSPITAL GERAL MANUEL DE ASSUNÇÃO PIRES",
     alignment: "left",
     style: "header",
     id: shortid.generate(),
@@ -14,7 +14,7 @@ module.exports = () => [
     id: shortid.generate(),
   },
   {
-    text: "HOSPITAL GERAL MANUEL DE ASSUNÇÃO PIRES",
+    text: "PREFEITURA MUNICIPAL DE AQUIRAZ",
     alignment: "left",
     style: "subheader",
     id: shortid.generate(),

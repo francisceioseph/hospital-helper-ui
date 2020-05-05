@@ -8,6 +8,7 @@ import {
   IStackStyles,
   IStackTokens,
   PrimaryButton,
+  DefaultButton,
 } from "@fluentui/react";
 import { internshipRoute } from "../../pages/beds/InternshipPage";
 import { useHistory } from "react-router";
@@ -16,6 +17,7 @@ import { IInternship } from "../../../types/models/internship.interface";
 interface IEvolutionTitleProps {
   internship?: IInternship;
   addEvolutionClick: (ev: React.MouseEvent<HTMLButtonElement>) => boolean;
+  printEvolutionClick: (ev: React.MouseEvent<HTMLButtonElement>) => boolean;
 }
 
 const headerStyles: IStackStyles = {
@@ -31,6 +33,7 @@ const headerTokens: IStackTokens = {
 export const EvolutionTitle: FC<IEvolutionTitleProps> = ({
   internship,
   addEvolutionClick,
+  printEvolutionClick,
 }) => {
   const history = useHistory();
 
@@ -59,7 +62,20 @@ export const EvolutionTitle: FC<IEvolutionTitleProps> = ({
         <div></div>
       </StackItem>
       <StackItem>
-        <PrimaryButton onClick={addEvolutionClick}>Nova Evolução</PrimaryButton>
+        <PrimaryButton
+          iconProps={{ iconName: "Add" }}
+          onClick={addEvolutionClick}
+        >
+          Nova Evolução
+        </PrimaryButton>
+      </StackItem>
+      <StackItem>
+        <DefaultButton
+          iconProps={{ iconName: "Print" }}
+          onClick={printEvolutionClick}
+        >
+          Imprimir
+        </DefaultButton>
       </StackItem>
     </Stack>
   );

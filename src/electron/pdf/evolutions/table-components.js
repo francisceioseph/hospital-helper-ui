@@ -6,15 +6,15 @@ const getEvolutionType = (evolution) => {
 
   switch (evolution.type) {
     case "medico":
-      title = "Evolução Médica";
+      title = "Médica";
       break;
 
     case "enfermagem":
-      title = "Evolução da Enfermagem";
+      title = "Enfermagem";
       break;
 
     case "fisioterapia":
-      title = "Evolução da Fisioterapia";
+      title = "Fisioterapia";
       break;
 
     default:
@@ -28,61 +28,67 @@ const getEvolutionType = (evolution) => {
 const pacientNameField = (evolution) => [
   {
     id: shortid.generate(),
-    text: "Nome do Paciente",
+    text: "Paciente:",
     style: "subheader",
   },
   {
     id: shortid.generate(),
-    text: evolution.Internship.Pacient.fullName,
+    text: evolution.Internship.Pacient.fullName.toUpperCase(),
+    style: "body",
   },
 ];
 
 const dateField = (evolution) => [
   {
     id: shortid.generate(),
-    text: "Data da Evolução",
+    text: "Data da Evolução:",
     style: "subheader",
   },
   {
     id: shortid.generate(),
     text: moment(evolution.createdAt).format("DD/MM/YYYY [às] HH:mm"),
+    style: "body",
   },
 ];
 
 const authorField = (evolution) => [
   {
     id: shortid.generate(),
-    text: "Nome do Profissional",
+    text: "Profissional:",
     style: "subheader",
   },
   {
     id: shortid.generate(),
-    text: evolution.author,
+    text: evolution.author.toUpperCase(),
+    style: "body",
   },
 ];
 
 const typeField = (evolution) => [
   {
     id: shortid.generate(),
-    text: "Tipo de Evolução",
+    text: "Tipo de Evolução:",
     style: "subheader",
   },
   {
     id: shortid.generate(),
-    text: getEvolutionType(evolution),
+    text: getEvolutionType(evolution).toUpperCase(),
+    style: "body",
   },
 ];
 
 const textField = (evolution) => [
   {
     id: shortid.generate(),
-    text: "Evolução",
-    style: "evolutionTitleStyle",
-  },
-  {
-    id: shortid.generate(),
     text: evolution.text.toUpperCase(),
     style: "evolutionTextStyle",
+  },
+
+  {
+    id: shortid.generate(),
+    text:
+      "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ",
+    style: "separator",
   },
 ];
 

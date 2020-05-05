@@ -4,6 +4,7 @@ import { IInternship } from "../../../types/models/internship.interface";
 export const SET_RELOAD_ACTION = "SET_RELOAD";
 export const SET_INTERNSHIP_ACTION = "SET_INTERNSHIP";
 export const SET_SHOW_DIALOG_ACTION = "SET_SHOW_DIALOG";
+export const SET_SHOW_REPORT_DIALOG_ACTION = "SET_REPORT_SHOW_DIALOG";
 
 export const setReload = (payload: boolean): SimpleAction => {
   return {
@@ -26,6 +27,13 @@ export const setShowDialog = (payload: boolean): SimpleAction => {
   };
 };
 
+export const setShowReportDialog = (payload: boolean): SimpleAction => {
+  return {
+    type: SET_SHOW_REPORT_DIALOG_ACTION,
+    payload,
+  };
+};
+
 export const evolutionPageReducer = (state: any, action: SimpleAction): any => {
   switch (action.type) {
     case SET_RELOAD_ACTION: {
@@ -43,6 +51,13 @@ export const evolutionPageReducer = (state: any, action: SimpleAction): any => {
       return {
         ...state,
         showDialog: action.payload,
+      };
+    }
+
+    case SET_SHOW_REPORT_DIALOG_ACTION: {
+      return {
+        ...state,
+        showReportDialog: action.payload,
       };
     }
 

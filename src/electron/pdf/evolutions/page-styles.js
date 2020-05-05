@@ -4,11 +4,12 @@ module.exports = {
   ...basicPageStyle,
 
   evolutionTitleStyle: {
-    fontSize: 12,
+    fontSize: 10,
     bold: true,
     margin: [16, 8, 16, 8],
   },
   evolutionTextStyle: {
-    margin: [16, 0, 16, 24],
+    fontSize: 10,
+    margin: [16, 8, 16, 0],
   },
 };
