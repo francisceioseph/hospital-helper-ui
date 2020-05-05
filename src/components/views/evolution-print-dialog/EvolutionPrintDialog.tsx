@@ -13,10 +13,16 @@ import {
 import { PtDatePicker } from "../date-picker/date-picker";
 import { IInternship } from "../../../types/models/internship.interface";
 
+export interface ISaveOptions {
+  selectedOption: string;
+  startDate: Date;
+  endDate: Date;
+}
+
 interface IEvolutionPrintDialog {
   internship: IInternship;
   showDialog: boolean;
-  onSaveClick: (event?: any) => void;
+  onSaveClick: (event?: any, values?: ISaveOptions) => void;
   onCancelClick: (event?: any) => void;
 }
 
@@ -79,8 +85,10 @@ export const EvolutionPrintDialog: FC<IEvolutionPrintDialog> = ({
 
       <DialogFooter>
         <PrimaryButton
-          onClick={onSaveClick}
-          text={selectedOption! === "today" ? "Gerar PDF" : ""}
+          onClick={(event) =>
+            onSaveClick(event, { selectedOption, startDate, endDate })
+          }
+          text={selectedOption! === "today" ? "Gerar PDF" : "Concluir"}
         />
         <DefaultButton onClick={onCancelClick} text="Cancelar" />
       </DialogFooter>

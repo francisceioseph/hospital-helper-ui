@@ -32,7 +32,7 @@ export const EvolutionReportPage: FC = () => {
   const generatePDFClickHandler = () => {
     ipcService
       .send(
-        Constants.PDF.PRINT_EVOLUTIONS,
+        Constants.PDF.REPORT_EVOLUTIONS,
         Constants.PDF.PRINT_EVOLUTIONS_RESPONSE,
         { dateStr: selectedDate?.toISOString() }
       )

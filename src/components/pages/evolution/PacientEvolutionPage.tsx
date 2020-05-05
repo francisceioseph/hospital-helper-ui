@@ -1,11 +1,13 @@
 import React, { FC, useEffect, useCallback, useReducer } from "react";
 import { Stack } from "@fluentui/react";
-import { InternshipService } from "../../../service/internship.service";
 import { useParams } from "react-router";
+
+import { InternshipService } from "../../../service/internship.service";
 import { EvolutionList } from "../../views/evolution-list/EvolutionList";
 import { EvolutionTitle } from "../../views/evolution-title/evolution-title";
 import { EvolutionListPlaceholder } from "../../views/evolution-list/EvolutionListPlaceholder";
 import { EvolutionFormDialog } from "../../views/evolution-form/EvolutionFormDialog";
+import { LoadingDialog } from "../../views/loading-dialog/LoadingDialog";
 import { IEvolutionPageState } from "../../../types/state/pacient-page-state.interface";
 import {
   evolutionPageReducer,
@@ -13,11 +15,21 @@ import {
   setShowDialog,
   setInternship,
   setShowReportDialog,
+  reportPacientEvolution,
+  reportPacientEvolutionSuccess,
+  reportPacientEvolutionFailure,
 } from "./evolution-reducer";
-import { EvolutionPrintDialog } from "../../views/evolution-print-dialog/EvolutionPrintDialog";
+
+import {
+  EvolutionPrintDialog,
+  ISaveOptions,
+} from "../../views/evolution-print-dialog/EvolutionPrintDialog";
+
+import { ReportService } from "../../../service/report.service";
 
 const initialState: IEvolutionPageState = {
   reload: false,
+  loading: false,
   showDialog: false,
   showReportDialog: false,
 };
@@ -66,6 +78,30 @@ export const PacientEvolutionPage: FC = () => {
     return true;
   };
 
+  const saveEvolutionReportClickHandler = async (
+    event?: any,
+    values?: ISaveOptions
+  ) => {
+    if (!state.internship || !values) {
+      return alert("Error crítico. Por favor, reinicie o programa");
+    }
+
+    dispatch(reportPacientEvolution());
+    const reportService = new ReportService();
+
+    try {
+      await reportService.reportPacientEvolutions(
+        state.internship.id,
+        values.startDate,
+        values.endDate
+      );
+
+      dispatch(reportPacientEvolutionSuccess());
+    } catch (error) {
+      dispatch(reportPacientEvolutionFailure());
+    }
+  };
+
   return (
     <Stack grow verticalFill>
       <EvolutionTitle
@@ -86,9 +122,10 @@ export const PacientEvolutionPage: FC = () => {
       <EvolutionPrintDialog
         internship={state.internship!}
         showDialog={state.showReportDialog}
-        onSaveClick={() => dispatch(setShowReportDialog(false))}
+        onSaveClick={saveEvolutionReportClickHandler}
         onCancelClick={() => dispatch(setShowReportDialog(false))}
       />
+      <LoadingDialog showDialog={state.loading} />
     </Stack>
   );
 };

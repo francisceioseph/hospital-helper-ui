@@ -1,12 +1,14 @@
 const electron = require("electron");
-const constants = require("../constants");
+const Constants = require("../constants");
 
-const createEvolutionsPDF = require("../../pdf/pdf-evolutions-by-pacient");
+const reportEvolutions = require("../../pdf/report-evolutions");
+const reportPacientEvolution = require("../../pdf/report-pacient-evolution");
 
 const ipcMain = electron.ipcMain;
 
 const initPDFChannels = () => {
-  ipcMain.on(constants.PDF.PRINT_EVOLUTIONS, createEvolutionsPDF);
+  ipcMain.on(Constants.PDF.REPORT_EVOLUTIONS, reportEvolutions);
+  ipcMain.on(Constants.PDF.REPORT_PACIENT_EVOLUTION, reportPacientEvolution);
 };
 
 module.exports = initPDFChannels;
