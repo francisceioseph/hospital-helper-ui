@@ -8,7 +8,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
-  "main": "public/electron/electron.js",
+  "main": "public/electron.js",
   "dependencies": {
     "@fluentui/react": "^7.107.5",
     "@testing-library/jest-dom": "^4.2.4",
