@@ -3,8 +3,7 @@ import { Nav, INavStyles, INavLink } from "@fluentui/react";
 import { menuItems } from "./menuItems";
 import { useHistory } from "react-router";
 import { internshipRoute } from "../../pages/beds/InternshipPage";
-import { homeRoute } from "../../pages/home/home";
-import { Constants } from "../../../constants/constants";
+import { AppConstants } from "../../../constants/constants";
 import { addPacientRoute } from "../../pages/pacient/AddPacientPage";
 import { pacientListRouteName } from "../../pages/pacient/PacientListPage";
 import { evolutionReportRoute } from "../../pages/report-evolution/EvolutionReportPage";
@@ -42,23 +41,19 @@ export const SideMenu: React.FC = () => {
 
   const handleLinkClick = (_?: any, item?: INavLink) => {
     switch (item?.key) {
-      case Constants.kHomeRouteKey: {
-        history.push(homeRoute);
-        break;
-      }
-      case Constants.kInternshipRouteKey: {
+      case AppConstants.kInternshipRouteKey: {
         history.push(internshipRoute);
         break;
       }
-      case Constants.kNewPacientRouteKey: {
+      case AppConstants.kNewPacientRouteKey: {
         history.push(addPacientRoute);
         break;
       }
-      case Constants.kSearchPacientRouteKey: {
+      case AppConstants.kSearchPacientRouteKey: {
         history.push(pacientListRouteName);
         break;
       }
-      case Constants.kEvolutionReport: {
+      case AppConstants.kEvolutionReport: {
         history.push(evolutionReportRoute);
         break;
       }

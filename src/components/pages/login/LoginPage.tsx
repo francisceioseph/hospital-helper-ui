@@ -19,8 +19,8 @@ import {
   ICardStyles,
 } from "@uifabric/react-cards";
 
-import { Constants } from "../../../constants/constants";
-import { homeRoute } from "../home/home";
+import { AppConstants } from "../../../constants/constants";
+import { internshipRoute } from "../beds/InternshipPage";
 
 export const loginRoute = "/login";
 
@@ -46,7 +46,7 @@ export const LoginPage: React.FC = () => {
   };
 
   const onSubmitForm = (data: any) => {
-    history.push(homeRoute);
+    history.push(internshipRoute);
   };
 
   return (
@@ -68,7 +68,7 @@ export const LoginPage: React.FC = () => {
                 rules={{
                   required: "campo obrigatório",
                   pattern: {
-                    value: new RegExp(Constants.emailRegex),
+                    value: new RegExp(AppConstants.emailRegex),
                     message: "formato de email inválido",
                   },
                 }}

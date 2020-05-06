@@ -3,7 +3,6 @@ import { Stack } from "office-ui-fabric-react";
 import { Route, Switch } from "react-router";
 
 import { SideMenu } from "../components/views/side-menu/SideMenu";
-import { homeRoute, HomePage } from "../components/pages/home/home";
 import {
   internshipRoute,
   InternshipPage,
@@ -40,7 +39,6 @@ export const AuthSwitch: FC = () => {
       <SideMenu />
 
       <Switch>
-        <Route exact path={homeRoute} component={HomePage} />
         <Route exact path={internshipRoute} component={InternshipPage} />
         <Route exact path={pacientListRouteName} component={PacientPageList} />
         <Route exact path={addPacientRoute} component={AddPacientPage} />
