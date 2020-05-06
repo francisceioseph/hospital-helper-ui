@@ -12,7 +12,7 @@ export class IpcService {
 
   listen(channel: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      ipcRenderer.once(channel, (_, data) => {
+      ipcRenderer.once(channel, (_: any, data: any) => {
         if (data.error) {
           return reject(data);
         }

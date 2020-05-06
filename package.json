@@ -8,7 +8,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
-  "main": "src/electron/electron.js",
+  "main": "public/electron/electron.js",
   "dependencies": {
     "@fluentui/react": "^7.107.5",
     "@testing-library/jest-dom": "^4.2.4",
@@ -54,7 +54,7 @@
     "eject": "react-scripts eject",
     "electron": "electron --lang=pt-BR --inspect=5858 .",
     "react-start": "react-scripts start",
-    "pack": "npm run build electron-builder --dir",
+    "pack": "npm run build && electron-builder --dir",
     "postinstall": "install-app-deps"
   },
   "build": {

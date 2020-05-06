@@ -3,7 +3,7 @@ const { app, BrowserWindow } = require("electron");
 const isDev = require("electron-is-dev");
 const path = require("path");
 const url = require("url");
-const initIPC = require("./ipc/config");
+const initIPC = require("./electron/ipc/config");
 
 let mainWindow;
 

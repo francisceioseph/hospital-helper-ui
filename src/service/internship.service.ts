@@ -1,4 +1,4 @@
-import * as Constants from "../electron/ipc/constants";
+import Constants from "../constants/ipc-constants";
 import { IpcService } from "./ipc.service";
 import { IIPCResponse } from "../types/ipc.response.interface";
 import { IInternship } from "../types/models/internship.interface";

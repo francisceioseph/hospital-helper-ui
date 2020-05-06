@@ -11,8 +11,7 @@ import {
 import { EvolutionReportHeader } from "../../views/evolution-report-header/EvolutionReportHeader";
 import { PtDatePicker } from "../../views/date-picker/date-picker";
 import { IpcService } from "../../../service/ipc.service";
-import * as Constants from "../../../electron/ipc/constants";
-
+import Constants from "../../../constants/ipc-constants";
 export const evolutionReportRoute = "/auth/reports/evolution";
 
 const stackTokens: IStackTokens = {
