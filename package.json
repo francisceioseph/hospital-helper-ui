@@ -57,6 +57,7 @@
     "electron": "electron --lang=pt-BR --inspect=5858 .",
     "react-start": "react-scripts start",
     "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
     "postinstall": "install-app-deps"
   },
   "build": {
@@ -72,7 +73,7 @@
     },
     "win": {
       "target": [
-        "nsis"
+        "msi"
       ]
     }
   },

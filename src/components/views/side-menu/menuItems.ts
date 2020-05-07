@@ -30,16 +30,6 @@ export const menuItems: INavLinkGroup[] = [
         name: "Evoluções (Dia)",
         url: "",
       },
-      {
-        key: "imprimir-02",
-        name: "Imprimir 02",
-        url: "",
-      },
-      {
-        key: "imprimir-03",
-        name: "Imprimir 03",
-        url: "",
-      },
     ],
   },
 ];

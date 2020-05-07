@@ -60,10 +60,12 @@ class EvolutionController {
     const replayChannel = IPCConstants.EVOLUTION.UPDATE_RESPONSE_CHANNEL;
 
     try {
-      const evolution = await Evolution.update(args.data, {
+      await Evolution.update(args.data, {
         where: { id: args.id },
         returning: true,
       });
+
+      const evolution = await Evolution.findOne({ where: { id: args.id } });
       event.reply(replayChannel, { data: evolution.toJSON() });
     } catch (error) {
       event.reply(replayChannel, {

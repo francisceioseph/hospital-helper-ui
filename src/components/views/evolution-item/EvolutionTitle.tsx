@@ -56,7 +56,9 @@ export const EvolutionTitle: FC<IEvolutionItemProps> = ({ evolution }) => {
       </div>
       <div>
         <Text variant="mediumPlus" className={classes.subtitle}>
-          {evolution.author}
+          {`${evolution.author} - ${evolution.councilType.toUpperCase()}: ${
+            evolution.councilNumber
+          }`}
         </Text>
       </div>
       <div className={classes.timestamp}>

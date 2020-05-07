@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useCallback } from "react";
+import React, { FC, useEffect, useCallback, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { IInternship } from "../../../types/models/internship.interface";
 import {
@@ -44,6 +44,19 @@ const footerStackTokens: IStackTokens = {
   childrenGap: 15,
 };
 
+const toCouncilType = (value: string) => {
+  switch (value) {
+    case "medico":
+      return "CRM";
+    case "fisioterapia":
+      return "CREFITO";
+    case "enfermagem":
+      return "COREM";
+    default:
+      return "";
+  }
+};
+
 export const EvolutionForm: FC<IEvolutionFormProps> = ({
   internship,
   evolution,
@@ -51,7 +64,7 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
   onSubmitClick,
 }) => {
   const { handleSubmit, control, errors } = useForm();
-  const evolutionMemo = useCallback(() => evolution, [evolution]);
+  const [councilType, setCouncilType] = useState("crm");
   const dispatch = useDispatch();
 
   const options: IDropdownOption[] = [
@@ -72,6 +85,7 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
     try {
       const evolutionData: IEvolution = {
         ...data,
+        councilType: toCouncilType(data.type),
         internshipId: internship.id,
       };
 
@@ -83,7 +97,6 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
 
       dispatch(saveEvolutionSuccess());
     } catch (error) {
-      console.error(error);
       dispatch(saveEvolutionFailure());
     } finally {
       onSubmitClick();
@@ -94,19 +107,18 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
     option?: IDropdownOption | undefined,
     index?: number | undefined
   ) => {
-    control.setValue("type", option!.key, true);
-    console.log(control.getValues());
+    control.setValue("type", option!.key);
+    setCouncilType(toCouncilType(option!.key.toString()));
   };
 
   useEffect(() => {
-    const ev = evolutionMemo();
-
-    if (ev) {
-      control.setValue("type", ev.type);
-      control.setValue("author", ev.author);
-      control.setValue("text", ev.text);
+    if (evolution) {
+      control.setValue("type", evolution.type);
+      control.setValue("author", evolution.author);
+      control.setValue("councilNumber", evolution.councilNumber);
+      control.setValue("text", evolution.text);
     }
-  }, [evolutionMemo, control]);
+  }, [evolution]);
 
   return (
     <form onSubmit={handleSubmit(handleSubmitCallback)}>
@@ -119,7 +131,9 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
               <Dropdown
                 options={options}
                 onChanged={handleDropdownChange}
-                defaultSelectedKey={evolutionMemo()?.type}
+                defaultSelectedKey={
+                  control.getValues("type") || evolution?.type
+                }
                 errorMessage={errors.type?.message}
               />
             }
@@ -139,6 +153,18 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
             control={control}
             styles={{ root: { minWidth: 166 } }}
             errorMessage={errors.author?.message}
+            rules={{ required: "campo obrigatório" }}
+          />
+        </StackItem>
+        <StackItem>
+          <Controller
+            name="councilNumber"
+            label={`Número ${councilType}`}
+            as={TextField}
+            type="number"
+            control={control}
+            styles={{ root: { minWidth: 166 } }}
+            errorMessage={errors.councilNumber?.message}
             rules={{ required: "campo obrigatório" }}
           />
         </StackItem>

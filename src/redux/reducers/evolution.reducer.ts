@@ -66,12 +66,14 @@ const handleSavEvolutionSuccess = (state: IEvolutionState) => ({
   ...state,
   showDialog: false,
   loading: false,
+  evolution: undefined,
 });
 
 const handleSaveEvolutionFailure = (state: IEvolutionState) => ({
   ...state,
   showDialog: false,
   loading: false,
+  evolution: undefined,
 });
 
 const handleSetEvolution = (state: IEvolutionState, action: SimpleAction) => ({
