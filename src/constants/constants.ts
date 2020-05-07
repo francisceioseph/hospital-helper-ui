@@ -5,4 +5,5 @@ export enum AppConstants {
   kNewPacientRouteKey = "new-pacient",
   kSearchPacientRouteKey = "search-pacient",
   kEvolutionReport = "evolution-report",
+  kAddBed = "create-bed",
 }

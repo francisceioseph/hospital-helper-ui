@@ -3,6 +3,56 @@ const IPCConstants = require("../../ipc/constants");
 const { Bed, Internship } = require("../config");
 
 class BedController {
+  static async create(event, args) {
+    const replayChannel = IPCConstants.BED.CREATE_RESPONSE_CHANNEL;
+
+    try {
+      const { data: bedData } = args;
+      const bed = await Bed.create(bedData);
+
+      event.reply(replayChannel, {
+        data: bed.toJSON(),
+      });
+    } catch (error) {
+      event.reply(replayChannel, {
+        error,
+        data: null,
+      });
+    }
+  }
+
+  static async list(event, args) {
+    const replayChannel = IPCConstants.BED.LIST_RESPONSE_CHANNEL;
+
+    try {
+      const results = await Bed.findAll({
+        include: [
+          {
+            model: Internship,
+          },
+        ],
+        order: [["name", "ASC"]],
+      });
+
+      const beds = results.map((result) => {
+        const bed = result.toJSON();
+
+        bed.Internships = bed.Internships.filter(
+          (internship) => internship.endDate === null
+        );
+
+        return bed;
+      });
+
+      event.reply(replayChannel, { data: beds });
+    } catch (error) {
+      event.reply(replayChannel, {
+        error,
+        data: null,
+      });
+    }
+  }
+
   static async listNotInUse(event, args) {
     const replayChannel = IPCConstants.BED.LIST_NOT_IN_USE_RESPONSE_CHANNEL;
     try {
@@ -23,6 +73,59 @@ class BedController {
       beds = beds.map((bed) => bed.toJSON());
 
       event.reply(replayChannel, { data: beds });
+    } catch (error) {
+      event.reply(replayChannel, {
+        error,
+        data: null,
+      });
+    }
+  }
+
+  static async show(event, args) {
+    const replayChannel = IPCConstants.BED.SHOW_RESPONSE_CHANNEL;
+
+    try {
+      const bed = await Bed.findOne({
+        where: { id: args.id },
+      });
+
+      event.reply(replayChannel, { data: bed.toJSON() });
+    } catch (error) {
+      event.reply(replayChannel, {
+        error,
+        data: null,
+      });
+    }
+  }
+
+  static async update(event, args) {
+    const replayChannel = IPCConstants.BED.UPDATE_RESPONSE_CHANNEL;
+
+    try {
+      await Bed.update(args.data, {
+        where: { id: args.id },
+        returning: true,
+      });
+
+      const bed = await Bed.findOne({ where: { id: args.id } });
+      event.reply(replayChannel, { data: bed.toJSON() });
+    } catch (error) {
+      event.reply(replayChannel, {
+        error,
+        data: null,
+      });
+    }
+  }
+
+  static async destroy(event, args) {
+    const replayChannel = IPCConstants.BED.DESTROY_RESPONSE_CHANNEL;
+
+    try {
+      await Bed.destroy({
+        where: args.id,
+      });
+
+      event.reply(replayChannel, { data: {} });
     } catch (error) {
       event.reply(replayChannel, {
         error,

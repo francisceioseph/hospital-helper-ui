@@ -36,7 +36,7 @@ export const menuItems: INavLinkGroup[] = [
     name: "Configurações",
     links: [
       {
-        key: "cad-leitos",
+        key: AppConstants.kAddBed,
         name: "Cadastrar Leitos",
         url: "",
       },

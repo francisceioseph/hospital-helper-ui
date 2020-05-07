@@ -7,6 +7,7 @@ import { AppConstants } from "../../../constants/constants";
 import { addPacientRoute } from "../../pages/pacient/AddPacientPage";
 import { pacientListRouteName } from "../../pages/pacient/PacientListPage";
 import { evolutionReportRoute } from "../../pages/report-evolution/EvolutionReportPage";
+import { createBedRoute } from "../../pages/beds/CreateBedPage";
 
 export const SideMenu: React.FC = () => {
   const navStyles: Partial<INavStyles> = {
@@ -55,6 +56,10 @@ export const SideMenu: React.FC = () => {
       }
       case AppConstants.kEvolutionReport: {
         history.push(evolutionReportRoute);
+        break;
+      }
+      case AppConstants.kAddBed: {
+        history.push(createBedRoute);
         break;
       }
       default: {

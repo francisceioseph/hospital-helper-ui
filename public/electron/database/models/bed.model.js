@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     { underscored: true }
   );
 
-  Bed.associate = (models) => {};
+  Bed.associate = (models) => {
+    Bed.Internship = Bed.hasMany(models.Internship);
+  };
 
   return Bed;
 };

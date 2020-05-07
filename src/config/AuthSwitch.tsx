@@ -27,6 +27,10 @@ import {
   evolutionReportRoute,
   EvolutionReportPage,
 } from "../components/pages/report-evolution/EvolutionReportPage";
+import {
+  createBedRoute,
+  CreateBedPage,
+} from "../components/pages/beds/CreateBedPage";
 
 export const AuthSwitch: FC = () => {
   return (
@@ -42,6 +46,7 @@ export const AuthSwitch: FC = () => {
         <Route exact path={internshipRoute} component={InternshipPage} />
         <Route exact path={pacientListRouteName} component={PacientPageList} />
         <Route exact path={addPacientRoute} component={AddPacientPage} />
+        <Route exact path={createBedRoute} component={CreateBedPage} />
         <Route
           exact
           path={pacientEvolutionRoute}
