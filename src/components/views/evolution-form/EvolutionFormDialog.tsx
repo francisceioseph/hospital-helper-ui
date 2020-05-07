@@ -2,8 +2,6 @@ import React, { FC } from "react";
 import {
   Modal,
   FontWeights,
-  IButtonStyles,
-  IconButton,
   Text,
   Stack,
   StackItem,
@@ -12,10 +10,12 @@ import {
 } from "@fluentui/react";
 import { EvolutionForm } from "./EvolutionForm";
 import { IInternship } from "../../../types/models/internship.interface";
+import { IEvolution } from "../../../types/models/evolution.interface";
 
 interface IEvolutionFormDialog {
   showDialog: boolean;
   internship: IInternship;
+  evolution?: IEvolution;
   onCloseCallback: (reload?: boolean) => void;
 }
 
@@ -25,19 +25,13 @@ const stackHeaderStyles: IStackStyles = {
 
 const titleTextStyles: ITextStyles = {
   root: {
+    marginTop: 4,
     fontWeight: FontWeights.bold,
   },
 };
 
-const iconButtonStyles: IButtonStyles = {
-  root: {
-    marginLeft: "auto",
-    marginTop: "4px",
-    marginRight: "2px",
-  },
-};
-
 export const EvolutionFormDialog: FC<IEvolutionFormDialog> = ({
+  evolution,
   internship,
   showDialog,
   onCloseCallback,
@@ -65,15 +59,9 @@ export const EvolutionFormDialog: FC<IEvolutionFormDialog> = ({
             Adicionar Evolução
           </Text>
         </StackItem>
-        <StackItem>
-          <IconButton
-            styles={iconButtonStyles}
-            iconProps={{ iconName: "Cancel" }}
-            onClick={onCancelClickHandler}
-          />
-        </StackItem>
       </Stack>
       <EvolutionForm
+        evolution={evolution}
         internship={internship}
         onCancelClick={onCancelClickHandler}
         onSubmitClick={onSubmitClickHandler}

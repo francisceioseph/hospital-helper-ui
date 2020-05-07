@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useCallback, useReducer } from "react";
+import React, { FC, useEffect, useCallback } from "react";
 import { Stack } from "@fluentui/react";
 import { useParams } from "react-router";
 
@@ -8,17 +8,15 @@ import { EvolutionTitle } from "../../views/evolution-title/evolution-title";
 import { EvolutionListPlaceholder } from "../../views/evolution-list/EvolutionListPlaceholder";
 import { EvolutionFormDialog } from "../../views/evolution-form/EvolutionFormDialog";
 import { LoadingDialog } from "../../views/loading-dialog/LoadingDialog";
-import { IEvolutionPageState } from "../../../types/state/pacient-page-state.interface";
 import {
-  evolutionPageReducer,
   setReload,
-  setShowDialog,
   setInternship,
-  setShowReportDialog,
-  reportPacientEvolution,
-  reportPacientEvolutionSuccess,
-  reportPacientEvolutionFailure,
-} from "./evolution-reducer";
+  showEvolutionDialog,
+  showReportDialog,
+  reportEvolution,
+  reportEvolutionSuccess,
+  reportEvolutionFailure,
+} from "../../../redux/actions/evolutions.actions";
 
 import {
   EvolutionPrintDialog,
@@ -26,20 +24,16 @@ import {
 } from "../../views/evolution-print-dialog/EvolutionPrintDialog";
 
 import { ReportService } from "../../../service/report.service";
-
-const initialState: IEvolutionPageState = {
-  reload: false,
-  loading: false,
-  showDialog: false,
-  showReportDialog: false,
-};
+import { useSelector, useDispatch } from "react-redux";
+import { IAppState } from "../../../types/state/app-state.interface";
 
 export const pacientEvolutionRoute = "/auth/internship/:id/evolution";
 
 export const PacientEvolutionPage: FC = () => {
   const { id } = useParams();
 
-  const [state, dispatch] = useReducer(evolutionPageReducer, initialState);
+  const state = useSelector((appState: IAppState) => appState.evolutions);
+  const dispatch = useDispatch();
 
   const reloadMemo = useCallback(() => state.reload === true, [state.reload]);
 
@@ -59,22 +53,22 @@ export const PacientEvolutionPage: FC = () => {
     };
 
     loadData();
-  }, [id, reloadMemo]);
+  }, [id, reloadMemo, dispatch]);
 
   const closeModalHandler = (reload?: boolean) => {
     if (reload) {
       dispatch(setReload(true));
     }
-    dispatch(setShowDialog(false));
+    dispatch(showEvolutionDialog(false));
   };
 
   const addEvolutionClickHandler = (): boolean => {
-    dispatch(setShowDialog(true));
+    dispatch(showEvolutionDialog(true));
     return true;
   };
 
   const printEvolutionClickHandler = (): boolean => {
-    dispatch(setShowReportDialog(true));
+    dispatch(showReportDialog(true));
     return true;
   };
 
@@ -86,7 +80,7 @@ export const PacientEvolutionPage: FC = () => {
       return alert("Error crítico. Por favor, reinicie o programa");
     }
 
-    dispatch(reportPacientEvolution());
+    dispatch(reportEvolution());
     const reportService = new ReportService();
 
     try {
@@ -96,9 +90,9 @@ export const PacientEvolutionPage: FC = () => {
         values.endDate
       );
 
-      dispatch(reportPacientEvolutionSuccess());
+      dispatch(reportEvolutionSuccess());
     } catch (error) {
-      dispatch(reportPacientEvolutionFailure());
+      dispatch(reportEvolutionFailure());
     }
   };
 
@@ -115,6 +109,7 @@ export const PacientEvolutionPage: FC = () => {
         <EvolutionListPlaceholder />
       )}
       <EvolutionFormDialog
+        evolution={state.evolution}
         showDialog={state.showDialog}
         internship={state.internship!}
         onCloseCallback={closeModalHandler}
@@ -123,7 +118,7 @@ export const PacientEvolutionPage: FC = () => {
         internship={state.internship!}
         showDialog={state.showReportDialog}
         onSaveClick={saveEvolutionReportClickHandler}
-        onCancelClick={() => dispatch(setShowReportDialog(false))}
+        onCancelClick={() => dispatch(showReportDialog(false))}
       />
       <LoadingDialog showDialog={state.loading} />
     </Stack>

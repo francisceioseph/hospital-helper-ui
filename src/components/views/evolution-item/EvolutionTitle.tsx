@@ -4,6 +4,7 @@ import { IEvolution } from "../../../types/models/evolution.interface";
 
 import "moment/locale/pt-br";
 import "moment-timezone";
+import Moment from "react-moment";
 
 interface IEvolutionItemProps {
   evolution: IEvolution;
@@ -22,6 +23,9 @@ export const EvolutionTitle: FC<IEvolutionItemProps> = ({ evolution }) => {
     },
     subtitle: {
       fontWeight: "bold",
+    },
+    timestamp: {
+      marginBottom: 24,
     },
   });
 
@@ -46,13 +50,22 @@ export const EvolutionTitle: FC<IEvolutionItemProps> = ({ evolution }) => {
   return (
     <div className={classes.root}>
       <div>
-        <Text variant="mediumPlus" className={classes.title}>
+        <Text variant="large" className={classes.title}>
           {title}
         </Text>
       </div>
       <div>
         <Text variant="mediumPlus" className={classes.subtitle}>
           {evolution.author}
+        </Text>
+      </div>
+      <div className={classes.timestamp}>
+        <Text variant="medium">
+          <Moment
+            locale="pt-br"
+            date={evolution.createdAt}
+            format="DD/MM/YYYY [às] HH:mm"
+          />
         </Text>
       </div>
     </div>

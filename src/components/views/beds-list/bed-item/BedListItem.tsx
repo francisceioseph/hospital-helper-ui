@@ -114,31 +114,11 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
           styles={footerCardSectionStyles}
           tokens={footerCardSectionTokens}
         >
-          {/* <TooltipHost content="Visualizar Detalhes" id="visualizar-detalhes">
-            <Icon
-              iconName="RedEye"
-              styles={iconStyles}
-              onClick={viewDetailsClickHandler}
-            />
-          </TooltipHost> */}
-          {/* <TooltipHost content="Evolução" id="tooltip-evolucao">
-            <Icon
-              iconName="Chart"
-              styles={iconStyles}
-              onClick={handleEvolutionClick}
-            />
-          </TooltipHost> */}
           <Stack.Item grow>
             <span />
           </Stack.Item>
           <TooltipHost content="Mais" id="tooltip-more">
             <div ref={moreIconRef}>
-              {/* <Icon
-                iconName="MoreVertical"
-                styles={iconStyles}
-                onClick={() => setShowMoreMenu(true)}
-              ></Icon> */}
-
               <CommandButton
                 styles={{ root: { margin: 0 } }}
                 text="Opções"

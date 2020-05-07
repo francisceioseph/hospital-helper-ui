@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useCallback } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { IInternship } from "../../../types/models/internship.interface";
 import {
@@ -16,15 +16,17 @@ import { EvolutionService } from "../../../service/evolution.service";
 import { IEvolution } from "../../../types/models/evolution.interface";
 import { useDispatch } from "react-redux";
 import {
-  savePacientEvolution,
-  savePacientEvolutionSuccess,
-  savePacientEvolutionFailure,
-} from "../../pages/evolution/evolution-reducer";
+  saveEvolution,
+  saveEvolutionSuccess,
+  saveEvolutionFailure,
+  setEvolution,
+} from "../../../redux/actions/evolutions.actions";
 
 interface IEvolutionFormProps {
   internship: IInternship;
   onCancelClick: (event: React.MouseEvent<HTMLDivElement>) => void;
   onSubmitClick: () => void;
+  evolution?: IEvolution;
 }
 
 const stackStyles: IStackStyles = {
@@ -44,10 +46,12 @@ const footerStackTokens: IStackTokens = {
 
 export const EvolutionForm: FC<IEvolutionFormProps> = ({
   internship,
+  evolution,
   onCancelClick,
   onSubmitClick,
 }) => {
   const { handleSubmit, control, errors } = useForm();
+  const evolutionMemo = useCallback(() => evolution, [evolution]);
   const dispatch = useDispatch();
 
   const options: IDropdownOption[] = [
@@ -56,8 +60,13 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
     { key: "fisioterapia", text: "Evolução da Fisioterapia" },
   ];
 
+  const handleCancel = (ev: React.MouseEvent<HTMLDivElement>) => {
+    dispatch(setEvolution(undefined));
+    onCancelClick(ev);
+  };
+
   const handleSubmitCallback = async (data: any) => {
-    dispatch(savePacientEvolution());
+    dispatch(saveEvolution());
     const service: EvolutionService = new EvolutionService();
 
     try {
@@ -66,11 +75,16 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
         internshipId: internship.id,
       };
 
-      await service.createEvolution(evolutionData);
-      dispatch(savePacientEvolutionSuccess());
+      if (evolution) {
+        await service.updateEvolution(evolution.id, evolutionData);
+      } else {
+        await service.createEvolution(evolutionData);
+      }
+
+      dispatch(saveEvolutionSuccess());
     } catch (error) {
       console.error(error);
-      dispatch(savePacientEvolutionFailure());
+      dispatch(saveEvolutionFailure());
     } finally {
       onSubmitClick();
     }
@@ -84,6 +98,16 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
     console.log(control.getValues());
   };
 
+  useEffect(() => {
+    const ev = evolutionMemo();
+
+    if (ev) {
+      control.setValue("type", ev.type);
+      control.setValue("author", ev.author);
+      control.setValue("text", ev.text);
+    }
+  }, [evolutionMemo, control]);
+
   return (
     <form onSubmit={handleSubmit(handleSubmitCallback)}>
       <Stack styles={stackStyles} tokens={stackTokens}>
@@ -95,11 +119,10 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
               <Dropdown
                 options={options}
                 onChanged={handleDropdownChange}
-                defaultValue={control.getValues("type")}
+                defaultSelectedKey={evolutionMemo()?.type}
                 errorMessage={errors.type?.message}
               />
             }
-            defaultValue={undefined}
             control={control}
             styles={{ root: { minWidth: 166 } }}
             rules={{
@@ -139,7 +162,7 @@ export const EvolutionForm: FC<IEvolutionFormProps> = ({
               <div></div>
             </StackItem>
             <PrimaryButton text="Salvar" type="submit" />
-            <DefaultButton onClick={onCancelClick} text="Cancelar" />
+            <DefaultButton onClick={handleCancel} text="Cancelar" />
           </Stack>
         </StackItem>
       </Stack>

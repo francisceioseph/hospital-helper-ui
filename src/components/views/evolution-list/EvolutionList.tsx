@@ -3,14 +3,7 @@ import moment from "moment";
 import "moment/locale/pt-br";
 import "moment-timezone";
 
-import {
-  StackItem,
-  FocusZone,
-  List,
-  FocusZoneDirection,
-  Separator,
-  mergeStyleSets,
-} from "@fluentui/react";
+import { StackItem, List, Separator, mergeStyleSets } from "@fluentui/react";
 import { IInternship } from "../../../types/models/internship.interface";
 import { EvolutionItem } from "../evolution-item/EvolutionItem";
 import { IEvolution } from "../../../types/models/evolution.interface";
@@ -67,13 +60,16 @@ export const EvolutionList: FC<IEvolutionListProps> = ({ internship }) => {
 
   return (
     <StackItem
+      grow
       styles={{
-        root: { marginLeft: 16, height: "89vh", overflowY: "scroll" },
+        root: {
+          marginLeft: 16,
+          height: "89vh",
+          overflowY: "scroll",
+        },
       }}
     >
-      <FocusZone direction={FocusZoneDirection.vertical}>
-        <List items={internship?.Evolution!} onRenderCell={onRenderCell} />
-      </FocusZone>
+      <List items={internship?.Evolution!} onRenderCell={onRenderCell} />
     </StackItem>
   );
 };

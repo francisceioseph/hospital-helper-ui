@@ -1,9 +1,12 @@
-import React, { FC } from "react";
-import Moment from "react-moment";
-import "moment/locale/pt-br";
-import "moment-timezone";
+import React, { FC, Dispatch } from "react";
 
-import { ActivityItem, mergeStyleSets, Image, Text } from "@fluentui/react";
+import {
+  ActivityItem,
+  mergeStyleSets,
+  Image,
+  Text,
+  DefaultButton,
+} from "@fluentui/react";
 import { IEvolution } from "../../../types/models/evolution.interface";
 import { EvolutionTitle } from "./EvolutionTitle";
 
@@ -11,6 +14,11 @@ import nurseIcon from "../../images/icons/enfermagem.png";
 import fisioIcon from "../../images/icons/fisioterapia.png";
 import doctorIcon from "../../images/icons/medico.png";
 import unknownIcon from "../../images/icons/desconhecido.png";
+import { useDispatch } from "react-redux";
+import {
+  setEvolution,
+  showEvolutionDialog,
+} from "../../../redux/actions/evolutions.actions";
 
 interface IEvolutionItemProps {
   evolution: IEvolution;
@@ -45,25 +53,51 @@ const getIcon = (type: "medico" | "enfermagem" | "fisioterapia") => {
   }
 };
 
+const renderComments = (evolution: IEvolution): JSX.Element[] =>
+  evolution.text.split("\n").map((token) => (
+    <Text
+      block
+      variant="mediumPlus"
+      styles={{
+        root: {
+          textAlign: "left",
+          marginBottom: 16,
+          marginRight: 64,
+        },
+      }}
+    >
+      {token.toUpperCase()}
+    </Text>
+  ));
+
+const renderActivityIcon = (evolution: IEvolution): JSX.Element => (
+  <Image src={getIcon(evolution.type)} width={50} height={50} />
+);
+
+const renderTimestamp = (
+  dispatch: Dispatch<any>,
+  evolution: IEvolution
+): JSX.Element => (
+  <div className={classNames.timestampContainer}>
+    <DefaultButton
+      text="Editar"
+      onClick={() => {
+        dispatch(setEvolution(evolution));
+        dispatch(showEvolutionDialog(true));
+      }}
+    />
+  </div>
+);
+
 export const EvolutionItem: FC<IEvolutionItemProps> = ({ evolution }) => {
+  const dispatch = useDispatch();
+
   const item = {
     key: evolution.id,
     activityDescription: [<EvolutionTitle evolution={evolution} />],
-    comments: evolution.text.split("\n").map((token) => (
-      <Text block variant="mediumPlus">
-        {token}
-      </Text>
-    )),
-    activityIcon: (
-      <Image src={getIcon(evolution.type)} width={50} height={50} />
-    ),
-    timeStamp: (
-      <div className={classNames.timestampContainer}>
-        <Text variant="medium" className={classNames.timestamp}>
-          <Moment locale="pt-br" fromNow date={evolution.createdAt} />
-        </Text>
-      </div>
-    ),
+    comments: renderComments(evolution),
+    activityIcon: renderActivityIcon(evolution),
+    timeStamp: renderTimestamp(dispatch, evolution),
   };
 
   return (

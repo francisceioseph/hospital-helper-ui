@@ -3,21 +3,21 @@ import { AppConstants } from "../../../constants/constants";
 
 export const menuItems: INavLinkGroup[] = [
   {
-    name: "Paciente",
-    links: [
-      {
-        key: AppConstants.kSearchPacientRouteKey,
-        name: "Buscar Paciente",
-        url: "",
-      },
-    ],
-  },
-  {
     name: "Internamento",
     links: [
       {
         key: AppConstants.kInternshipRouteKey,
         name: "Pacientes Internados",
+        url: "",
+      },
+    ],
+  },
+  {
+    name: "Paciente",
+    links: [
+      {
+        key: AppConstants.kSearchPacientRouteKey,
+        name: "Buscar Pacientes",
         url: "",
       },
     ],

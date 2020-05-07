@@ -44,7 +44,7 @@ class EvolutionController {
 
     try {
       const evolution = await Evolution.findOne({
-        where: { id: args.data.id },
+        where: { id: args.id },
       });
 
       event.reply(replayChannel, { data: evolution.toJSON() });
@@ -61,7 +61,7 @@ class EvolutionController {
 
     try {
       const evolution = await Evolution.update(args.data, {
-        where: { id: args.data.id },
+        where: { id: args.id },
         returning: true,
       });
       event.reply(replayChannel, { data: evolution.toJSON() });
@@ -78,7 +78,7 @@ class EvolutionController {
 
     try {
       await Evolution.destroy({
-        where: args.data.id,
+        where: args.id,
       });
 
       event.reply(replayChannel, { data: {} });
