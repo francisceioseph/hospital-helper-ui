@@ -35,8 +35,8 @@ function createWindow() {
 
   initIPC();
 
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
+  // const menuBuilder = new MenuBuilder(mainWindow);
+  // menuBuilder.buildMenu();
 }
 
 app.on("ready", createWindow);

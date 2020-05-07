@@ -32,4 +32,19 @@ export const menuItems: INavLinkGroup[] = [
       },
     ],
   },
+  {
+    name: "Configurações",
+    links: [
+      {
+        key: "cad-leitos",
+        name: "Cadastrar Leitos",
+        url: "",
+      },
+      {
+        key: "cad-users",
+        name: "Cadastrar Usuários",
+        url: "",
+      },
+    ],
+  },
 ];
