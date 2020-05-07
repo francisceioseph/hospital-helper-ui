@@ -4,6 +4,7 @@ const isDev = require("electron-is-dev");
 const path = require("path");
 const url = require("url");
 const initIPC = require("./electron/ipc/config");
+const MenuBuilder = require("./electron/utils/menu");
 
 let mainWindow;
 
@@ -33,6 +34,9 @@ function createWindow() {
   });
 
   initIPC();
+
+  const menuBuilder = new MenuBuilder(mainWindow);
+  menuBuilder.buildMenu();
 }
 
 app.on("ready", createWindow);

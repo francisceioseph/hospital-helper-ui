@@ -26,7 +26,7 @@ export const PacientBedDialog: FC<IPacientBedDialog> = ({
   onSaveClick,
   onCancelClick,
 }) => {
-  const [newBedId, setNewBedId] = useState<string | number>(0);
+  const [newBedId, setNewBedId] = useState<number>(0);
   const [bedOptions, setBedOptions] = useState<IDropdownOption[]>([]);
 
   useEffect(() => {
@@ -49,7 +49,8 @@ export const PacientBedDialog: FC<IPacientBedDialog> = ({
   }, [hidden]);
 
   const handleOnSaveClick = (_: any) => {
-    onSaveClick(parseInt(newBedId.toString()));
+    setNewBedId(0);
+    onSaveClick(newBedId);
   };
 
   const handleOnChange = (
@@ -57,8 +58,13 @@ export const PacientBedDialog: FC<IPacientBedDialog> = ({
     option?: IDropdownOption
   ) => {
     if (option) {
-      setNewBedId(option.key);
+      setNewBedId(parseInt(option.key.toString()));
     }
+  };
+
+  const handleOnCancelClick = (event?: any) => {
+    setNewBedId(0);
+    onCancelClick(event);
   };
 
   return (
@@ -72,7 +78,7 @@ export const PacientBedDialog: FC<IPacientBedDialog> = ({
       modalProps={{
         isBlocking: true,
       }}
-      onDismiss={onCancelClick}
+      onDismiss={handleOnCancelClick}
     >
       <Dropdown
         label="Escolha o leito"
@@ -81,8 +87,12 @@ export const PacientBedDialog: FC<IPacientBedDialog> = ({
         onChange={handleOnChange}
       ></Dropdown>
       <DialogFooter>
-        <PrimaryButton onClick={handleOnSaveClick} text="Salvar" />
-        <DefaultButton onClick={onCancelClick} text="Cancelar" />
+        <PrimaryButton
+          onClick={handleOnSaveClick}
+          text="Salvar"
+          disabled={newBedId === 0}
+        />
+        <DefaultButton onClick={handleOnCancelClick} text="Cancelar" />
       </DialogFooter>
     </Dialog>
   );
