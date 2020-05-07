@@ -1,6 +1,5 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC } from "react";
 import { IBed } from "../../../types/models/bed.interface";
-import { BedService } from "../../../service/bed.service";
 import {
   Stack,
   StackItem,
@@ -11,27 +10,11 @@ import {
   DetailsListLayoutMode,
 } from "@fluentui/react";
 
-const bedService: BedService = new BedService();
+interface IBedTable {
+  beds: IBed[];
+}
 
-export const BedTable: FC = () => {
-  const [beds, setBeds] = useState<IBed[]>([]);
-
-  useEffect(() => {
-    const getBeds = async () => {
-      try {
-        const { data } = await bedService.listBeds();
-        const beds = data ? data : [];
-
-        setBeds(beds);
-      } catch (error) {
-        setBeds([]);
-        console.log(error);
-      }
-    };
-
-    getBeds();
-  }, []);
-
+export const BedTable: FC<IBedTable> = ({ beds }) => {
   const columns: IColumn[] = [
     {
       key: "column-01",

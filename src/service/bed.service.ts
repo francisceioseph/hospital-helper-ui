@@ -6,11 +6,11 @@ import { IBed } from "../types/models/bed.interface";
 export class BedService {
   private ipcService: IpcService = new IpcService();
 
-  createBed(evolution: any): Promise<IIPCResponse<IBed>> {
+  createBed(bed: any): Promise<IIPCResponse<IBed>> {
     const channel = Constants.BED.CREATE_CHANNEL;
     const backChannel = Constants.BED.CREATE_RESPONSE_CHANNEL;
 
-    return this.ipcService.send(channel, backChannel, { data: evolution });
+    return this.ipcService.send(channel, backChannel, { data: bed });
   }
 
   listBeds(): Promise<IIPCResponse<IBed[]>> {
@@ -34,11 +34,11 @@ export class BedService {
     return this.ipcService.send(channel, backChannel, { id });
   }
 
-  updateBed(id: number, evolution: any): Promise<IIPCResponse<IBed>> {
+  updateBed(id: number, bed: any): Promise<IIPCResponse<IBed>> {
     const channel = Constants.BED.UPDATE_CHANNEL;
     const backChannel = Constants.BED.UPDATE_RESPONSE_CHANNEL;
 
-    return this.ipcService.send(channel, backChannel, { id, data: evolution });
+    return this.ipcService.send(channel, backChannel, { id, data: bed });
   }
 
   destroyBed(id: number): Promise<IIPCResponse<any>> {

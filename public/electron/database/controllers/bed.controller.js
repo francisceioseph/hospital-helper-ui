@@ -10,6 +10,8 @@ class BedController {
       const { data: bedData } = args;
       const bed = await Bed.create(bedData);
 
+      await bed.reload({ include: [Internship] });
+
       event.reply(replayChannel, {
         data: bed.toJSON(),
       });
@@ -87,6 +89,7 @@ class BedController {
     try {
       const bed = await Bed.findOne({
         where: { id: args.id },
+        include: [Internship],
       });
 
       event.reply(replayChannel, { data: bed.toJSON() });
@@ -107,7 +110,10 @@ class BedController {
         returning: true,
       });
 
-      const bed = await Bed.findOne({ where: { id: args.id } });
+      const bed = await Bed.findOne({
+        where: { id: args.id },
+        include: [Internship],
+      });
       event.reply(replayChannel, { data: bed.toJSON() });
     } catch (error) {
       event.reply(replayChannel, {
