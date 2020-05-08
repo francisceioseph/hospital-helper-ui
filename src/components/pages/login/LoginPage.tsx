@@ -19,8 +19,10 @@ import {
   ICardStyles,
 } from "@uifabric/react-cards";
 
-import { AppConstants } from "../../../constants/constants";
 import { internshipRoute } from "../beds/InternshipPage";
+import { UserService } from "../../../service/user.service";
+
+const userService = new UserService();
 
 export const loginRoute = "/login";
 
@@ -45,8 +47,26 @@ export const LoginPage: React.FC = () => {
     },
   };
 
-  const onSubmitForm = (data: any) => {
-    history.push(internshipRoute);
+  const onSubmitForm = async (data: any) => {
+    try {
+      const response = await userService.authtenticateUser({
+        username: data.username,
+        password: data.password,
+      });
+
+      if (response.error) {
+        alert(
+          "Não foi possível realizar login. Verifique o nome de usuário e a senha"
+        );
+      } else {
+        history.push(internshipRoute);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(
+        "Não foi possível realizar login. Verifique o nome de usuário e a senha"
+      );
+    }
   };
 
   return (
@@ -59,18 +79,14 @@ export const LoginPage: React.FC = () => {
             </CardSection>
             <CardItem>
               <Controller
-                name="email"
-                label="E-mail"
+                name="username"
+                label="Nome de Usuário"
                 type="text"
                 as={TextField}
                 control={control}
                 errorMessage={errors.email?.message}
                 rules={{
                   required: "campo obrigatório",
-                  pattern: {
-                    value: new RegExp(AppConstants.emailRegex),
-                    message: "formato de email inválido",
-                  },
                 }}
               />
             </CardItem>
@@ -85,7 +101,7 @@ export const LoginPage: React.FC = () => {
                 errorMessage={errors.password?.message}
                 rules={{
                   required: "campo obrigatório",
-                  minLength: { value: 6, message: "senha muito curta" },
+                  minLength: { value: 5, message: "senha muito curta" },
                 }}
               />
             </CardItem>

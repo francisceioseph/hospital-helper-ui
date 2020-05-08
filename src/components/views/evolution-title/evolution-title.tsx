@@ -9,6 +9,7 @@ import {
   IStackTokens,
   PrimaryButton,
   DefaultButton,
+  Separator,
 } from "@fluentui/react";
 import { internshipRoute } from "../../pages/beds/InternshipPage";
 import { useHistory } from "react-router";
@@ -58,8 +59,8 @@ export const EvolutionTitle: FC<IEvolutionTitleProps> = ({
       <StackItem>
         <Text variant="large">Evolução de {internship?.Pacient?.fullName}</Text>
       </StackItem>
-      <StackItem grow>
-        <div></div>
+      <StackItem>
+        <Separator vertical />
       </StackItem>
       <StackItem>
         <PrimaryButton
