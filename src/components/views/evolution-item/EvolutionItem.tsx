@@ -5,7 +5,11 @@ import {
   mergeStyleSets,
   Image,
   Text,
-  DefaultButton,
+  IActivityItemProps,
+  IImageStyles,
+  Separator,
+  ISeparatorStyles,
+  CommandButton,
 } from "@fluentui/react";
 import { IEvolution } from "../../../types/models/evolution.interface";
 import { EvolutionTitle } from "./EvolutionTitle";
@@ -19,6 +23,12 @@ import {
   setEvolution,
   showEvolutionDialog,
 } from "../../../redux/actions/evolutions.actions";
+import {
+  Card,
+  CardSection,
+  ICardStyles,
+  ICardSectionStyles,
+} from "@uifabric/react-cards";
 
 interface IEvolutionItemProps {
   evolution: IEvolution;
@@ -29,9 +39,7 @@ const classNames = mergeStyleSets({
     marginTop: "20px",
   },
 
-  timestampContainer: {
-    marginTop: 8,
-  },
+  timestampContainer: {},
 
   timestamp: {
     padding: 2,
@@ -61,7 +69,6 @@ const renderComments = (evolution: IEvolution): JSX.Element[] =>
       styles={{
         root: {
           textAlign: "left",
-          marginBottom: 16,
           marginRight: 64,
         },
       }}
@@ -70,16 +77,34 @@ const renderComments = (evolution: IEvolution): JSX.Element[] =>
     </Text>
   ));
 
-const renderActivityIcon = (evolution: IEvolution): JSX.Element => (
-  <Image src={getIcon(evolution.type)} width={50} height={50} />
-);
+const renderActivityIcon = (evolution: IEvolution): JSX.Element => {
+  const styles: Partial<IImageStyles> = {
+    root: {
+      width: 48,
+      height: 48,
+      border: "1px solid #3498DB",
+      borderRadius: "50%",
+      padding: 8,
+    },
+  };
 
-const renderTimestamp = (
+  return (
+    <Image
+      src={getIcon(evolution.type)}
+      width={32}
+      height={32}
+      styles={styles}
+    />
+  );
+};
+
+const renderCardFooter = (
   dispatch: Dispatch<any>,
   evolution: IEvolution
 ): JSX.Element => (
   <div className={classNames.timestampContainer}>
-    <DefaultButton
+    <CommandButton
+      iconProps={{ iconName: "PageEdit" }}
       text="Editar"
       onClick={() => {
         dispatch(setEvolution(evolution));
@@ -92,15 +117,54 @@ const renderTimestamp = (
 export const EvolutionItem: FC<IEvolutionItemProps> = ({ evolution }) => {
   const dispatch = useDispatch();
 
-  const item = {
-    key: evolution.id,
-    activityDescription: [<EvolutionTitle evolution={evolution} />],
-    comments: renderComments(evolution),
+  const item: IActivityItemProps = {
     activityIcon: renderActivityIcon(evolution),
-    timeStamp: renderTimestamp(dispatch, evolution),
+    activityDescription: [<EvolutionTitle evolution={evolution} />],
+  };
+
+  const cardStyles: ICardStyles = {
+    root: {
+      paddingRight: 16,
+      paddingLeft: 16,
+      margin: 16,
+      maxWidth: "98%",
+    },
+  };
+
+  const commentStyles: ICardSectionStyles = { root: { marginLeft: 57 } };
+  const separatorSectionStyles: ICardSectionStyles = {
+    root: { margin: 0, marginLeft: 57 },
+  };
+  const separatorStyles: Partial<ISeparatorStyles> = {
+    root: { margin: 0, height: 8 },
+  };
+  const timeStampSectionStyles: ICardSectionStyles = {
+    root: { marginLeft: 57, marginTop: "0 !important", marginBottom: 8 },
   };
 
   return (
-    <ActivityItem {...item} key={item.key} className={classNames.exampleRoot} />
+    <div>
+      <Card styles={cardStyles}>
+        <CardSection>
+          <ActivityItem
+            {...item}
+            key={evolution.id}
+            className={classNames.exampleRoot}
+          />
+        </CardSection>
+
+        <CardSection styles={commentStyles}>
+          {renderComments(evolution)}
+        </CardSection>
+
+        <CardSection styles={separatorSectionStyles}>
+          <Separator styles={separatorStyles} />
+        </CardSection>
+
+        <CardSection styles={timeStampSectionStyles}>
+          {renderCardFooter(dispatch, evolution)}
+        </CardSection>
+      </Card>
+    </div>
   );
 };
