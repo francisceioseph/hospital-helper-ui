@@ -9,6 +9,7 @@ import {
   SelectionMode,
   DetailsListLayoutMode,
 } from "@fluentui/react";
+import { BedTableItem } from "./BedTableItem";
 
 interface IBedTable {
   beds: IBed[];
@@ -24,9 +25,12 @@ export const BedTable: FC<IBedTable> = ({ beds }) => {
       maxWidth: 210,
       isRowHeader: true,
       isResizable: true,
+      onRender: (item: IBed) => {
+        return <BedTableItem bed={item} />;
+      },
     },
     {
-      key: "column-03",
+      key: "column-02",
       name: "Status",
       fieldName: "name",
       minWidth: 210,
@@ -34,11 +38,8 @@ export const BedTable: FC<IBedTable> = ({ beds }) => {
       isRowHeader: true,
       isResizable: true,
       onRender: (item: IBed) => {
-        return item.Internships!.length > 0 ? (
-          <Text>ocupado</Text>
-        ) : (
-          <div></div>
-        );
+        const busy = item.Internships!.length > 0;
+        return <Text>{busy ? "ocupado" : "livre"}</Text>;
       },
     },
   ];

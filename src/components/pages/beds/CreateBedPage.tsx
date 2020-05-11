@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useCallback } from "react";
 import * as _ from "lodash";
 import { Stack, StackItem, IStackStyles } from "@fluentui/react";
 import { BedTable } from "../../views/bed-table/BedTable";
@@ -6,6 +6,14 @@ import { CreateBedHeader } from "../../views/create-bed-header/CreateBedHeader";
 import { CreateBedDialog } from "../../views/create-bed-dialog/CreateBedDialog";
 import { IBed } from "../../../types/models/bed.interface";
 import { BedService } from "../../../service/bed.service";
+import { useSelector, useDispatch } from "react-redux";
+import { IAppState } from "../../../types/state/app-state.interface";
+import {
+  loadBedsSuccessAction,
+  loadBedsFailureAction,
+  reloadAction,
+  loadBedsAction,
+} from "../../../redux/actions/bed.actions";
 
 export const createBedRoute = "/auth/beds/create";
 
@@ -18,24 +26,29 @@ const stackStyles: IStackStyles = {
 const bedService: BedService = new BedService();
 
 export const CreateBedPage: FC = () => {
+  const dispatch = useDispatch();
+  const { beds, reload } = useSelector((state: IAppState) => state.beds);
+
+  const reloadMemo = useCallback(() => reload === true, [reload]);
   const [showNewBedDialog, setShowNewBedDialog] = useState(false);
-  const [beds, setBeds] = useState<IBed[]>([]);
 
   useEffect(() => {
+    dispatch(loadBedsAction());
+
     const getBeds = async () => {
       try {
         const { data } = await bedService.listBeds();
         const beds = data ? data : [];
 
-        setBeds(beds);
+        dispatch(loadBedsSuccessAction(beds));
       } catch (error) {
-        setBeds([]);
+        dispatch(loadBedsFailureAction(error));
         console.log(error);
       }
     };
 
     getBeds();
-  }, []);
+  }, [reloadMemo, dispatch]);
 
   const handleCreateBedClick = () => {
     setShowNewBedDialog(true);
@@ -43,11 +56,8 @@ export const CreateBedPage: FC = () => {
 
   const handleSaveBedClick = async (bedName: string) => {
     try {
-      const { data: bed } = await bedService.createBed({ name: bedName });
-
-      if (bed) {
-        setBeds(_.sortBy([...beds, bed], "name"));
-      }
+      await bedService.createBed({ name: bedName });
+      dispatch(reloadAction(true));
     } catch (error) {
       console.log(error);
     } finally {

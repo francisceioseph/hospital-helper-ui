@@ -22,6 +22,9 @@ export const TableItem: FC<ITableItem> = ({ item }) => {
     {
       key: "internar-paciente",
       text: "Internar Paciente",
+      iconProps: {
+        iconName: "Hotel",
+      },
       onClick: () => {
         setShowPacientDialog(true);
       },
@@ -29,6 +32,9 @@ export const TableItem: FC<ITableItem> = ({ item }) => {
     {
       key: "mostrar-paciente",
       text: "Detalhes do Paciente",
+      iconProps: {
+        iconName: "FabricUserFolder",
+      },
       onClick: () => {
         history.push(getPacientDetailsRoute(item.id));
       },

@@ -34,14 +34,26 @@ export const CreateBedDialog: FC<ICreateBedDialog> = ({
         isBlocking: true,
       }}
     >
-      <TextField value={bedName} onChange={(_, value) => setBedName(value!)} />
+      <TextField
+        value={bedName}
+        onChange={(_, value) => setBedName(value!.toUpperCase())}
+      />
       <DialogFooter>
         <PrimaryButton
-          onClick={() => onSaveClick(bedName)}
+          onClick={() => {
+            onSaveClick(bedName);
+            setBedName("");
+          }}
           text="Salvar"
           disabled={!bedName.length}
         />
-        <DefaultButton onClick={onCancelClick} text="Cancelar" />
+        <DefaultButton
+          onClick={() => {
+            onCancelClick();
+            setBedName("");
+          }}
+          text="Cancelar"
+        />
       </DialogFooter>
     </Dialog>
   );
