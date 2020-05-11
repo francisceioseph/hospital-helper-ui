@@ -44,12 +44,6 @@ export const menuItems: INavLinkGroup[] = [
         url: "",
         iconProps: { iconName: "AddToShoppingList" },
       },
-      {
-        key: "cad-users",
-        name: "Cadastrar Usuários",
-        url: "",
-        iconProps: { iconName: "PeopleAdd" },
-      },
     ],
   },
 ];
