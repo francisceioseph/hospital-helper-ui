@@ -43,6 +43,8 @@ export const EvolutionReportPage: FC = () => {
       });
   };
 
+  const today = new Date();
+
   return (
     <Stack grow verticalFill tokens={stackTokens}>
       <StackItem>
@@ -59,6 +61,7 @@ export const EvolutionReportPage: FC = () => {
           <PtDatePicker
             onSelectDate={(date) => setSelectedDate(date!)}
             value={selectedDate}
+            maxDate={today}
           />
           <PrimaryButton
             text="Gerar Relatório"
