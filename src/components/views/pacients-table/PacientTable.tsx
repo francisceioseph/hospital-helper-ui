@@ -20,11 +20,6 @@ import {
   loadPacientsFailure,
 } from "../../../redux/actions/pacient.actions";
 
-interface IPacientTableState {
-  items: IPacient[];
-  columns: IColumn[];
-}
-
 export const PacientTable: FC = () => {
   const dispatch = useDispatch();
 
@@ -33,10 +28,8 @@ export const PacientTable: FC = () => {
 
   const showNewButton = useCallback((): boolean => {
     const searchActive = !!searchTerm && searchTerm.length > 0;
-    const hasPacients = pacients.length === 0;
-
-    return searchActive && hasPacients;
-  }, [pacients, searchTerm]);
+    return searchActive;
+  }, [searchTerm]);
 
   useEffect(() => {
     const pacientService = new PacientService();
