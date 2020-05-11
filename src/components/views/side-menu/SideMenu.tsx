@@ -13,7 +13,8 @@ export const SideMenu: React.FC = () => {
   const navStyles: Partial<INavStyles> = {
     root: {
       background: "linear-gradient(to bottom, #7BA2E7 0%, #6375D6 100%)",
-      width: 200,
+      width: "15vw",
+      minWidth: 200,
       height: "100vh",
       boxSizing: "border-box",
       border: "1px solid #eee",

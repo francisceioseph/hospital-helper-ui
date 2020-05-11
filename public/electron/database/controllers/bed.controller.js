@@ -70,6 +70,7 @@ class BedController {
 
       let beds = await Bed.findAll({
         where: { id: { [Sequelize.Op.notIn]: internships } },
+        order: [["name", "ASC"]],
       });
 
       beds = beds.map((bed) => bed.toJSON());

@@ -62,6 +62,9 @@ export const BedTable: FC<IBedTable> = ({ beds }) => {
         getKey={(item: IColumn): string => item.key}
         selectionMode={SelectionMode.none}
         layoutMode={DetailsListLayoutMode.justified}
+        styles={{
+          root: { maxHeight: "88vh" },
+        }}
       />
     );
   };
