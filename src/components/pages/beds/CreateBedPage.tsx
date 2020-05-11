@@ -1,10 +1,8 @@
-import React, { FC, useState, useEffect, useCallback } from "react";
-import * as _ from "lodash";
+import React, { FC, useEffect, useCallback } from "react";
 import { Stack, StackItem, IStackStyles } from "@fluentui/react";
 import { BedTable } from "../../views/bed-table/BedTable";
 import { CreateBedHeader } from "../../views/create-bed-header/CreateBedHeader";
 import { CreateBedDialog } from "../../views/create-bed-dialog/CreateBedDialog";
-import { IBed } from "../../../types/models/bed.interface";
 import { BedService } from "../../../service/bed.service";
 import { useSelector, useDispatch } from "react-redux";
 import { IAppState } from "../../../types/state/app-state.interface";
@@ -13,7 +11,10 @@ import {
   loadBedsFailureAction,
   reloadAction,
   loadBedsAction,
+  clearBedAction,
+  showNewBedDialogAction,
 } from "../../../redux/actions/bed.actions";
+import { BedEditDialog } from "../../views/bed-table/BedEditDialog";
 
 export const createBedRoute = "/auth/beds/create";
 
@@ -27,15 +28,16 @@ const bedService: BedService = new BedService();
 
 export const CreateBedPage: FC = () => {
   const dispatch = useDispatch();
-  const { beds, reload } = useSelector((state: IAppState) => state.beds);
+  const { beds, bed, reload, showNewBedDialog } = useSelector(
+    (state: IAppState) => state.beds
+  );
 
   const reloadMemo = useCallback(() => reload === true, [reload]);
-  const [showNewBedDialog, setShowNewBedDialog] = useState(false);
 
   useEffect(() => {
-    dispatch(loadBedsAction());
-
     const getBeds = async () => {
+      dispatch(loadBedsAction());
+
       try {
         const { data } = await bedService.listBeds();
         const beds = data ? data : [];
@@ -47,40 +49,74 @@ export const CreateBedPage: FC = () => {
       }
     };
 
-    getBeds();
+    if (reloadMemo()) {
+      getBeds();
+    }
   }, [reloadMemo, dispatch]);
 
-  const handleCreateBedClick = () => {
-    setShowNewBedDialog(true);
+  const handleNewBedButtonClick = () => {
+    dispatch(showNewBedDialogAction(true));
   };
 
-  const handleSaveBedClick = async (bedName: string) => {
+  const handleOnCreateBed = async (bedName: string) => {
     try {
       await bedService.createBed({ name: bedName });
+      dispatch(showNewBedDialogAction(false));
       dispatch(reloadAction(true));
     } catch (error) {
+      dispatch(showNewBedDialogAction(false));
       console.log(error);
-    } finally {
-      setShowNewBedDialog(false);
     }
   };
 
-  const handleCancelClick = () => {
-    setShowNewBedDialog(false);
+  const handleOnCancelCreateBed = () => {
+    dispatch(showNewBedDialogAction(false));
+  };
+
+  const handleOnEditBed = async (name?: string) => {
+    if (!name) {
+      return;
+    }
+
+    const bedData = {
+      name,
+    };
+
+    try {
+      await bedService.updateBed(bed!.id, bedData);
+
+      dispatch(clearBedAction());
+      dispatch(reloadAction(true));
+    } catch (error) {
+      console.error(error);
+      dispatch(clearBedAction());
+    }
+  };
+
+  const handleOnCancelEditBed = () => {
+    dispatch(clearBedAction());
   };
 
   return (
     <Stack grow verticalFill styles={stackStyles}>
       <StackItem>
-        <CreateBedHeader onCreateBedClick={handleCreateBedClick} />
+        <CreateBedHeader onCreateBedClick={handleNewBedButtonClick} />
       </StackItem>
       <StackItem>
         <BedTable beds={beds} />
       </StackItem>
+
       <CreateBedDialog
         showDialog={showNewBedDialog}
-        onSaveClick={handleSaveBedClick}
-        onCancelClick={handleCancelClick}
+        onSaveClick={handleOnCreateBed}
+        onCancelClick={handleOnCancelCreateBed}
+      />
+
+      <BedEditDialog
+        bed={bed}
+        showDialog={!!bed?.id}
+        onSaveClick={handleOnEditBed}
+        onCancelClick={handleOnCancelEditBed}
       />
     </Stack>
   );

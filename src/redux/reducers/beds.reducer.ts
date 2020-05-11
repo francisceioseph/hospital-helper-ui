@@ -8,12 +8,22 @@ import {
   LOAD_BEDS_FAILURE,
   SELECT_BED,
   CLEAR_BED,
+  SHOW_NEW_BED_DIALOG,
 } from "../actions/bed.actions";
 
 const intialState: IBedState = {
-  reload: false,
+  reload: true,
   loading: false,
+  showNewBedDialog: false,
   beds: [],
+  bed: undefined,
+};
+
+const handleShowNewBedDialog = (
+  state: IBedState,
+  action: SimpleAction
+): IBedState => {
+  return { ...state, showNewBedDialog: action.payload };
 };
 
 const handleReload = (state: IBedState, action: SimpleAction): IBedState => {
@@ -24,6 +34,7 @@ const handleLoadBeds = (state: IBedState): IBedState => {
   return {
     ...state,
     loading: true,
+    reload: false,
   };
 };
 
@@ -72,6 +83,7 @@ export const bedsReducer = handleActions(
     [LOAD_BEDS_FAILURE]: handleLoadBedsFailure,
     [SELECT_BED]: handleSelectBed,
     [CLEAR_BED]: handleClearBed,
+    [SHOW_NEW_BED_DIALOG]: handleShowNewBedDialog,
   },
   intialState
 );

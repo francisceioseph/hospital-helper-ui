@@ -5,5 +5,6 @@ export interface IBedState {
   bed?: IBed;
   loading: boolean;
   reload: boolean;
+  showNewBedDialog: boolean;
   error?: any;
 }

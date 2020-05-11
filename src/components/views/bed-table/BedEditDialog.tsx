@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import {
   Dialog,
   DialogType,
@@ -10,9 +10,9 @@ import {
 import { IBed } from "../../../types/models/bed.interface";
 
 interface IBedEditDialog {
-  bed: IBed;
+  bed?: IBed;
   showDialog: boolean;
-  onSaveClick: (value: string) => void;
+  onSaveClick: (value?: string) => void;
   onCancelClick: () => void;
 }
 
@@ -22,7 +22,22 @@ export const BedEditDialog: FC<IBedEditDialog> = ({
   onSaveClick,
   onCancelClick,
 }) => {
-  const [value, setValue] = useState(bed.name);
+  const [value, setValue] = useState<string>();
+
+  useEffect(() => setValue(bed?.name), [bed]);
+
+  const handleSubmitForm = (ev: React.FormEvent<HTMLFormElement>) => {
+    ev.preventDefault();
+    onSaveClick(value);
+  };
+
+  const handleOnChange = (
+    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+    newValue?: string
+  ) => {
+    event.preventDefault();
+    setValue(newValue?.toUpperCase());
+  };
 
   return (
     <Dialog
@@ -37,26 +52,18 @@ export const BedEditDialog: FC<IBedEditDialog> = ({
         isBlocking: true,
       }}
     >
-      <form
-        onSubmit={(ev) => {
-          ev.preventDefault();
-          onSaveClick(value);
-        }}
-      >
-        <TextField
-          value={value}
-          onChange={(ev: any, v?: string) => {
-            setValue(v?.toUpperCase() || "");
-          }}
-          required
-        />
-
+      <form onSubmit={handleSubmitForm}>
+        <TextField value={value} onChange={handleOnChange} required />
         <DialogFooter>
-          <PrimaryButton type="submit" text="Salvar" disabled={!value.length} />
+          <PrimaryButton
+            type="submit"
+            text="Salvar"
+            disabled={!value?.length}
+          />
           <DefaultButton
             onClick={() => {
               onCancelClick();
-              setValue(bed.name);
+              setValue(bed?.name);
             }}
             text="Cancelar"
           />
