@@ -19,7 +19,6 @@ class InternshipController {
       });
 
       if (internship === null) {
-        console.log(pacientId, bedId);
         internship = await Internship.create({
           pacientId,
           bedId,

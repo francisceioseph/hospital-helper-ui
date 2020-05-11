@@ -77,7 +77,7 @@ export const PacientEvolutionPage: FC = () => {
     values?: ISaveOptions
   ) => {
     if (!state.internship || !values) {
-      return alert("Error crítico. Por favor, reinicie o programa");
+      return;
     }
 
     dispatch(reportEvolution());

@@ -30,7 +30,7 @@ export const PacientPageList: FC = () => {
   return (
     <Stack verticalFill styles={stackStyles}>
       <StackItem styles={titleStyles}>
-        <Text variant="large">Pacientes</Text>
+        <Text variant="large">Buscar Pacientes</Text>
       </StackItem>
       <StackItem>
         <PacientTable />

@@ -5,6 +5,7 @@ import { PacientBedDialog } from "./PacientBed";
 import { InternshipService } from "../../../service/internship.service";
 import { useHistory } from "react-router";
 import { getPacientDetailsRoute } from "../../pages/pacient/PacientDetailsPage";
+import { MessageDialog } from "../message-dialog/MessageDialog";
 
 interface ITableItem {
   item: IPacient;
@@ -13,6 +14,7 @@ interface ITableItem {
 export const TableItem: FC<ITableItem> = ({ item }) => {
   const [showContextualMenu, setShowContextualMenu] = useState(false);
   const [showPacientDialog, setShowPacientDialog] = useState(false);
+  const [messageDialogData, setMessageDialogData] = useState<any>();
 
   const history = useHistory();
 
@@ -49,9 +51,16 @@ export const TableItem: FC<ITableItem> = ({ item }) => {
         pacientId: item.id,
         bedId,
       });
-      alert("Internamento realizado");
+      setMessageDialogData({
+        title: "Sucesso",
+        message: "Internamento realizado com sucesso",
+      });
     } catch (error) {
-      alert(error.error.message);
+      setMessageDialogData({
+        title: "Erro",
+        message: "Paciente já se encontra internado",
+      });
+      console.log(error);
     } finally {
       setShowPacientDialog(false);
     }
@@ -87,12 +96,25 @@ export const TableItem: FC<ITableItem> = ({ item }) => {
         }}
       />
 
-      <PacientBedDialog
-        pacient={item}
-        hidden={!showPacientDialog}
-        onCancelClick={handleCancelInternship}
-        onSaveClick={handleSaveInternship}
-      />
+      {showPacientDialog && (
+        <PacientBedDialog
+          pacient={item}
+          hidden={!showPacientDialog}
+          onCancelClick={handleCancelInternship}
+          onSaveClick={handleSaveInternship}
+        />
+      )}
+
+      {messageDialogData !== undefined && (
+        <MessageDialog
+          title={messageDialogData?.title}
+          message={messageDialogData?.message}
+          showDialog={messageDialogData !== undefined}
+          onOkClick={() => {
+            setMessageDialogData(undefined);
+          }}
+        />
+      )}
     </div>
   );
 };

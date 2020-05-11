@@ -17,11 +17,9 @@ const initIPC = () => {
   sequelize
     .sync()
     .then(() => {
-      console.log("SYNC RESOLVES");
       return seedData();
     })
     .then(() => {
-      console.log("SEED RESOLVES");
       initBedIPC();
       initPacientIPC();
       initInternshipsIPC();

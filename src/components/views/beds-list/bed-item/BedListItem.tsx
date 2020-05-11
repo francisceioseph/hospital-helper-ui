@@ -9,6 +9,8 @@ import {
   IContextualMenuItem,
   TooltipHost,
   CommandButton,
+  Image,
+  IImageStyles,
 } from "@fluentui/react";
 import { IInternship } from "../../../../types/models/internship.interface";
 import {
@@ -23,9 +25,21 @@ import { ConfirmDialog } from "../../confirm-dialog/confirm-dialog";
 import { useHistory } from "react-router";
 import { getPacientDetailsRoute } from "../../../pages/pacient/PacientDetailsPage";
 
+import internshipIcon from "../../../images/icons/internship.png";
+
 interface IBedListItemProps {
   internship: IInternship;
 }
+
+const bedIconStyles: Partial<IImageStyles> = {
+  root: {
+    width: 48,
+    height: 48,
+    border: "1px solid #3498DB",
+    borderRadius: "50%",
+    padding: 8,
+  },
+};
 
 export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
   const internshipService = new InternshipService();
@@ -105,9 +119,19 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
   return (
     <StackItem styles={rootStackItemStyles}>
       <Card tokens={cardTokens}>
-        <Card.Section>
-          <Text>{internship.Bed?.name}</Text>
-          <Text variant="small">{internship.Pacient?.fullName}</Text>
+        <Card.Section horizontal>
+          <Card.Section>
+            <Image
+              src={internshipIcon}
+              width={32}
+              height={32}
+              styles={bedIconStyles}
+            />
+          </Card.Section>
+          <Card.Section>
+            <Text>{internship.Bed?.name}</Text>
+            <Text variant="small">{internship.Pacient?.fullName}</Text>
+          </Card.Section>
         </Card.Section>
         <Card.Section
           horizontal

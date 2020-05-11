@@ -57,7 +57,7 @@ const accented = {
     "[Zz\u0179-\u017e\u01f1-\u01f3\u1dbb\u1e90-\u1e95\u2124\u2128\u24b5\u24cf\u24e9\u3390-\u3394\uff3a\uff5a]",
 };
 
-const toSearchRegex = (str) => {
+const toTokens = (str) => {
   str = str
     .normalize("NFD")
     .split(" ")
@@ -65,20 +65,21 @@ const toSearchRegex = (str) => {
       x.replace(/[^a-zA-Zs]/g, "").replace(/([|()[{.+*?^$\\])/g, "\\$1")
     )
     .join(" ");
+
+  return str.split(/\s+/);
+};
+
+const toSearchRegex = (str) => {
   // remove os meta caracteres
 
   // Separa em palavras
-  var words = str.split(/\s+/);
-
-  // ordena pelo tamanho
-  words.sort(function (a, b) {
-    return b.length - a.length;
-  });
+  var words = toTokens(str);
 
   // troca caracteres pelos seus compositores
   var accentReplacer = function (chr) {
     return accented[chr.toUpperCase()] || chr;
   };
+
   for (var i = 0; i < words.length; i++) {
     words[i] = words[i].replace(/\S/g, accentReplacer);
   }
@@ -88,4 +89,4 @@ const toSearchRegex = (str) => {
   return new RegExp(regexp, "g");
 };
 
-module.exports = toSearchRegex;
+module.exports = { toSearchRegex, toTokens };
