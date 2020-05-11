@@ -8,6 +8,7 @@ import {
 } from "@fluentui/react";
 
 interface IConfirmDialogProps {
+  message?: string;
   showDialog: boolean;
   onCancelClick: (event?: any) => void;
   onOkClick: (event?: any) => void;
@@ -17,6 +18,7 @@ export const ConfirmDialog: FC<IConfirmDialogProps> = ({
   showDialog,
   onOkClick: onSaveClick,
   onCancelClick,
+  message,
 }) => {
   return (
     <Dialog
@@ -24,7 +26,7 @@ export const ConfirmDialog: FC<IConfirmDialogProps> = ({
       dialogContentProps={{
         type: DialogType.normal,
         title: "Confirmar",
-        subText: "Você está certo disso?",
+        subText: message || "Você está certo disso?",
       }}
       modalProps={{
         isBlocking: true,

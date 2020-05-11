@@ -3,19 +3,27 @@ import { Text, ContextualMenu, IContextualMenuItem } from "@fluentui/react";
 import { IBed } from "../../../types/models/bed.interface";
 import { BedEditDialog } from "./BedEditDialog";
 import { BedService } from "../../../service/bed.service";
-import { useDispatch } from "react-redux";
-import { reloadAction } from "../../../redux/actions/bed.actions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  reloadAction,
+  selectBed,
+  clearBed,
+} from "../../../redux/actions/bed.actions";
+import { ConfirmDialog } from "../confirm-dialog/confirm-dialog";
+import { IBedState } from "../../../types/state/beds-state.interface";
+import { IAppState } from "../../../types/state/app-state.interface";
 
 interface IBedTableItem {
   bed: IBed;
 }
 
 export const BedTableItem: FC<IBedTableItem> = ({ bed }) => {
-  const dispatch = useDispatch();
   const bedService = new BedService();
 
+  const state: IBedState = useSelector((appState: IAppState) => appState.beds);
+  const dispatch = useDispatch();
+
   const [showMenu, setShowMenu] = useState(false);
-  const [showEditDialog, setShowEditDialog] = useState(false);
   const ref = useRef(null);
 
   const menuItems: IContextualMenuItem[] = [
@@ -26,14 +34,7 @@ export const BedTableItem: FC<IBedTableItem> = ({ bed }) => {
         iconName: "EditNote",
       },
       onClick: () => {
-        setShowEditDialog(true);
-      },
-    },
-    {
-      key: "remove-bed",
-      text: "Remover",
-      iconProps: {
-        iconName: "Delete",
+        dispatch(selectBed(bed));
       },
     },
   ];
@@ -57,16 +58,24 @@ export const BedTableItem: FC<IBedTableItem> = ({ bed }) => {
 
     try {
       await bedService.updateBed(bed.id, bedData);
+      dispatch(clearBed());
       dispatch(reloadAction(true));
     } catch (error) {
+      dispatch(clearBed());
       console.error(error);
-    } finally {
-      setShowEditDialog(false);
     }
   };
 
   const handleCancelEditClick = () => {
-    setShowEditDialog(false);
+    dispatch(clearBed());
+  };
+
+  const showEditDialog = () => {
+    if (!state.bed) {
+      return false;
+    } else {
+      return state.bed.id === bed.id;
+    }
   };
 
   return (
@@ -89,7 +98,7 @@ export const BedTableItem: FC<IBedTableItem> = ({ bed }) => {
 
       <BedEditDialog
         bed={bed}
-        showDialog={showEditDialog}
+        showDialog={showEditDialog()}
         onSaveClick={handleSaveEditClick}
         onCancelClick={handleCancelEditClick}
       />
