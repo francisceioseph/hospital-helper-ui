@@ -2,6 +2,10 @@ module.exports = (sequelize, DataTypes) => {
   const Bed = sequelize.define(
     "Bed",
     {
+      sector: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       name: {
         type: DataTypes.STRING,
         allowNull: false,

@@ -33,7 +33,10 @@ class BedController {
             model: Internship,
           },
         ],
-        order: [["name", "ASC"]],
+        order: [
+          ["sector", "ASC"],
+          ["name", "ASC"],
+        ],
       });
 
       const beds = results.map((result) => {

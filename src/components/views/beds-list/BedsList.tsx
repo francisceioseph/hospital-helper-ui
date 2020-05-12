@@ -1,9 +1,18 @@
 import React, { FC } from "react";
-import { Stack, IStackStyles, StackItem, Text } from "@fluentui/react";
+import _ from "lodash";
+import {
+  Stack,
+  IStackStyles,
+  StackItem,
+  Text,
+  Separator,
+} from "@fluentui/react";
 import { BedListItem } from "./bed-item/BedListItem";
+import { IBed } from "../../../types/models/bed.interface";
+import { IInternship } from "../../../types/models/internship.interface";
 
 interface IBedsListProps {
-  beds: Array<any>;
+  beds: any;
 }
 
 const stackStyling: IStackStyles = {
@@ -17,12 +26,18 @@ const stackStyling: IStackStyles = {
   },
 };
 
+const containerStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  overflowY: "scroll",
+  maxHeight: "89vh",
+};
+
 const listStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "row",
   flexWrap: "wrap",
-  maxHeight: "89vh",
-  overflowY: "scroll",
+  marginBottom: 16,
 };
 
 export const BedsList: FC<IBedsListProps> = ({ beds }) => {
@@ -41,24 +56,27 @@ export const BedsList: FC<IBedsListProps> = ({ beds }) => {
   }
 
   return (
-    <div style={listStyle}>
-      {beds.map((bed, index) => (
-        <BedListItem key={index} internship={bed}></BedListItem>
-      ))}
+    <div style={containerStyle}>
+      {_.map(_.keys(beds), (key) => {
+        return (
+          <div>
+            <Separator alignContent="start">
+              <Text
+                variant="medium"
+                style={{ color: "#3498DB", fontWeight: "bold" }}
+              >
+                {key}
+              </Text>
+            </Separator>
+
+            <div style={listStyle}>
+              {beds[key].map((bed: IInternship, index: number) => (
+                <BedListItem key={index} internship={bed}></BedListItem>
+              ))}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
-
-  // return (
-  //   <Stack
-  //     wrap
-  //     horizontal
-  //     horizontalAlign="start"
-  //     styles={stackStyling}
-  //     tokens={stackTokens}
-  //   >
-  //     {beds.map((bed, index) => (
-  //       <BedListItem key={index} internship={bed}></BedListItem>
-  //     ))}
-  //   </Stack>
-  // );
 };

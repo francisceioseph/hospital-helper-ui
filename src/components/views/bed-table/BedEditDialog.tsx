@@ -12,7 +12,7 @@ import { IBed } from "../../../types/models/bed.interface";
 interface IBedEditDialog {
   bed?: IBed;
   showDialog: boolean;
-  onSaveClick: (value?: string) => void;
+  onSaveClick: (bedName?: string, bedSector?: string) => void;
   onCancelClick: () => void;
 }
 
@@ -22,21 +22,33 @@ export const BedEditDialog: FC<IBedEditDialog> = ({
   onSaveClick,
   onCancelClick,
 }) => {
-  const [value, setValue] = useState<string>();
+  const [bedName, setBedName] = useState<string>();
+  const [bedSector, setBedSector] = useState<string>();
 
-  useEffect(() => setValue(bed?.name), [bed]);
+  useEffect(() => {
+    setBedName(bed?.name);
+    setBedSector(bed?.sector);
+  }, [bed]);
 
   const handleSubmitForm = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    onSaveClick(value);
+    onSaveClick(bedName, bedSector);
   };
 
-  const handleOnChange = (
+  const handleOnNameChange = (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     newValue?: string
   ) => {
     event.preventDefault();
-    setValue(newValue?.toUpperCase());
+    setBedName(newValue?.toUpperCase());
+  };
+
+  const handleOnSectorChange = (
+    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+    newValue?: string
+  ) => {
+    event.preventDefault();
+    setBedSector(newValue?.toUpperCase());
   };
 
   return (
@@ -45,7 +57,6 @@ export const BedEditDialog: FC<IBedEditDialog> = ({
       dialogContentProps={{
         type: DialogType.normal,
         title: "Editar Leito",
-        subText: "Insira o novo nome desse leito",
         showCloseButton: false,
       }}
       modalProps={{
@@ -53,17 +64,29 @@ export const BedEditDialog: FC<IBedEditDialog> = ({
       }}
     >
       <form onSubmit={handleSubmitForm}>
-        <TextField value={value} onChange={handleOnChange} required />
+        <TextField
+          label="Nome so setor"
+          value={bedSector}
+          onChange={handleOnSectorChange}
+          required
+        />
+        <TextField
+          label="Nome do Leito"
+          value={bedName}
+          onChange={handleOnNameChange}
+          required
+        />
         <DialogFooter>
           <PrimaryButton
             type="submit"
             text="Salvar"
-            disabled={!value?.length}
+            disabled={!bedName?.length || !bedSector?.length}
           />
           <DefaultButton
             onClick={() => {
               onCancelClick();
-              setValue(bed?.name);
+              setBedName(bed?.name);
+              setBedSector(bed?.sector);
             }}
             text="Cancelar"
           />

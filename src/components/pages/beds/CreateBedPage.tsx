@@ -58,9 +58,9 @@ export const CreateBedPage: FC = () => {
     dispatch(showNewBedDialogAction(true));
   };
 
-  const handleOnCreateBed = async (bedName: string) => {
+  const handleOnCreateBed = async (bedName: string, bedSection: string) => {
     try {
-      await bedService.createBed({ name: bedName });
+      await bedService.createBed({ name: bedName, sector: bedSection });
       dispatch(showNewBedDialogAction(false));
       dispatch(reloadAction(true));
     } catch (error) {
@@ -73,13 +73,14 @@ export const CreateBedPage: FC = () => {
     dispatch(showNewBedDialogAction(false));
   };
 
-  const handleOnEditBed = async (name?: string) => {
-    if (!name) {
+  const handleOnEditBed = async (name?: string, sector?: string) => {
+    if (!name || !sector) {
       return;
     }
 
     const bedData = {
       name,
+      sector,
     };
 
     try {

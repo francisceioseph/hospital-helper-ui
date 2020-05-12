@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const Sequelize = require("sequelize");
 const IPCConstants = require("../../ipc/constants");
 const { Pacient, Bed, Internship, Evolution } = require("../config");
@@ -51,6 +52,10 @@ class InternshipController {
       });
 
       internships = internships.map((i) => i.toJSON());
+      internships = _.groupBy(
+        internships,
+        (internship) => internship.Bed.sector
+      );
 
       event.reply(replayChannel, { data: internships });
     } catch (error) {

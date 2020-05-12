@@ -10,7 +10,7 @@ import {
 
 interface ICreateBedDialog {
   showDialog: boolean;
-  onSaveClick: (bedName: string) => void;
+  onSaveClick: (bedName: string, bedSector: string) => void;
   onCancelClick: (event?: any) => void;
 }
 
@@ -19,6 +19,7 @@ export const CreateBedDialog: FC<ICreateBedDialog> = ({
   onSaveClick,
   onCancelClick,
 }) => {
+  const [bedSector, setBedSector] = useState<string>("");
   const [bedName, setBedName] = useState<string>("");
 
   return (
@@ -27,7 +28,6 @@ export const CreateBedDialog: FC<ICreateBedDialog> = ({
       dialogContentProps={{
         type: DialogType.normal,
         title: "Criar Leito",
-        subText: "Insira um nome para este leito:",
         showCloseButton: false,
       }}
       modalProps={{
@@ -35,22 +35,30 @@ export const CreateBedDialog: FC<ICreateBedDialog> = ({
       }}
     >
       <TextField
+        label="Setor do leito"
+        value={bedSector}
+        onChange={(_, value) => setBedSector(value!.toUpperCase())}
+      />
+      <TextField
+        label="Nome do leito"
         value={bedName}
         onChange={(_, value) => setBedName(value!.toUpperCase())}
       />
       <DialogFooter>
         <PrimaryButton
           onClick={() => {
-            onSaveClick(bedName);
+            onSaveClick(bedName, bedSector);
             setBedName("");
+            setBedSector("");
           }}
           text="Salvar"
-          disabled={!bedName.length}
+          disabled={!bedName.length || !bedSector.length}
         />
         <DefaultButton
           onClick={() => {
             onCancelClick();
             setBedName("");
+            setBedSector("");
           }}
           text="Cancelar"
         />

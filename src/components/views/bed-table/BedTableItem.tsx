@@ -45,7 +45,7 @@ export const BedTableItem: FC<IBedTableItem> = ({ bed }) => {
           root: { color: "blue", fontWeight: "bold" },
         }}
       >
-        {bed.name}
+        {`${bed.sector} - ${bed.name}`}
       </Text>
 
       <ContextualMenu
