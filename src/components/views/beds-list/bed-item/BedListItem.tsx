@@ -1,22 +1,16 @@
 import React, { FC, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { Card } from "@uifabric/react-cards";
+import { Card, CardSection } from "@uifabric/react-cards";
 import {
   Text,
-  Stack,
-  StackItem,
   ContextualMenu,
   IContextualMenuItem,
-  TooltipHost,
   CommandButton,
   Image,
   IImageStyles,
 } from "@fluentui/react";
 import { IInternship } from "../../../../types/models/internship.interface";
-import {
-  rootStackItemStyles,
-  footerCardSectionStyles,
-} from "./BedListItem.style";
+import { footerCardSectionStyles } from "./BedListItem.style";
 import { cardTokens, footerCardSectionTokens } from "./BedListItem.tokens";
 import { ChangeBedDialog } from "../change-bed/change-bed";
 import { InternshipService } from "../../../../service/internship.service";
@@ -33,8 +27,8 @@ interface IBedListItemProps {
 
 const bedIconStyles: Partial<IImageStyles> = {
   root: {
-    width: 48,
-    height: 48,
+    width: 40,
+    height: 40,
     border: "1px solid #3498DB",
     borderRadius: "50%",
     padding: 8,
@@ -117,40 +111,39 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
   };
 
   return (
-    <StackItem styles={rootStackItemStyles}>
+    <div style={{ margin: 8 }}>
       <Card tokens={cardTokens}>
-        <Card.Section horizontal>
-          <Card.Section>
+        <CardSection horizontal>
+          <CardSection>
             <Image
               src={internshipIcon}
-              width={32}
-              height={32}
+              width={24}
+              height={24}
               styles={bedIconStyles}
             />
-          </Card.Section>
-          <Card.Section>
-            <Text>{internship.Bed?.name}</Text>
+          </CardSection>
+          <CardSection>
+            <Text variant="smallPlus">{internship.Bed?.name}</Text>
             <Text variant="small">{internship.Pacient?.fullName}</Text>
-          </Card.Section>
-        </Card.Section>
-        <Card.Section
+          </CardSection>
+        </CardSection>
+
+        <CardSection
           horizontal
           styles={footerCardSectionStyles}
           tokens={footerCardSectionTokens}
         >
-          <Stack.Item grow>
+          <CardSection grow>
             <span />
-          </Stack.Item>
-          <TooltipHost content="Mais" id="tooltip-more">
-            <div ref={moreIconRef}>
-              <CommandButton
-                styles={{ root: { margin: 0 } }}
-                text="Opções"
-                iconProps={{ iconName: "AllApps" }}
-                onClick={() => setShowMoreMenu(true)}
-              />
-            </div>
-          </TooltipHost>
+          </CardSection>
+          <div ref={moreIconRef}>
+            <CommandButton
+              styles={{ root: { margin: 0, height: 24 } }}
+              text="Opções"
+              iconProps={{ iconName: "AllApps" }}
+              onClick={() => setShowMoreMenu(true)}
+            />
+          </div>
           <ContextualMenu
             target={moreIconRef}
             items={menuItems}
@@ -158,7 +151,7 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
             onItemClick={() => setShowMoreMenu(false)}
             onDismiss={() => setShowMoreMenu(false)}
           />
-        </Card.Section>
+        </CardSection>
       </Card>
 
       <ChangeBedDialog
@@ -177,6 +170,6 @@ export const BedListItem: FC<IBedListItemProps> = ({ internship }) => {
         }}
         onCancelClick={() => setShowConfirmDialog(false)}
       />
-    </StackItem>
+    </div>
   );
 };

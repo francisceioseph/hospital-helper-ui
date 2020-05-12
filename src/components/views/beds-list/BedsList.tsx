@@ -1,11 +1,5 @@
 import React, { FC } from "react";
-import {
-  Stack,
-  IStackTokens,
-  IStackStyles,
-  StackItem,
-  Text,
-} from "@fluentui/react";
+import { Stack, IStackStyles, StackItem, Text } from "@fluentui/react";
 import { BedListItem } from "./bed-item/BedListItem";
 
 interface IBedsListProps {
@@ -23,8 +17,12 @@ const stackStyling: IStackStyles = {
   },
 };
 
-const stackTokens: IStackTokens = {
-  childrenGap: 8,
+const listStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  maxHeight: "89vh",
+  overflowY: "scroll",
 };
 
 export const BedsList: FC<IBedsListProps> = ({ beds }) => {
@@ -43,16 +41,24 @@ export const BedsList: FC<IBedsListProps> = ({ beds }) => {
   }
 
   return (
-    <Stack
-      wrap
-      horizontal
-      horizontalAlign="start"
-      styles={stackStyling}
-      tokens={stackTokens}
-    >
+    <div style={listStyle}>
       {beds.map((bed, index) => (
         <BedListItem key={index} internship={bed}></BedListItem>
       ))}
-    </Stack>
+    </div>
   );
+
+  // return (
+  //   <Stack
+  //     wrap
+  //     horizontal
+  //     horizontalAlign="start"
+  //     styles={stackStyling}
+  //     tokens={stackTokens}
+  //   >
+  //     {beds.map((bed, index) => (
+  //       <BedListItem key={index} internship={bed}></BedListItem>
+  //     ))}
+  //   </Stack>
+  // );
 };

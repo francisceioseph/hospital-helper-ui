@@ -4,6 +4,7 @@ import { IIconStyles, FontWeights, IStackItemStyles } from "@fluentui/react";
 export const footerCardSectionStyles: ICardSectionStyles = {
   root: {
     borderTop: "1px solid #F3F2F1",
+    margin: 8,
   },
 };
 
