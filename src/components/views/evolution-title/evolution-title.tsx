@@ -57,7 +57,9 @@ export const EvolutionTitle: FC<IEvolutionTitleProps> = ({
         </TooltipHost>
       </StackItem>
       <StackItem>
-        <Text variant="large">Evolução de {internship?.Pacient?.fullName}</Text>
+        <Text variant="large">
+          Evolução de {internship?.Pacient?.fullName.split(" ")[0]}
+        </Text>
       </StackItem>
       <StackItem>
         <Separator vertical />

@@ -5,31 +5,14 @@
     "name": "Francisco Souza"
   },
   "description": "A simple electron app to help a hospital in Brazil",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "homepage": "./",
   "main": "public/electron.js",
   "dependencies": {
     "@fluentui/react": "^7.107.5",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "@types/react-redux": "^7.1.7",
-    "@types/react-router": "^5.1.5",
-    "@types/react-router-dom": "^5.1.4",
-    "@types/redux": "^3.6.0",
-    "@types/redux-actions": "^2.6.1",
-    "@types/redux-logger": "^3.0.7",
     "@uifabric/react-cards": "^0.109.63",
     "bcrypt": "^4.0.1",
-    "electron-debug": "^3.0.1",
-    "electron-is-dev": "^1.2.0",
-    "electron-log": "^4.1.1",
-    "electron-updater": "^4.2.5",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
@@ -49,9 +32,7 @@
     "redux-logger": "^3.0.6",
     "sequelize": "^5.21.7",
     "shortid": "^2.2.15",
-    "source-map-support": "^0.5.19",
-    "sqlite3": "^4.1.1",
-    "typescript": "~3.7.2"
+    "sqlite3": "^4.1.1"
   },
   "scripts": {
     "start": "nf start -p 3000",
@@ -97,8 +78,23 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
     "@types/lodash": "^4.14.150",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-redux": "^7.1.7",
+    "@types/react-router": "^5.1.5",
+    "@types/react-router-dom": "^5.1.4",
+    "@types/redux": "^3.6.0",
+    "@types/redux-actions": "^2.6.1",
+    "@types/redux-logger": "^3.0.7",
     "electron": "^8.2.3",
-    "electron-builder": "^22.5.1"
+    "electron-builder": "^22.5.1",
+    "source-map-support": "^0.5.19",
+    "typescript": "~3.7.2"
   }
 }

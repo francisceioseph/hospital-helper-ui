@@ -8,7 +8,6 @@ import {
   Separator,
 } from "@fluentui/react";
 import { BedListItem } from "./bed-item/BedListItem";
-import { IBed } from "../../../types/models/bed.interface";
 import { IInternship } from "../../../types/models/internship.interface";
 
 interface IBedsListProps {

@@ -1,6 +1,5 @@
 const { app, BrowserWindow } = require("electron");
 
-const isDev = require("electron-is-dev");
 const path = require("path");
 const url = require("url");
 const initIPC = require("./electron/ipc/config");
@@ -17,16 +16,21 @@ function createWindow() {
     },
   });
 
-  if (isDev) {
+  console.log("===> NODE ENV <===: ", process.env.NODE_ENV);
+
+  if (process.env.NODE_ENV === "development") {
     mainWindow.loadURL(process.env.ELECTRON_START_DEV_URL);
   } else {
     mainWindow.loadURL(
       url.format({
-        pathname: path.join(__dirname, "../build/index.html"),
+        pathname: path.join(__dirname, "./index.html"),
         protocol: "file:",
         slashes: true,
       })
     );
+
+    const menuBuilder = new MenuBuilder(mainWindow);
+    menuBuilder.buildMenu();
   }
 
   mainWindow.on("closed", () => {
@@ -34,9 +38,6 @@ function createWindow() {
   });
 
   initIPC();
-
-  // const menuBuilder = new MenuBuilder(mainWindow);
-  // menuBuilder.buildMenu();
 }
 
 app.on("ready", createWindow);

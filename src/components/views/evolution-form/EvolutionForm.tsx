@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useCallback, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { IInternship } from "../../../types/models/internship.interface";
 import {
