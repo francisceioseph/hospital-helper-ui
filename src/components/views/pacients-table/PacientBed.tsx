@@ -38,7 +38,7 @@ export const PacientBedDialog: FC<IPacientBedDialog> = ({
       const options = beds.map(
         (bed: IBed): IDropdownOption => ({
           key: bed.id,
-          text: bed.name,
+          text: `${bed.sector} - ${bed.name}`,
         })
       );
 

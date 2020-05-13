@@ -36,7 +36,7 @@ export const ChangeBedDialog: FC<IChangeBedDialog> = ({
       const beds = response.data || [];
       const options = beds.map<IDropdownOption>((bed) => ({
         key: bed.id,
-        text: bed.name,
+        text: `${bed.sector} - ${bed.name}`,
       }));
 
       setBedOptions(options);
